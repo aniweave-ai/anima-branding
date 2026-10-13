@@ -402,7 +402,7 @@
         <input id="title" type="text" value="UI/UX Designer">
 
         <label for="mobile">手機</label>
-        <input id="mobile" type="text" value="+886 936 928 372">
+        <input id="mobile" type="text" value="+886 900 000 000">
         <div class="field-error" id="mobileError"></div>
 
         <label for="showMobile">顯示手機</label>
@@ -643,7 +643,7 @@
         document.getElementById('showMobile').addEventListener('change', updateCard);
 
         // ---- 輸入檢查/自動修正：Email 全部小寫、英文名每個單字字首大寫、電話格式驗證 ----
-        // 手機固定「國碼 3碼 3碼 3碼」，例如 +886 936 928 372
+        // 手機固定「國碼 3碼 3碼 3碼」，例如 +886 900 000 000
         var MOBILE_FORMAT_RE = /^\+\d{1,4}(\s\d{3}){3}$/;
         // 公司電話（市話）分組長度不一（例如 +886 2 2775 2099），只限制每組最多 4 碼、不能整串黏在一起
         var TEL_FORMAT_RE = /^\+\d{1,4}(\s\d{1,4})+$/;
@@ -698,7 +698,7 @@
         }
 
         function validateMobile() {
-            return validatePhone('mobile', 'mobileError', MOBILE_FORMAT_RE, '格式需為「+國碼 3碼 3碼 3碼」，例如 +886 936 928 372');
+            return validatePhone('mobile', 'mobileError', MOBILE_FORMAT_RE, '格式需為「+國碼 3碼 3碼 3碼」，例如 +886 900 000 000');
         }
         function validateTel() {
             return validatePhone('tel', 'telError', TEL_FORMAT_RE, '格式需為「+國碼 數字 數字…」，數字之間用空格分隔，例如 +886 2 2775 2099');
