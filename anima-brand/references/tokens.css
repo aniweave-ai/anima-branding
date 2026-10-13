@@ -1,4 +1,4 @@
-/* ANIMA Design Tokens — v1.1
+/* ANIMA Design Tokens — v1.2
    五組色階（50–900）與語意色。不新增色階；深色模式只換用同一組色階裡不同的階數。 */
 
 :root {
@@ -75,6 +75,16 @@
   --accent-decorative: var(--ripple-500);
   --button-solid-bg: var(--current-500);
   --button-solid-text: #FFFFFF;
+
+  /* 確認並送出（Confirm）— ANIMA 對外動作前，人按下確認的那顆按鈕。
+     色相沿用實心按鈕（Current），另外把每個狀態都定義清楚；同一個畫面只放一顆。 */
+  --button-confirm-bg: var(--current-500);          /* 白字 5.89:1 */
+  --button-confirm-bg-hover: var(--current-600);    /* 白字 6.78:1 */
+  --button-confirm-bg-pressed: var(--current-700);  /* 白字 9.35:1 */
+  --button-confirm-text: #FFFFFF;
+  --button-confirm-focus-ring: var(--current-500);  /* 對白底 5.89:1；2px 外框、2px 間距 */
+  --button-confirm-bg-disabled: var(--mist-200);
+  --button-confirm-text-disabled: var(--mist-500);  /* 停用狀態不受 WCAG 對比要求，但仍保持可辨識 */
 }
 
 /* 深色模式：只換用同一組色階裡不同的階數，不引入新色 */
@@ -92,6 +102,14 @@
     --accent-decorative: var(--ripple-500); /* 不需換階 */
     --button-solid-bg: var(--current-400);
     --button-solid-text: #FFFFFF; /* 對比 4.01:1，大字合格；按鈕文字須維持字重 ≥ 600、字級 ≥ 14px */
+
+    --button-confirm-bg: var(--current-400);          /* 白字 4.01:1，字重 ≥ 600、字級 ≥ 14px */
+    --button-confirm-bg-hover: var(--current-500);    /* 深底 hover 往深走：Current 300 配白字僅 3.10:1，不合格 */
+    --button-confirm-bg-pressed: var(--current-600);  /* 白字 6.78:1 */
+    --button-confirm-text: #FFFFFF;
+    --button-confirm-focus-ring: var(--sky-300);      /* 對 Mist 900 深底 10.03:1 */
+    --button-confirm-bg-disabled: var(--mist-700);
+    --button-confirm-text-disabled: var(--mist-500);
   }
 }
 
@@ -106,10 +124,12 @@
   - Mist 900 深底＋ Sky 200：11.76:1，深底次要文字、說明、標籤
   - 白 #FFFFFF 配 Mist 500：3.36:1，僅大字級合格，一般內文不合格
   - Mist 900 深底＋ Mist 400：8.95:1，深底第三層級文字
+  - 確認按鈕（button-confirm）：淺色 Current 500／600／700 底＋白字 5.89／6.78／9.35:1；
+    深色 Current 400／500／600 底＋白字 4.01／5.89／6.78:1。深色 hover 不可換成 Current 300（白字僅 3.10:1）
 
   text-tertiary 使用限制：僅用於真正不重要、或屬於第三層級的輔助資訊（例如版權小字、次要標籤），
   不可用於任何需要被閱讀的內文——淺色模式的 Mist 500 未達一般內文 4.5:1 門檻，只在大字級
   （≥18px 或 ≥14px 粗體）或純裝飾用途下可接受。
 
-  完整對照與各版位重量分配比例建議，請見主文件《ANIMA_品牌規範_v1.1.html》02 色彩系統章節。
+  完整對照與各版位重量分配比例建議，請見主文件《ANIMA_品牌規範_v1.2.html》02 色彩系統章節。
 */
