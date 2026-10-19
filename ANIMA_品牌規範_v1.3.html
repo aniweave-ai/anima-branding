@@ -536,7 +536,7 @@
     </div>
 
     <div class="ramp-block">
-      <div class="ramp-head"><span class="ramp-name">Neutral warm　沙岸<span class="ramp-alias">Sand</span></span><span class="ramp-note">暖色中性底色，大面積背景用；500 為 #C6A575。50、100 取自長片畫面</span></div>
+      <div class="ramp-head"><span class="ramp-name">Neutral warm　沙岸<span class="ramp-alias">Sand</span></span><span class="ramp-note">暖色氛圍底色，只當最底層背景，不用在 UI 元件；500 為 #C6A575。50、100 取自長片畫面</span></div>
       <div class="ramp-row">
         <div class="ramp-cell" onclick="copyHex(this,'#FAF7F0')" title="點擊複製 #FAF7F0"><div class="chip" style="background:#FAF7F0;"><svg class="copy-icon" viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg></div><div class="stop">50</div><div class="hex">#FAF7F0</div></div>
         <div class="ramp-cell" onclick="copyHex(this,'#FDF4E4')" title="點擊複製 #FDF4E4"><div class="chip" style="background:#FDF4E4;"><svg class="copy-icon" viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg></div><div class="stop">100</div><div class="hex">#FDF4E4</div></div>
@@ -592,21 +592,22 @@
           <td>固定用這階，不使用 Tertiary 或其他深色</td>
         </tr>
         <tr>
-          <td class="role">Sand 50–400</td>
-          <td>暖色大面積背景：「ANIMA 處理中」畫面、CTA 字卡漸層、需要溫度的版位；字用 Depth 700</td>
-          <td>底色用途，跟 Mist（冷中性灰）互補；不取代 Sky 當識別色，不用在按鈕或互動元件</td>
+          <td class="role">Sand 50–100</td>
+          <td>淺色模式的頁面、畫面底色：「ANIMA 處理中」畫面、CTA 字卡漸層、需要溫度的版位</td>
+          <td>只當最底層背景，跟 Mist（冷中性灰）互補</td>
         </tr>
         <tr>
-          <td class="role">Sand 500–600</td>
-          <td>插圖、裝飾、圖示線條</td>
-          <td>不放內文（配白字或 Depth 700 都不到一般內文門檻）</td>
+          <td class="role">Sand 900</td>
+          <td>深色模式的頁面、畫面底色</td>
+          <td>只當最底層背景；直接放在上面的強調字改用 Sky 300</td>
         </tr>
         <tr>
-          <td class="role">Sand 700–900</td>
-          <td>深色暖底、淺底上的暖色文字（Sand 700）；深底的字用白色</td>
-          <td>底色或少量文字用途，不承載品牌識別</td>
+          <td class="role">Sand 200–800</td>
+          <td>漸層過渡、影片畫面背景</td>
+          <td>只當背景</td>
         </tr>
       </table>
+      <p style="margin-top:16px; font-size:14px;"><strong>Sand 不用在 UI 元件。</strong>Sand 只負責給畫面一點溫度，是最底層的氛圍底色。卡片、側邊欄、按鈕、輸入框、邊框、分隔線、文字、圖示、標籤一律照常用 Mist、Depth、Current、Sky，放在 Sand 底上也維持原本的淺色／深色配色。Sand 也不取代 Sky 當品牌識別色。</p>
 
       <h3 style="margin-top:52px;">對比配對表</h3>
       <p>哪個底配哪個字，數值為 WCAG 對比度。</p>
@@ -715,28 +716,22 @@
           <td>只能用在大字（≥18px 或 ≥14px 粗體）</td>
         </tr>
         <tr>
-          <td class="role">Sand 200／300／400</td>
-          <td>Depth 700 #33454E</td>
-          <td>8.25／7.05／5.72:1</td>
-          <td>Sand 50–400 當底，字一律用 Depth 700</td>
+          <td class="role">Sand 900 #3F301F（深底）</td>
+          <td>白／Mist 300／Mist 400</td>
+          <td>12.70／9.00／6.90:1</td>
+          <td>深色 Sand 底上直接放的主要／次要／第三層級文字（沿用深色模式的文字 token）</td>
         </tr>
         <tr>
-          <td class="role">Sand 500 #C6A575</td>
-          <td>Depth 700 #33454E</td>
-          <td>4.30:1　僅大字級合格</td>
-          <td>Sand 500 底配白字僅 2.32:1，不合格；不建議放內文</td>
+          <td class="role">Sand 900 #3F301F（深底）</td>
+          <td>Sky 300 #80D4FF</td>
+          <td>7.73:1</td>
+          <td>深色 Sand 底上直接放的數字、強調、連結</td>
         </tr>
         <tr>
-          <td class="role">Sand 600 #A6865C</td>
-          <td>白 #FFFFFF</td>
-          <td>3.39:1　僅大字級合格</td>
-          <td>配 Depth 700 僅 2.94:1，不合格；只當裝飾或插圖</td>
-        </tr>
-        <tr>
-          <td class="role">Sand 700／800／900</td>
-          <td>白 #FFFFFF</td>
-          <td>5.34／8.52／12.70:1</td>
-          <td>Sand 700–900 當底，字一律用白色；白底上的 Sand 700 暖色文字同為 5.34:1</td>
+          <td class="role">Sand 900 #3F301F（深底）</td>
+          <td>Current 400 #4C7AE6</td>
+          <td>3.16:1　不合格</td>
+          <td>深色 Sand 底上不可用 Current 400 當文字色，改用 Sky 300</td>
         </tr>
       </table>
 
@@ -770,6 +765,12 @@
           <td>白 #FFFFFF</td>
           <td>Mist 900 #1F1F1F</td>
           <td></td>
+        </tr>
+        <tr>
+          <td class="role">頁面底色・暖色（選用）</td>
+          <td>Sand 50 #FAF7F0</td>
+          <td>Sand 900 #3F301F</td>
+          <td>只換最底層的頁面底色，卡片、邊框、按鈕、文字照 Mist 那一套；直接放在 Sand 900 上的強調字用 Sky 300（Current 400 僅 3.16:1）</td>
         </tr>
         <tr>
           <td class="role">卡片／次要底色</td>
