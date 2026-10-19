@@ -72,9 +72,9 @@
   --sand-400: #DCC095;
   --sand-500: #C6A575; /* anchor */
   --sand-600: #A6865C;
-  --sand-700: #826644;
-  --sand-800: #5D4932;
-  --sand-900: #3F301F;
+  --sand-700: #7F674A;
+  --sand-800: #574736;
+  --sand-900: #312A23;
 
   /* 漸層 */
   --bg-cta:  linear-gradient(to bottom right, var(--sky-100) 0%, var(--sky-50) 40%, var(--sand-50) 100%); /* CTA 字卡、片尾 */
@@ -116,7 +116,7 @@
     --text-secondary: var(--mist-300); /* Mist 600 在深底僅 2.35:1，不合格，故調淺一階 */
     --text-tertiary: var(--mist-400); /* 8.95:1，深底第三層級文字仍需清楚可讀 */
     --text-accent: var(--sky-300);
-    --bg-page-warm: var(--sand-900); /* 直接放在上面的強調字用 Sky 300（7.73:1）；Current 400 僅 3.16:1 */
+    --bg-page-warm: var(--sand-900); /* 直接放在上面的強調字用 Sky 300（8.60:1）；Current 400 僅 3.52:1 */
     --brand: var(--sky-500); /* 兩種模式對比皆足夠，不需換階 */
     --interactive: var(--current-400); /* Current 500 在深底僅 2.80:1，不合格 */
     --accent-decorative: var(--ripple-500); /* 不需換階 */
@@ -150,9 +150,9 @@
   - Sand 50／100 底＋ Depth 900：15.98／15.66:1，處理中畫面主句
   - Sand 50／100 底＋ Current 500：5.51／5.40:1，Sand 底重點數字、連結
   - Sand 50／100 底＋ Mist 500：3.14／3.08:1，僅大字級合格
-  - Sand 900 深底＋白／Mist 300／Mist 400：12.70／9.00／6.90:1，深色 Sand 底的主要／次要／第三層級文字
-  - Sand 900 深底＋ Sky 300：7.73:1，深色 Sand 底的數字、強調、連結
-  - Sand 900 深底＋ Current 400：3.16:1，不合格，改用 Sky 300
+  - Sand 900 深底＋白／Mist 300／Mist 400：14.13／10.01／7.68:1，深色 Sand 底的主要／次要／第三層級文字
+  - Sand 900 深底＋ Sky 300：8.60:1，深色 Sand 底的數字、強調、連結
+  - Sand 900 深底＋ Current 400：3.52:1，不合格，改用 Sky 300
 
   text-tertiary 使用限制：僅用於真正不重要、或屬於第三層級的輔助資訊（例如版權小字、次要標籤），
   不可用於任何需要被閱讀的內文——淺色模式的 Mist 500 未達一般內文 4.5:1 門檻，只在大字級
