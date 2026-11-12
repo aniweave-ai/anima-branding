@@ -125,7 +125,8 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## Logo 與素材
 
-- 檔名帶 `-dark` 的是給深色底用的**白色版**。
+- sales deck 素材：檔名帶 `-dark` 的是給深色底用的**白色版**。
+- 品牌 repo 的 `assets/logo/`：`primary_dark` 是深色底用的白字版；`mono_light` 是白色單色、`mono_dark` 是深色單色。深色底用 `primary_dark` 或 `mono_light`。
 - 封面底圖、4A 頁 GIF 的規則照 sales 交接文件；新版素材之後補。
 
 ## sales deck 現有顏色對照（v1.3 色階外的 26 色）
@@ -158,7 +159,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## slides.css 版型
 
-`examples/layouts.html` 是 14 種版型的示範，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
+`examples/layouts.html` 是 36 種版型的示範，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
 
 | class | 版型 | 用在 |
 |---|---|---|
@@ -176,6 +177,30 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.options` + `.option` | 方案 | 2–3 欄，`.is-featured` 標推薦 |
 | `.quote` | 引言 | 客戶說的話 |
 | `.closing` | 結尾 | 一句話＋按鈕＋聯絡方式 |
+| `.facts` | 公司概要 | 一段介紹＋4–6 個事實數字 |
+| `.layers` | 分層架構 | 3–5 層，右側深色面板統籌 |
+| `.hub` | 中心放射 | 左邊來源、中間核心、右邊結果 |
+| `.case` | 案例 | 背景／卡點／做法＋深色面板放結果 |
+| `.ratio` | 比例對照 | 兩塊寬度照 `--share` 比例 |
+| `.bars` | 長條圖 | 排名、占比；要強調一根，其餘加 `.is-other` |
+| `.stages` | 階段路徑 | 3–4 階，一階比一階高 |
+| `.options` + `.option-rows` | 選項比較（無價格） | 部署方式等，一列一個面向 |
+| `.table.matrix` + `.mark` | 權限矩陣 | ● 有、○ 部分、－ 沒有 |
+| `.list.boxes` | 準備清單 | 雙方各一欄，方框勾選 |
+| `.transform` | 資料轉換前後 | `.pii` 標個資、`.token` 標代號 |
+| `.people` | 團隊 | 頭像、姓名、職稱、一句經歷 |
+| `.logos` | logo 牆 | 客戶 logo 自動轉單色；沒授權寫產業名 |
+| `.market` | 市場規模 | TAM／SAM／SOM 同心圓 |
+| `.chart` | 折線圖 | SVG 用 `.series-1`、`.grid-line` 等 class 取色 |
+| `.quadrant` | 競爭定位 2×2 | 點的位置用 `--x`、`--y` |
+| `.milestones` | 里程碑 | `.is-done`／`.is-now`／未來 |
+| `.annotated` | 截圖加標註 | 圖上 `.pin` 對應右邊編號說明 |
+| `.features` | 功能格 | icon＋標題＋一句話，6–8 格 |
+| `.split-3` | 合作分工 | 我方／一起做／夥伴 |
+| `.fullbleed` | 全版圖片 | 圖片用 JPG，文字壓在下方漸層 |
+
+- 有深色面板的版型（`.case`、`.ratio`、`.stages`、`.compare`、`.options`、`.layers`、`.hub`）一頁只放一塊。
+- 示範頁裡的數字都是示意，寫進真的簡報前要換成有出處的數字。
 
 - 底色用 `.ground-neutral`／`-brand`／`-sky`／`-ambient`／`-dark`／`-dark-warm`。深色底的文字、線條、卡片會自動換色。
 - 換頁：方向鍵、空白、點畫面；`#5` 跳頁；`O` 總覽；`F` 全螢幕。
