@@ -106,7 +106,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 
 /* ---------- 頁首：小標、標題、引言 ---------- */
-.slide-head { display: flex; flex-direction: column; gap: var(--deck-space-2); max-width: calc(1440px * var(--u)); }
+.slide-head { display: flex; flex-direction: column; gap: var(--deck-space-2); }   /* 標題可以用滿整個寬度；lede 自己有 40em 上限 */
 .title { font-size: var(--deck-fs-title); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-bold);
          color: var(--s-strong); text-wrap: balance; }
 .lede { font-size: var(--deck-fs-body-lg); line-height: var(--deck-lh-body); color: var(--s-muted); max-width: 40em; text-wrap: pretty; }
@@ -270,6 +270,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .table .is-us { background: color-mix(in srgb, var(--deck-chip-bg) 70%, transparent); }   /* 我方那一欄 */
 .table th.is-us { color: var(--s-accent); font-weight: var(--deck-fw-bold); }
 .table .num { text-align: right; font-variant-numeric: tabular-nums; }
+/* 列數多的表（7 列以上）：只縮列距，不縮字 */
+.table.is-dense td { padding-top: calc(14px * var(--u)); padding-bottom: calc(14px * var(--u)); }
 
 /* 時程（甘特）：--weeks 欄，每條 .bar 用 --from / --to（第幾週，含頭含尾） */
 .timeline { display: grid; grid-template-columns: calc(360px * var(--u)) repeat(var(--weeks, 8), minmax(0, 1fr)); row-gap: var(--deck-space-2); align-items: center; }
