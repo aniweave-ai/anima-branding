@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANIMA 簡報版型示範</title>
+<link rel="stylesheet" href="../../anima-brand/references/tokens.css">
+<link rel="stylesheet" href="../slides.css">
+</head>
+<body>
+<!-- 版型示範：每一頁是一種版型，內容是示意文字與示意數字。
+     複製需要的 <section> 到自己的 deck，改文字就好，不要另外寫樣式。 -->
+<main class="deck">
+
+  <!-- 1 封面 -->
+  <section class="slide cover ground-ambient">
+    <img class="cover-logo" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA">
+    <div class="cover-main">
+      <div class="cover-client">為 範例製造股份有限公司 準備</div>
+      <h1 class="display">讓報價流程<br>自己跑起來</h1>
+      <p class="lede">ANIMA 讀取信件、ERP 與共享資料夾，整理成待確認的草稿，由負責人確認後送出。</p>
+    </div>
+    <div class="cover-meta"><span>2026 年 11 月</span><span>ANIWEAVE 業務團隊</span></div>
+  </section>
+
+  <!-- 2 議程 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">AGENDA</div>
+      <h2 class="title">今天談四件事</h2>
+    </header>
+    <ol class="agenda slide-body">
+      <li class="is-current"><span class="agenda-title">現況與卡點</span><span class="agenda-text">報價從收單到送出，時間花在哪裡</span></li>
+      <li><span class="agenda-title">ANIMA 怎麼做</span><span class="agenda-text">四個步驟，最後一步由人確認</span></li>
+      <li><span class="agenda-title">導入方式</span><span class="agenda-text">八週 PoC，先跑一條流程</span></li>
+      <li><span class="agenda-title">方案與下一步</span><span class="agenda-text">計價方式、雙方要準備什麼</span></li>
+    </ol>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 3 章節頁（深色底只用在章節頁、主張頁） -->
+  <section class="slide section ground-dark">
+    <div class="section-num">01 · 現況</div>
+    <h2 class="display">報價單在信箱、<br>ERP 和 Excel 之間來回</h2>
+    <p class="lede">先看現在一張報價要經過幾個人、幾套系統。</p>
+  </section>
+
+  <!-- 4 主張頁 -->
+  <section class="slide statement ground-brand">
+    <div class="eyebrow">我們的看法</div>
+    <p class="statement-text">問題不在系統不夠多，而是<em>系統之間靠人工轉貼</em>。ANIMA 把現有的系統串成一條流程，不用換掉任何一套。</p>
+  </section>
+
+  <!-- 5 三欄卡片 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">流程拆解</div>
+      <h2 class="title">三個部門，一條流程</h2>
+    </header>
+    <div class="grid cols-3 slide-body">
+      <article class="card">
+        <div class="chips"><span class="chip">業務</span><span class="chip">Gmail</span></div>
+        <h3 class="card-title">收單與報價</h3>
+        <p class="card-text">讀取客戶信件與附件，對照 ERP 價目，產出報價草稿。</p>
+        <div class="tags"><span class="tag is-success">自動</span></div>
+      </article>
+      <article class="card">
+        <div class="chips"><span class="chip">財務</span><span class="chip">ERP</span></div>
+        <h3 class="card-title">送審與核准</h3>
+        <p class="card-text">依金額與客戶等級分流，超過門檻才請主管核准。</p>
+        <div class="tags"><span class="tag is-success">自動</span><span class="tag is-warning">待確認</span></div>
+      </article>
+      <article class="card">
+        <div class="chips"><span class="chip">業務助理</span></div>
+        <h3 class="card-title">送出與追蹤</h3>
+        <p class="card-text">負責人確認後寄出，三天沒回覆就提醒業務追蹤。</p>
+        <div class="tags"><span class="tag">人工確認</span></div>
+      </article>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 6 KPI 大數字 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">導入成效</div>
+      <h2 class="title">報價時間少了三分之二</h2>
+    </header>
+    <div class="slide-body" style="justify-content: center;">
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-value">−68<small>%</small></div><div class="kpi-label">報價處理時間</div><p class="kpi-text">從收單到送出的平均時間</p></div>
+        <div class="kpi"><div class="kpi-value">3.5<small>×</small></div><div class="kpi-label">每人每週報價量</div><p class="kpi-text">同樣人力可以處理的件數</p></div>
+        <div class="kpi"><div class="kpi-value">0</div><div class="kpi-label">人工轉貼次數</div><p class="kpi-text">ERP 與信件之間不用再複製貼上</p></div>
+      </div>
+    </div>
+    <p class="slide-note">示意數字。實際成效依流程複雜度而定。</p>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 7 左文右圖 -->
+  <section class="slide ground-neutral">
+    <div class="split">
+      <div class="split-text">
+        <div class="slide-head">
+          <div class="eyebrow">產品畫面</div>
+          <h2 class="title">在 LINE 群組裡確認，不用多開一套系統</h2>
+        </div>
+        <ul class="list checks">
+          <li>草稿直接送到負責人的群組</li>
+          <li>按一下確認，ANIMA 接著送出</li>
+          <li>每一步都留紀錄，事後查得到</li>
+        </ul>
+      </div>
+      <figure class="media contain"><img src="../../anima-brand/assets/logo/ANIMA_vertical_primary.svg" alt="產品截圖放這裡" style="width:40%;height:auto"></figure>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 8 流程 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">ANIMA 怎麼做</div>
+      <h2 class="title">拿得到資料、做得了事，送出前由人確認</h2>
+    </header>
+    <ol class="flow slide-body">
+      <li><div class="card"><h3 class="card-title">拍照上傳</h3><p class="card-text">業務把客戶的需求單拍照傳到群組。</p></div></li>
+      <li><div class="card"><h3 class="card-title">辨識與對照</h3><p class="card-text">讀出品項與數量，對照 ERP 的料號和價目。</p></div></li>
+      <li><div class="card"><h3 class="card-title">產生草稿</h3><p class="card-text">依客戶等級套用折扣，排好報價單格式。</p></div></li>
+      <li><div class="card"><h3 class="card-title">人工確認</h3><p class="card-text">負責人看過、按確認，才會寄給客戶。</p><div class="tags"><span class="tag is-success">由人把關</span></div></div></li>
+    </ol>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 9 現況 vs 導入後（As-is / To-be） -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">AS-IS → TO-BE</div>
+      <h2 class="title">同一張報價單，前後差在哪</h2>
+    </header>
+    <div class="compare slide-body" style="--rows: 5;">
+      <div class="compare-col before">
+        <div class="compare-head">現況</div>
+        <div class="compare-item"><b>業務手抄需求</b><span>從信件和 LINE 一則一則整理</span></div>
+        <div class="compare-item"><b>開 ERP 查價</b><span>料號對不上要回頭問客戶</span></div>
+        <div class="compare-item"><b>Excel 排報價單</b><span>折扣規則記在資深業務腦中</span></div>
+        <div class="compare-item"><b>主管逐張簽核</b><span>不管金額大小都要排隊</span></div>
+      </div>
+      <div class="compare-arrows"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="compare-col after">
+        <div class="compare-head">導入 ANIMA 後</div>
+        <div class="compare-item"><b>自動讀取需求</b><span>信件、附件、照片都能讀</span></div>
+        <div class="compare-item"><b>自動對照料號</b><span>對不上的才列出來請人確認</span></div>
+        <div class="compare-item"><b>依規則產生草稿</b><span>折扣規則寫成設定，人人一致</span></div>
+        <div class="compare-item"><b>超過門檻才簽核</b><span>小額報價確認後直接送出</span></div>
+      </div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 10 對照表 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">比較</div>
+      <h2 class="title">基本能力大家都有，差在協作介面與部署方式</h2>
+    </header>
+    <div class="slide-body">
+      <table class="table">
+        <thead><tr><th>能力</th><th class="is-us">ANIMA</th><th>通用 AI 助理</th><th>RPA 工具</th></tr></thead>
+        <tbody>
+          <tr><td>讀取信件與附件</td><td class="is-us"><span class="tag is-success">支援</span></td><td><span class="tag is-success">支援</span></td><td><span class="tag is-warning">部分</span></td></tr>
+          <tr><td>寫回 ERP</td><td class="is-us"><span class="tag is-success">支援</span></td><td><span class="tag">不支援</span></td><td><span class="tag is-success">支援</span></td></tr>
+          <tr><td>在群組裡確認</td><td class="is-us"><span class="tag is-success">支援</span></td><td><span class="tag">不支援</span></td><td><span class="tag">不支援</span></td></tr>
+          <tr><td>地端部署</td><td class="is-us"><span class="tag is-success">支援</span></td><td><span class="tag">不支援</span></td><td><span class="tag is-warning">部分</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 11 時程（甘特） -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">導入時程</div>
+      <h2 class="title">八週完成 PoC</h2>
+    </header>
+    <div class="slide-body">
+      <div class="timeline" style="--weeks: 8;">
+        <div class="timeline-week">階段</div>
+        <div class="timeline-week">W1</div><div class="timeline-week">W2</div><div class="timeline-week">W3</div><div class="timeline-week">W4</div>
+        <div class="timeline-week">W5</div><div class="timeline-week">W6</div><div class="timeline-week">W7</div><div class="timeline-week">W8</div>
+
+        <div class="timeline-label">流程訪談<small>雙方</small></div>
+        <div class="bar is-client" style="--from: 1; --to: 2;">訪談與資料盤點</div>
+        <div class="timeline-label">串接系統<small>ANIMA</small></div>
+        <div class="bar" style="--from: 2; --to: 4;">Gmail、ERP、共享資料夾</div>
+        <div class="timeline-label">試跑與調整<small>雙方</small></div>
+        <div class="bar" style="--from: 5; --to: 7;">真實報價單試跑</div>
+        <div class="timeline-label">成效檢視<small>雙方</small></div>
+        <div class="bar is-client" style="--from: 8; --to: 8;">結案</div>
+      </div>
+      <div class="legend"><span><i></i>ANIMA 執行</span><span><i style="--c: var(--deck-chart-3)"></i>需要貴公司參與</span></div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 12 方案 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">方案</div>
+      <h2 class="title">依流程數量選方案</h2>
+    </header>
+    <div class="options slide-body">
+      <div class="option">
+        <div class="option-name">入門</div>
+        <div class="option-price">1<small>條流程</small></div>
+        <p class="option-text">先從一個部門的一條流程開始。</p>
+        <ul class="list checks"><li>雲端部署</li><li>LINE／Slack 群組確認</li><li>每月成效報告</li></ul>
+      </div>
+      <div class="option is-featured">
+        <div class="option-name">標準</div>
+        <div class="option-price">3<small>條流程</small></div>
+        <p class="option-text">跨部門串起一條完整的業務流程。</p>
+        <ul class="list checks"><li>入門方案全部內容</li><li>ERP 寫回</li><li>專屬導入顧問</li></ul>
+      </div>
+      <div class="option">
+        <div class="option-name">企業</div>
+        <div class="option-price">不限</div>
+        <p class="option-text">全公司導入，可選地端或 hybrid。</p>
+        <ul class="list checks"><li>標準方案全部內容</li><li>地端／hybrid 部署</li><li>權限與角色管理</li></ul>
+      </div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 13 引言 -->
+  <section class="slide statement ground-brand">
+    <blockquote class="quote">
+      <p class="quote-text">以前報價要等資深業務有空，現在新人也能在當天送出，而且格式和折扣都對。</p>
+      <p class="quote-by"><b>王經理</b>範例製造　業務部</p>
+    </blockquote>
+  </section>
+
+  <!-- 14 結尾 -->
+  <section class="slide closing ground-ambient">
+    <h2 class="display">先跑一條流程，<br>再擴到整間公司</h2>
+    <p class="lede">兩週內完成流程訪談，第三週開始串接。</p>
+    <a class="button">預約流程訪談</a>
+    <div class="contact">
+      <div><b>網站</b><span>aniweave.ai</span></div>
+      <div><b>聯絡窗口</b><span>ANIWEAVE 業務團隊</span></div>
+    </div>
+  </section>
+
+</main>
+<script src="../slides.js"></script>
+</body>
+</html>

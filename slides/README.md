@@ -7,7 +7,7 @@
 | | sales deck | 其他簡報 |
 |---|---|---|
 | `tokens.css` | 直接讀 `--deck-*` 和色階 token | 直接讀 |
-| `slides.css`（之後補） | 不引用，當示範頁對照版型 | 直接引用 class 和模板 |
+| `slides.css`＋`slides.js` | 不引用，當示範頁對照版型 | 直接引用 class，從 `examples/layouts.html` 複製版型 |
 
 - **只讀色階和 `--deck-*`。** 不要用 `--text-primary`、`--bg-card` 這類語意 token，它們在深色模式會換值。
 - **不寫死顏色和字級。** 所有顏色、字級、圓角、間距都從 token 來；規範以外的值檢查工具會擋。
@@ -16,10 +16,12 @@
 ## 畫布與縮放
 
 - 規範以 **1920×1080** 為準。
-- 所有尺寸 token 都乘上 `--deck-scale`。1920 畫布設 `1`；1440×810 畫布設 `0.75`，其他不用動。
+- 所有尺寸 token 都乘上 `--deck-canvas-scale`。1920 畫布設 `1`；1440×810 畫布設 `0.75`，其他不用動。
+- 要設在 `:root`，不能設在 `.deck` 之類的子元素：尺寸 token 在 `:root` 就算好了，設在下層不會跟著變。
+- 這個 token 只管畫布換算。投影時依視窗大小整頁縮放是另一回事，用自己的變數（sales deck 現在的 `--deck-scale` 就是這個用途，不受影響）。
 
 ```css
-.deck { --deck-scale: 0.75; } /* 1440×810 的 deck 只要加這行 */
+:root { --deck-canvas-scale: 0.75; } /* 1440×810 的 deck 只要加這行，放在 tokens.css 之後 */
 ```
 
 - 安全邊界：左右 `--deck-pad-x` 128、上 `--deck-pad-top` 112、下 `--deck-pad-bottom` 96。
@@ -117,7 +119,8 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 ## PDF
 
 - 每一頁不靠動畫也要能完整讀懂，PDF 只會印出最後的狀態。
-- 字型要嵌靜態 TTF（Chrome 會把可變字型嵌成 Type 3，LINE 檢視器會破字）。靜態 TTF 之後補進 `anima-brand/assets/fonts/`。
+- 字型要嵌靜態 TTF（Chrome 會把可變字型嵌成 Type 3，LINE 檢視器會破字）。Nunito Sans 400–800 的靜態檔在 `anima-brand/assets/fonts/static/`；`slides.css` 已經接好，寫 `font-weight: 700` 會自動用重一階的 800 檔。
+- 用 Chrome 列印或 headless `--print-to-pdf`，`slides.css` 會一頁印一張 1920×1080。
 - 圖片用 JPG 或不透明 PNG；帶透明的 PNG 印成 PDF 會拆成兩張圖。
 
 ## Logo 與素材
@@ -153,6 +156,30 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `rgba(0,126,181,…)`、`rgba(32,75,94,…)` | 卡片陰影 | `--deck-card-shadow`（none） |
 | `rgba(219,230,235,…)` | 淺線 | `--deck-line` |
 
+## slides.css 版型
+
+`examples/layouts.html` 是 14 種版型的示範，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
+
+| class | 版型 | 用在 |
+|---|---|---|
+| `.cover` | 封面 | 客戶名、主標、一句說明 |
+| `.agenda` | 議程 | 3–6 項，`.is-current` 標目前章節 |
+| `.section` + `.ground-dark` | 章節頁 | 章節編號＋大標 |
+| `.statement` | 主張頁 | 一句話，`<em>` 標重點 |
+| `.grid.cols-2/3/4` + `.card` | 卡片欄 | 並列 2–4 件事 |
+| `.kpis` + `.kpi` | 大數字 | 2–4 個數字，不放卡片 |
+| `.split` | 左文右圖 | 產品畫面、截圖 |
+| `.flow` | 流程 | 3–5 步，最後一步常是人工確認 |
+| `.compare` | 現況 vs 導入後 | 一列一個對照，右欄用深色面板 |
+| `.table` | 對照表 | 功能比較，`.is-us` 標我方欄 |
+| `.timeline` + `.bar` | 時程 | 甘特圖，`--from`／`--to` 是第幾週 |
+| `.options` + `.option` | 方案 | 2–3 欄，`.is-featured` 標推薦 |
+| `.quote` | 引言 | 客戶說的話 |
+| `.closing` | 結尾 | 一句話＋按鈕＋聯絡方式 |
+
+- 底色用 `.ground-neutral`／`-brand`／`-sky`／`-ambient`／`-dark`／`-dark-warm`。深色底的文字、線條、卡片會自動換色。
+- 換頁：方向鍵、空白、點畫面；`#5` 跳頁；`O` 總覽；`F` 全螢幕。
+
 ## 版本
 
-- v1.4（草稿）：新增狀態色階（success／warning／error）、`--deck-*` 簡報 token、這份文件。
+- v1.4（草稿）：新增狀態色階（success／warning／error）、`--deck-*` 簡報 token、這份文件、`slides.css`／`slides.js`／版型示範、Nunito Sans 靜態 TTF。
