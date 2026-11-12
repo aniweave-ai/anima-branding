@@ -76,6 +76,70 @@
   addEventListener('resize', fit);
   document.fonts?.ready.then(fit);
 
+  // 連接線：.diagram 裡有 data-to 的元素，畫箭頭到指定 id。座標用未縮放的尺寸算，縮放、列印都不用重畫。
+  const NS = 'http://www.w3.org/2000/svg';
+  function drawLinks() {
+    deck.querySelectorAll('.diagram').forEach(box => {
+      box.querySelector(':scope > svg.links')?.remove();
+      const sources = box.querySelectorAll('[data-to]');
+      if (!sources.length) return;
+      const br = box.getBoundingClientRect();
+      const k = br.width / box.offsetWidth || 1;
+      const rect = el => { const r = el.getBoundingClientRect();
+        return { l: (r.left - br.left) / k, t: (r.top - br.top) / k, r: (r.right - br.left) / k, b: (r.bottom - br.top) / k,
+                 cx: (r.left + r.width / 2 - br.left) / k, cy: (r.top + r.height / 2 - br.top) / k }; };
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'links');
+      svg.setAttribute('width', box.offsetWidth); svg.setAttribute('height', box.offsetHeight);
+      const unit = parseFloat(getComputedStyle(box).getPropertyValue('--u')) || 1;
+      const ah = 14 * unit;                                     // 箭頭長度
+      sources.forEach(src => {
+        const style = src.dataset.toStyle || '';
+        src.dataset.to.split(/\s+/).filter(Boolean).forEach(id => {
+          const tgt = box.querySelector('#' + CSS.escape(id));
+          if (!tgt) return;
+          const s = rect(src), t = rect(tgt);
+          let d, end, dir;
+          if (t.l >= s.r - 1 || t.r <= s.l + 1) {                 // 左右：從側邊出、進側邊，中間轉折
+            const right = t.l >= s.r - 1;
+            const x1 = right ? s.r : s.l, x2 = right ? t.l : t.r;
+            const lo = Math.max(s.t, t.t), hi = Math.min(s.b, t.b);
+            const y1 = hi - lo > 20 ? (lo + hi) / 2 : s.cy, y2 = hi - lo > 20 ? y1 : t.cy;
+            const xm = (x1 + x2) / 2;
+            end = [x2, y2]; dir = right ? 1 : -1;
+            const xe = x2 - dir * ah;
+            d = y1 === y2 ? `M${x1},${y1} H${xe}` : `M${x1},${y1} H${xm} V${y2} H${xe}`;
+            dir = right ? 'r' : 'l';
+          } else {                                              // 上下
+            const down = t.t >= s.cy;
+            const y1 = down ? s.b : s.t, y2 = down ? t.t : t.b;
+            const lo = Math.max(s.l, t.l), hi = Math.min(s.r, t.r);
+            const x1 = hi - lo > 20 ? (lo + hi) / 2 : s.cx, x2 = hi - lo > 20 ? x1 : t.cx;
+            const ym = (y1 + y2) / 2;
+            end = [x2, y2]; const sign = down ? 1 : -1;
+            const ye = y2 - sign * ah;
+            d = x1 === x2 ? `M${x1},${y1} V${ye}` : `M${x1},${y1} V${ym} H${x2} V${ye}`;
+            dir = down ? 'd' : 'u';
+          }
+          const path = document.createElementNS(NS, 'path');
+          path.setAttribute('d', d);
+          path.setAttribute('class', style.split(/\s+/).filter(Boolean).map(c => 'is-' + c).join(' '));
+          svg.append(path);
+          const [ex, ey] = end, w = ah * 0.55;
+          const pts = { r: [[ex, ey], [ex - ah, ey - w], [ex - ah, ey + w]], l: [[ex, ey], [ex + ah, ey - w], [ex + ah, ey + w]],
+                        d: [[ex, ey], [ex - w, ey - ah], [ex + w, ey - ah]], u: [[ex, ey], [ex - w, ey + ah], [ex + w, ey + ah]] }[dir];
+          const head = document.createElementNS(NS, 'polygon');
+          head.setAttribute('points', pts.map(p => p.join(',')).join(' '));
+          head.setAttribute('class', 'head' + (style.includes('accent') ? ' is-accent' : ''));
+          svg.append(head);
+        });
+      });
+      box.prepend(svg);
+    });
+  }
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(drawLinks);
+  addEventListener('beforeprint', drawLinks);
+
   document.body.style.overflow = 'hidden';
   fit();
   go((parseInt(location.hash.slice(1), 10) || 1) - 1, { updateHash: false });

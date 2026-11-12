@@ -702,7 +702,481 @@
     <h2 class="display">AI 會做事了，<br>但它還不懂你的公司</h2>
   </section>
 
-  <!-- 36 結尾 -->
+  <!-- ===================== 第四批：舊簡報裡還沒有的頁型 ===================== -->
+
+  <!-- 36 封面＋目錄 -->
+  <section class="slide cover ground-ambient">
+    <img class="cover-logo" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA">
+    <div class="cover-body">
+      <div class="cover-main">
+        <div class="cover-client">ANIMA for 範例建設</div>
+        <h1 class="title" style="font-size: var(--deck-fs-title);">進度報告與每週管理會議<br>As-is → To-be 流程確認</h1>
+      </div>
+      <div class="panel-dark cover-aside">
+        <div class="label">今天談七件事</div>
+        <ol class="toc">
+          <li>五份資料，我們看到什麼</li><li>As-is：三層分工與缺口</li><li>To-be：一句話產出報告</li>
+          <li>AI 產出的報表長怎樣</li><li>未來的管理會議</li><li>週會資料與月報怎麼產出</li><li>今天要確認的事</li>
+        </ol>
+      </div>
+    </div>
+    <div class="cover-meta"><span>2026 年 11 月</span></div>
+  </section>
+
+  <!-- 37 封面＋底圖（底圖用 JPG，左側留文字區） -->
+  <section class="slide cover">
+    <div class="cover-media"><!-- <img src="…/cover-bg.jpg" alt=""> --></div>
+    <img class="cover-logo" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA">
+    <div class="cover-main">
+      <h1 class="display">AI 什麼都懂，<br>就是不懂你公司</h1>
+      <p class="lede">對話、文件與承諾，散在 LINE、Slack 與雲端硬碟裡。沒進系統的那一半工作，ANIMA 來做。</p>
+      <a class="button">觀看產品介紹影片</a>
+    </div>
+    <div class="cover-meta"><span>2026 年 7 月起在台灣上線</span></div>
+  </section>
+
+  <!-- 38 單列流程，含「同時進行」的一組 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">場景 A 流程｜今日投入優先順序</div>
+      <h2 class="title">讀取 → 判斷 → 產出清單 → 主管確認</h2>
+    </header>
+    <div class="slide-body" style="justify-content: center; gap: var(--deck-space-4);">
+      <div class="chain diagram">
+        <div class="node" id="a0" data-to="a1"><span class="label">開始</span><b>每日 08:00</b></div>
+        <div class="node is-ai" id="a1" data-to="a2"><span class="node-num">1</span><b>讀取昨日訊號</b>客戶訊息、內部討論、表格更新</div>
+        <div class="node-group" id="a2" data-to="a3">
+          <span class="label">2　同時判斷</span>
+          <div class="node"><b>客戶訊號</b>預算、期限、決策點</div>
+          <div class="node"><b>內部風險</b>待回覆、卡關項目</div>
+          <div class="node"><b>商機狀態</b>續約日、金額變動</div>
+        </div>
+        <div class="node is-ai" id="a3" data-to="a4"><span class="node-num">3</span><b>產出今日清單</b>依影響與時效排序，附建議行動</div>
+        <div class="node is-human" id="a4" data-to="a5"><span class="node-num is-human">4</span><b>主管確認與分派</b>可調整排序或改派</div>
+        <div class="node is-done" id="a5"><span class="label">完成</span><b>清單、分派紀錄、明日追蹤</b></div>
+      </div>
+      <div class="legend"><span><i style="--c: var(--deck-chip-bg)"></i>ANIMA 執行</span><span><i style="--c: var(--deck-warning-bg)"></i>人員處理</span><span><i style="--c: var(--deck-success-bg)"></i>完成</span></div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 39 泳道流程：As-is，標出缺口 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">AS-IS</div>
+      <h2 class="title">三層分工，週報要靠整合者線下補資料</h2>
+    </header>
+    <div class="slide-body" style="gap: var(--deck-space-3);">
+      <div class="lanes diagram" style="--steps: 4;">
+        <div class="lane" style="--lane: 1;"></div><div class="lane-label" style="--lane: 1;">第 1 層<br>工地現場</div>
+        <div class="lane" style="--lane: 2;"></div><div class="lane-label" style="--lane: 2;">第 2 層<br>報告整合者</div>
+        <div class="lane" style="--lane: 3;"></div><div class="lane-label" style="--lane: 3;">第 3 層<br>主管、高層</div>
+
+        <div class="node" id="b1" data-to="b3" style="--lane: 1; --step: 2;"><b>工地會報</b>排定工項、預定日期</div>
+        <div class="node" id="b2" data-to="b4" style="--lane: 1; --step: 3;"><b>工地 LINE 群組</b>每日出工、完成回報</div>
+        <div class="node is-gap" id="b0" data-to="b3" data-to-style="dashed" style="--lane: 2; --step: 1;"><b>會報、LINE 都沒有</b>結算、驗屋、交屋戶數要另外問人</div>
+        <div class="node is-human" id="b3" data-to="b6" style="--lane: 2; --step: 2;"><b>週報 PPT</b>大日程、結算、驗屋、照片</div>
+        <div class="node is-human" id="b4" data-to="b6" style="--lane: 2; --step: 3;"><b>雙週進度條</b>Excel，手動塗色</div>
+        <div class="node is-human" id="b5" data-to="b6" style="--lane: 2; --step: 4;"><b>標準工期表</b>手 key 日期、備註原因</div>
+        <div class="node" id="b6" style="--lane: 3; --step: 2; --span: 3;"><b>主管、高層開會</b>主任、經理、副總、高層三份一起看</div>
+      </div>
+      <div class="legend"><span><i style="--c: var(--deck-ground-page); box-shadow: inset 0 0 0 2px var(--deck-line-strong)"></i>現場第一手資料</span><span><i style="--c: var(--deck-warning-bg)"></i>整合者人工製作</span><span><i style="--c: var(--deck-error-bg)"></i>缺口：線下補的資料</span></div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 40 泳道流程：To-be，編號步驟 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">TO-BE</div>
+      <h2 class="title">同仁說一句「做這週的報告」，週會資料由 AI 產出</h2>
+    </header>
+    <div class="slide-body" style="gap: var(--deck-space-3);">
+      <div class="lanes diagram" style="--steps: 5;">
+        <div class="lane" style="--lane: 1;"></div><div class="lane-label" style="--lane: 1;">同仁</div>
+        <div class="lane" style="--lane: 2;"></div><div class="lane-label" style="--lane: 2;">ANIMA</div>
+        <div class="lane" style="--lane: 3;"></div><div class="lane-label" style="--lane: 3;">資料來源</div>
+
+        <div class="node is-human" id="c1" data-to="c2" style="--lane: 1; --step: 1;"><span class="node-num is-human">1</span><b>一句話下指令</b>「做這週的報告」</div>
+        <div class="node is-human" id="c5" data-to="c6" style="--lane: 1; --step: 4;"><span class="node-num is-human">5</span><b>補上缺的資料</b>直接回覆或貼表格</div>
+        <div class="node is-human" id="c7" style="--lane: 1; --step: 5;"><span class="node-num is-human">7</span><b>確認後發布</b>推進 LINE，附完整版連結</div>
+        <div class="node is-ai" id="c2" data-to="c3" style="--lane: 2; --step: 2;"><span class="node-num">2</span><b>讀取基本資料</b>會報、LINE、工期表</div>
+        <div class="node is-ai" id="c3" data-to="c5" style="--lane: 2; --step: 3;"><span class="node-num">3</span><b>只問缺的</b>「本週驗屋戶數？」</div>
+        <div class="node is-ai" id="c6" data-to="c7" style="--lane: 2; --step: 4;"><span class="node-num">6</span><b>產出報告草稿</b>KPI、進度、重大議題</div>
+        <div class="node" id="c8" data-to="c2" style="--lane: 3; --step: 2;"><b>工地會報</b>每週自動讀取</div>
+        <div class="node" id="c9" data-to="c2" style="--lane: 3; --step: 3;"><b>工地 LINE 群組</b>每天自動讀取</div>
+        <div class="node is-ghost" id="c10" data-to="c6" data-to-style="dashed" style="--lane: 3; --step: 4;"><b>報告範本</b>導入時定一次</div>
+      </div>
+      <div class="legend"><span><i style="--c: var(--deck-warning-bg)"></i>同仁做的（1、5、7）</span><span><i style="--c: var(--deck-chip-bg)"></i>ANIMA 做的（2、3、6）</span></div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 41 架構矩陣 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">資安與部署</div>
+      <h2 class="title">地端與 hybrid 方案，每一層都有對應元件</h2>
+    </header>
+    <div class="arch diagram slide-body" style="--cols: 2;">
+      <div class="arch-head" style="grid-column: 2; grid-row: 1;">Hybrid<small>去識別化的機器放在企業端</small></div>
+      <div class="arch-head" style="grid-column: 3; grid-row: 1;">完全地端<small>模型與資料都不出網</small></div>
+      <div class="arch-label" style="grid-row: 2;">Orchestration</div>
+      <div class="arch-label" style="grid-row: 3;">Agent</div>
+      <div class="arch-label" style="grid-row: 4;">Context</div>
+      <div class="arch-label" style="grid-row: 5;">Data</div>
+      <div class="arch-cell" style="grid-column: 2; grid-row: 2 / span 2;"><div class="node is-ai" id="h1"><b>推論走雲端</b>去識別化後的請求</div></div>
+      <div class="arch-cell" style="grid-column: 3; grid-row: 2;"><div class="node" id="o1"><b>地端 CPU</b>分派、排序、自動化</div></div>
+      <div class="arch-cell" style="grid-column: 3; grid-row: 3;"><div class="node" id="o2"><b>開放權重模型</b>企業內推論</div><div class="node"><b>GPU 伺服器</b>企業提供</div></div>
+      <div class="arch-cell" style="grid-column: 2 / span 2; grid-row: 4;"><div class="node is-ai" id="ctx" data-to="h1 o2"><b>企業知識層</b>中文 embedding 與 reranking，兩種方案共用</div></div>
+      <div class="arch-cell" style="grid-column: 2; grid-row: 5;"><div class="node" id="h2" data-to="ctx"><b>去識別化閘道</b>每個請求先經過它</div></div>
+      <div class="arch-cell" style="grid-column: 3; grid-row: 5;"><div class="node" id="o3" data-to="ctx"><b>企業機房</b>資料不離開內部網路</div></div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 42 調度中心（長方形核心） -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">產品往哪走</div>
+      <h2 class="title">ANIMA 指揮人、機器和別家的 agents</h2>
+    </header>
+    <div class="hub wide-core diagram slide-body">
+      <div class="hub-side">
+        <div class="label">進來的事</div>
+        <div class="hub-item" id="i1" data-to="core">客戶在 LINE 傳來故障照片</div>
+        <div class="hub-item" id="i2" data-to="core">監控回報異常</div>
+        <div class="hub-item" id="i3" data-to="core">到貨要回覆客戶</div>
+      </div>
+      <div class="hub-core rect panel-dark" id="core" data-to="x1 x2 x3">
+        <div class="card-title">Operations Orchestrator</div>
+        <ol class="steps">
+          <li><div><b>先做哪件</b></div></li>
+          <li><div><b>資料與 SOP 進來</b></div></li>
+          <li><div><b>交給哪個執行者</b></div></li>
+          <li><div><b>對外送出前停下來</b></div></li>
+        </ol>
+      </div>
+      <div class="hub-side">
+        <div class="label">交給誰做</div>
+        <div class="hub-item" id="x1">別家的 agents</div>
+        <div class="hub-item" id="x2">機器與系統</div>
+        <div class="hub-item" id="x3" style="background: var(--deck-warning-bg); color: var(--deck-warning-text);">人：負責人點頭才送出</div>
+      </div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 43 儀表板：數字卡＋漏斗＋警示 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">週會 KPI 首頁｜示意</div>
+      <h2 class="title">主管 30 秒看完，跟上週差多少一眼就知道</h2>
+    </header>
+    <div class="split even slide-body" style="align-items: stretch;">
+      <div class="split-text" style="gap: var(--deck-space-2);">
+        <div class="callout"><span class="callout-title">本週重點</span>複驗完成累計 159 戶（+28）；1 月底目標 250 戶，還差 91 戶。</div>
+        <div class="stats" style="--cols: 2;">
+          <div class="stat"><span class="stat-label">初驗完成</span><span class="stat-value">309</span><span class="stat-delta is-up">上週 264　+45</span></div>
+          <div class="stat"><span class="stat-label">複驗完成</span><span class="stat-value">159</span><span class="stat-delta is-up">上週 131　+28</span></div>
+          <div class="stat"><span class="stat-label">確認書已簽</span><span class="stat-value">91</span><span class="stat-delta is-up">上週 79　+12</span></div>
+          <div class="stat"><span class="stat-label">缺失待補</span><span class="stat-value">272</span><span class="stat-delta is-down">上週 225　+47</span></div>
+        </div>
+      </div>
+      <div class="split-text" style="gap: var(--deck-space-3);">
+        <div class="bars" style="gap: var(--deck-space-2);">
+          <div class="label">驗屋交屋漏斗</div>
+          <div class="bars-row"><div class="bars-label">已售</div><div class="bars-track"><i class="bars-fill" style="--v: 100;"></i></div><div class="bars-value">390</div></div>
+          <div class="bars-row"><div class="bars-label">初驗完成</div><div class="bars-track"><i class="bars-fill" style="--v: 79;"></i></div><div class="bars-value">309</div></div>
+          <div class="bars-row"><div class="bars-label">複驗完成</div><div class="bars-track"><i class="bars-fill" style="--v: 41;"></i></div><div class="bars-value">159</div></div>
+          <div class="bars-row"><div class="bars-label">交屋</div><div class="bars-track"><i class="bars-fill" style="--v: 2;"></i></div><div class="bars-value">9</div></div>
+        </div>
+        <div class="callout is-error"><span class="callout-title">AI 發現，請確認</span>「頂版實績」寫成 113/3/27，LINE 上是 114/3/27。</div>
+      </div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 44 甘特：預定 vs 實際、今天線、差幾天 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">工期｜示意</div>
+      <h2 class="title">六個節點收成一張甘特圖，延誤幾天一眼看到</h2>
+    </header>
+    <div class="slide-body">
+      <div class="timeline has-end" style="--weeks: 10;">
+        <div class="timeline-week">節點</div>
+        <div class="timeline-week">8 月</div><div class="timeline-week">9 月</div><div class="timeline-week">10 月</div><div class="timeline-week">11 月</div><div class="timeline-week">12 月</div>
+        <div class="timeline-week">1 月</div><div class="timeline-week">2 月</div><div class="timeline-week">3 月</div><div class="timeline-week">4 月</div><div class="timeline-week">5 月</div>
+        <div class="timeline-week" style="text-align: right;">差異</div>
+
+        <div class="timeline-label" style="--row: 2;">開工前置</div>
+        <div class="bar is-plan" style="--row: 2; --from: 1; --to: 1;"></div><div class="bar is-actual" style="--row: 2; --from: 1; --to: 2;"></div>
+        <div class="timeline-end is-late" style="--row: 2;">+30</div>
+        <div class="timeline-label" style="--row: 3;">地下結構</div>
+        <div class="bar is-plan" style="--row: 3; --from: 2; --to: 4;"></div><div class="bar is-actual" style="--row: 3; --from: 2; --to: 4;"></div>
+        <div class="timeline-end is-ok" style="--row: 3;">−2</div>
+        <div class="timeline-label" style="--row: 4;">地上結構</div>
+        <div class="bar is-plan" style="--row: 4; --from: 4; --to: 7;"></div><div class="bar is-actual" style="--row: 4; --from: 5; --to: 7;"></div>
+        <div class="timeline-end" style="--row: 4;">+2</div>
+        <div class="timeline-label" style="--row: 5;">外牆、拆架</div>
+        <div class="bar is-plan" style="--row: 5; --from: 7; --to: 8;"></div><div class="bar is-actual" style="--row: 5; --from: 8; --to: 9;"></div>
+        <div class="timeline-end is-late" style="--row: 5;">+49</div>
+        <div class="timeline-label" style="--row: 6;">使照</div>
+        <div class="bar is-plan" style="--row: 6; --from: 8; --to: 9;"></div><div class="bar is-actual" style="--row: 6; --from: 9; --to: 10;"></div>
+        <div class="timeline-end is-late" style="--row: 6;">+48</div>
+        <div class="timeline-today" data-label="今天" style="--at: 5.5;"></div>
+      </div>
+      <div class="legend"><span><i style="--c: transparent; box-shadow: inset 0 0 0 3px var(--deck-chart-other)"></i>預定</span><span><i></i>實際（含預估）</span><span style="color: var(--deck-error-text);">紅字＝延誤天數</span></div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 45 表格＋表格內長條＋狀態說明條 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">推算準不準｜示意</div>
+      <h2 class="title">用去年 12 月的資料推算，再拿實際回頭對</h2>
+    </header>
+    <div class="split slide-body" style="grid-template-columns: 8fr 4fr; align-items: start;">
+      <table class="table">
+        <thead><tr><th>節點</th><th>推算</th><th>實際</th><th style="width: 40%;">差異</th><th class="num">天</th></tr></thead>
+        <tbody>
+          <tr><td>14F 頂版</td><td>1/4</td><td>1/4</td><td><div class="bars-track"><i class="bars-fill" style="--v: 1;"></i></div></td><td class="num">0</td></tr>
+          <tr><td>16F 頂版</td><td>2/16</td><td>2/17</td><td><div class="bars-track"><i class="bars-fill" style="--v: 2;"></i></div></td><td class="num">+1</td></tr>
+          <tr><td>18F 頂版</td><td>3/23</td><td>3/27</td><td><div class="bars-track"><i class="bars-fill" style="--v: 8;"></i></div></td><td class="num">+4</td></tr>
+          <tr><td>拆架</td><td>8/5</td><td>9/25</td><td><div class="bars-track"><i class="bars-fill" style="--v: 100; background: var(--deck-error-mark);"></i></div></td><td class="num" style="color: var(--deck-error-text);">+51</td></tr>
+          <tr><td>使照取得</td><td>11/3</td><td>12/23</td><td><div class="bars-track"><i class="bars-fill" style="--v: 98; background: var(--deck-error-mark);"></i></div></td><td class="num" style="color: var(--deck-error-text);">+50</td></tr>
+        </tbody>
+      </table>
+      <div class="callouts">
+        <div class="callout is-success"><span class="label">結構段</span><span class="callout-title">最多差 4 天</span>每層週期穩定，照 LINE 的澆置日推算就很準。</div>
+        <div class="callout is-error"><span class="label">後段</span><span class="callout-title">差了 50 天</span>延誤集中在拆架。</div>
+        <div class="callout"><span class="callout-title">所以月報要做的事</span>提早把「包版」列成要追的項目。</div>
+      </div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 46 直條圖 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">地上結構每層天數｜示意</div>
+      <h2 class="title">標準 15 天一層，延誤集中在三個樓層</h2>
+    </header>
+    <div class="slide-body" style="justify-content: center; gap: 0;">
+      <div class="columns" style="--h: calc(460px * var(--u));">
+        <div class="col is-other"><div class="col-bar" data-v="18" style="--v: 50;"></div></div>
+        <div class="col is-other"><div class="col-bar" data-v="16" style="--v: 44;"></div></div>
+        <div class="col"><div class="col-bar" data-v="34" style="--v: 94;"></div></div>
+        <div class="col is-other"><div class="col-bar" data-v="17" style="--v: 47;"></div></div>
+        <div class="col is-other"><div class="col-bar" data-v="15" style="--v: 42;"></div></div>
+        <div class="col"><div class="col-bar" data-v="27" style="--v: 75;"></div></div>
+        <div class="col is-other"><div class="col-bar" data-v="16" style="--v: 44;"></div></div>
+        <div class="col is-other"><div class="col-bar" data-v="15" style="--v: 42;"></div></div>
+        <div class="col"><div class="col-bar" data-v="25" style="--v: 69;"></div></div>
+        <div class="col is-other"><div class="col-bar" data-v="16" style="--v: 44;"></div></div>
+      </div>
+      <div class="columns-axis"><span>2F</span><span>3F</span><span>4F</span><span>5F</span><span>6F</span><span>7F</span><span>8F</span><span>9F</span><span>10F</span><span>11F</span></div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 47 對話示意＋做法 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">AI 怎麼問</div>
+      <h2 class="title">只問缺的、附上次的值，沒變就回「照舊」</h2>
+    </header>
+    <div class="split even slide-body" style="align-items: stretch;">
+      <div class="chat">
+        <div class="msg"><span class="msg-name">ANIMA</span>驗屋統計：LINE 上沒有對保、核貸、確認書、切交。上週是 259／184／79／7，這週是多少？<div class="chips"><span class="chip">照舊</span><span class="chip">輸入新數字</span></div></div>
+        <div class="msg is-me"><span class="msg-name">工地主任</span>確認書 91，其他照舊</div>
+        <div class="msg"><span class="msg-name">ANIMA</span>已更新。協調事項「隔壁空地 1/30 淨空」有變嗎？<div class="chips"><span class="chip">照舊</span><span class="chip">有變</span></div></div>
+      </div>
+      <ol class="steps" style="justify-content: center;">
+        <li><div><b>只問缺的</b><span>LINE、會議抓得到的不問；同類合成一題</span></div></li>
+        <li><div><b>附上次的值</b><span>沒變就回「照舊」，有矛盾直接點出來</span></div></li>
+        <li><div><b>沒回也照樣出草稿</b><span>該項標「待補」，下週再問一次</span></div></li>
+      </ol>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 48 資料來源盤點 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">資料盤點</div>
+      <h2 class="title">五份資料：兩份第一手、三份整合報告</h2>
+    </header>
+    <div class="grid cols-2 slide-body" style="align-items: start;">
+      <div class="card">
+        <div class="card-head"><div class="card-title">基本資料來源</div><span class="chip">AI 直接讀取</span></div>
+        <div class="entries">
+          <div class="entry"><span class="entry-title">工地會報</span><span class="entry-meta">PDF・52 頁</span><p class="entry-text">每週排定工項、預定日期與待辦事項。</p><p class="entry-note">「預定」的來源，日期寫法不統一。</p></div>
+          <div class="entry"><span class="entry-title">工地 LINE 群組</span><span class="entry-meta">1,211 則</span><p class="entry-text">每天出工、人數、完成回報。</p><p class="entry-note">「實際做到哪」的來源，最完整的第一手資料。</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">整合者做的報告</div><span class="chip">改由 AI 產出</span></div>
+        <div class="entries">
+          <div class="entry"><span class="entry-title">週報</span><span class="entry-meta">PPT・每週</span><p class="entry-note">金額、驗屋等不在會報與 LINE 裡，要另外問。</p></div>
+          <div class="entry"><span class="entry-title">雙週進度表</span><span class="entry-meta">Excel・雙週</span><p class="entry-note">進度條手動塗色，名稱與期間對不上。</p></div>
+          <div class="entry"><span class="entry-title">標準工期表單</span><span class="entry-meta">Excel・不定期</span><p class="entry-note">一套公式推算，前段一動後段就要人工修。</p></div>
+        </div>
+      </div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 49 發現：原文摘錄 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">我們的發現</div>
+      <h2 class="title">會報給預定、LINE 給實際，缺的只有幾項</h2>
+    </header>
+    <div class="slide-body" style="gap: var(--deck-space-3);">
+      <div class="grid cols-3" style="flex: 1;">
+        <div class="card">
+          <span class="card-num">發現 1</span><h3 class="card-title">預定日就在會報裡</h3>
+          <div class="excerpt"><cite>工地會報 2025/1/15</cite>「17FL 預計 <mark>2/17</mark> 澆置」</div>
+          <div class="excerpt-arrow">↓ 一致</div>
+          <div class="excerpt"><cite>標準工期表</cite>十七樓底版完成：預定 <mark>2025/2/17</mark></div>
+        </div>
+        <div class="card">
+          <span class="card-num">發現 2</span><h3 class="card-title">實際做到哪，LINE 看得出來</h3>
+          <div class="excerpt"><cite>LINE 出工回報 2025/1/21</cite>「壓送 17 人，<mark>16FL 混凝土澆置</mark>」</div>
+          <div class="excerpt-arrow">↓ 對上</div>
+          <div class="excerpt"><cite>標準工期表</cite>十六樓底版完成：實際 <mark>2025/1/21</mark></div>
+        </div>
+        <div class="card">
+          <span class="card-num">發現 3</span><h3 class="card-title">這幾項要另外問人</h3>
+          <ul class="rows">
+            <li><span>結算、發包金額</span><span class="tag is-warning">要問人</span></li>
+            <li><span>驗屋、對保、交屋戶數</span><span class="tag is-warning">要問人</span></li>
+            <li><span>協調事項</span><span class="tag is-warning">要問人</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">To-be 的做法：會報＋LINE 當基本資料自動抓，抓不到的由 AI 開口問同仁。</div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 50 三欄清單（每項帶來源標籤） -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">三份報告</div>
+      <h2 class="title">同一套資料，各取所需</h2>
+    </header>
+    <div class="grid cols-3 slide-body" style="align-items: start;">
+      <div class="card">
+        <h3 class="card-title">KPI 表＋重大議題</h3><span class="label">每週管理會議・取代週報 PPT</span>
+        <ul class="rows">
+          <li><span>本週施工重點與出工人數</span><span class="chip">LINE</span></li>
+          <li><span>大日程：計畫／變更／實績</span><span class="chip">工期表</span></li>
+          <li><span>結算、發包金額</span><span class="tag is-warning">問同仁</span></li>
+          <li><span>驗屋、交屋戶數</span><span class="tag is-warning">問同仁</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="card-title">進度表</h3><span class="label">每週管理會議・取代雙週進度條</span>
+        <ul class="rows">
+          <li><span>會報排定的工項與預定日</span><span class="chip">會報</span></li>
+          <li><span>實際做到哪、有沒有完成</span><span class="chip">LINE</span></li>
+          <li><span>落後燈號與落後天數</span><span class="chip">AI 計算</span></li>
+          <li><span>沒有回報的工項</span><span class="tag is-warning">問主任</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="card-title">月報</h3><span class="label">每月給高層・取代工期表摘要</span>
+        <ul class="rows">
+          <li><span>里程碑：預定、實際、差異</span><span class="chip">LINE＋基準</span></li>
+          <li><span>後段節點與交屋日推算</span><span class="chip">AI 計算</span></li>
+          <li><span>延誤原因與天數彙總</span><span class="chip">會報＋LINE</span></li>
+          <li><span>工期變更核定紀錄</span><span class="tag is-warning">主管核定</span></li>
+        </ul>
+      </div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 51 下一步：直向步驟＋狀態表 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">下一步</div>
+      <h2 class="title">清單定好，做 PPT 這件事就能消失</h2>
+    </header>
+    <div class="split even slide-body" style="align-items: start;">
+      <ol class="steps">
+        <li class="is-current"><div><b>今天：定好前、中、後期的節點與 KPI</b><span>上一頁的清單</span></div></li>
+        <li><div><b>依清單做成固定的進度表、KPI 表範本</b></div></li>
+        <li><div><b>接上 LINE 群組與工地會報</b></div></li>
+        <li><div><b>用真實一週試做週會資料</b><span>與人工版並行比對</span></div></li>
+        <li><div><b>停做週報 PPT 與雙週進度條</b></div></li>
+      </ol>
+      <table class="table">
+        <thead><tr><th>清單項目</th><th>資料來源</th><th>狀態</th></tr></thead>
+        <tbody>
+          <tr><td>時程節點</td><td>工期表＋LINE</td><td><span class="tag is-success">已提供</span></td></tr>
+          <tr><td>延誤原因</td><td>會報＋LINE</td><td><span class="tag is-success">已提供</span></td></tr>
+          <tr><td>發包、執行金額</td><td>預算書</td><td><span class="tag is-warning">串接或人給</span></td></tr>
+          <tr><td>開工文件</td><td>目前不在 LINE</td><td><span class="tag is-error">要問誰</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 52 直向時間軸＋人物 -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">團隊與公司現況</div>
+      <h2 class="title">有出場經驗的創辦人，加上磨合過的團隊</h2>
+    </header>
+    <div class="split even slide-body" style="align-items: start;">
+      <div class="split-text">
+        <div class="person"><div class="person-name" style="font-size: var(--deck-fs-heading);">Wayne Chien</div><div class="person-role">創辦人</div><p class="person-text">3 次新創 IPO｜企業財務｜成長策略｜前 EY 併購顧問</p></div>
+        <div class="facts">
+          <div class="fact"><div class="fact-value">10 人</div><div class="fact-label">團隊，AI 與串接全部自建</div></div>
+          <div class="fact"><div class="fact-value">100K+</div><div class="fact-label">維運過的 DAU</div></div>
+        </div>
+      </div>
+      <ol class="milestones vertical">
+        <li class="is-done"><div class="milestone-when">2025.06</div><div class="milestone-title">ANIWEAVE 成立</div></li>
+        <li class="is-done"><div class="milestone-when">2025.11</div><div class="milestone-title">WEAVE Space Touring 上線</div><p class="milestone-text">與半導體大廠簽有年約</p></li>
+        <li class="is-done"><div class="milestone-when">2026.03</div><div class="milestone-title">WEAVE Space Design 公測</div></li>
+        <li class="is-done"><div class="milestone-when">2026.07</div><div class="milestone-title">ANIMA 上線</div></li>
+        <li class="is-now"><div class="milestone-when">2026.08</div><div class="milestone-title">第一個付費客戶</div></li>
+      </ol>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 53 方案 5 欄（compact） -->
+  <section class="slide">
+    <header class="slide-head">
+      <div class="eyebrow">商業模式</div>
+      <h2 class="title">訂閱制，買的是用量等級</h2>
+      <p class="lede">以 10 人團隊用量為參考，實際方案依用量訂定。新台幣，未稅。</p>
+    </header>
+    <div class="options compact slide-body" style="--cols: 5; align-items: start;">
+      <div class="option"><div class="option-name">Lite</div><div class="option-price">3,888<small>／月</small></div><p class="option-text">一個群組試用</p></div>
+      <div class="option"><div class="option-name">Starter</div><div class="option-price">9,888<small>／月</small></div><p class="option-text">一個部門</p></div>
+      <div class="option"><div class="option-name">Growth</div><div class="option-price">19,888<small>／月</small></div><p class="option-text">跨部門協作</p></div>
+      <div class="option"><div class="option-name">Scale</div><div class="option-price">29,888<small>／月</small></div><p class="option-text">全公司</p></div>
+      <div class="option is-featured"><div class="option-name">Enterprise</div><div class="option-price">另議</div><p class="option-text">PoC 起步，可選 hybrid 或完全地端</p></div>
+    </div>
+    <footer class="slide-foot"><img class="logo-on-light" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span data-page></span></footer>
+  </section>
+
+  <!-- 54 logo 結尾頁（置中，深色底） -->
+  <section class="slide closing center ground-dark">
+    <img class="closing-logo" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary_dark.svg" alt="ANIMA">
+    <p class="lede">aniweave.ai</p>
+  </section>
+
+  <!-- 55 結尾 -->
   <section class="slide closing ground-ambient">
     <h2 class="display">先跑一條流程，<br>再擴到整間公司</h2>
     <p class="lede">兩週內完成流程訪談，第三週開始串接。</p>

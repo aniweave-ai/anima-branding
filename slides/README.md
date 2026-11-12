@@ -65,7 +65,7 @@
 | `--deck-ground-brand` | Sand 50 | ANIMA 說話：方案、標語、CTA |
 | `--deck-ground-sky` | Sky 50 | 冷調品牌頁 |
 | `--deck-ground-ambient` | 白→Sky 50→Sand 50 漸層 | 封面以外需要氛圍的頁 |
-| `--deck-ground-dark` | Depth 900 | **只用在**章節頁、主張頁 |
+| `--deck-ground-dark` | Depth 900 | **只用在**章節頁、主張頁、logo 結尾頁 |
 | `--deck-ground-dark-warm` | Sand 900 | 同上，需要溫度時 |
 
 - Neutral 和 Brand 兩種底不要連續相鄰，中間隔一頁白底。
@@ -160,7 +160,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## slides.css 版型
 
-`examples/layouts.html` 是 36 種版型的示範，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
+`examples/layouts.html` 是 55 頁版型示範；三份舊簡報每一頁要用哪個版型，見 `examples/coverage.md`，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
 
 | class | 版型 | 用在 |
 |---|---|---|
@@ -199,6 +199,37 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.features` | 功能格 | icon＋標題＋一句話，6–8 格 |
 | `.split-3` | 合作分工 | 我方／一起做／夥伴 |
 | `.fullbleed` | 全版圖片 | 圖片用 JPG，文字壓在下方漸層 |
+| `.cover-body` + `.cover-aside` + `.toc` | 封面＋目錄 | 右邊深色面板列今天的議程 |
+| `.cover-media` | 封面＋底圖 | 底圖用 JPG，左側留文字區 |
+| `.slide.center` | 置中封面、logo 結尾頁 | logo 結尾頁可用深色底 |
+| `.chain` | 單列流程 | 節點橫排，`.node-group` 是同時進行的一組 |
+| `.lanes` + `.lane` | 泳道流程 | As-is／To-be；節點用 `--lane`、`--step`、`--span` 定位 |
+| `.arch` | 架構矩陣 | 層別 × 方案，格子用 `grid-column`／`grid-row` 定位 |
+| `.hub.wide-core` + `.hub-core.rect` | 調度中心 | 中間是長方形面板，放分工步驟 |
+| `.stats` + `.stat` | 數字卡 | 儀表板小 KPI，`.stat-delta.is-up／is-down` 標和上次比 |
+| `.timeline.has-end` | 甘特：預定 vs 實際 | `.bar.is-plan`＋`.bar.is-actual` 同一 `--row`；`.timeline-today` 今天線；`.timeline-end` 差幾天 |
+| `.columns` + `.col` | 直條圖 | `--v` 是高度 0–100，`data-v` 是顯示的數字 |
+| `.callout.is-success／is-warning／is-error` | 狀態說明條 | 結論是好消息、要注意、有風險 |
+| `.chat` + `.msg` | 對話示意 | 群組裡的訊息，`.is-me` 是同仁 |
+| `.entries` + `.entry` | 資料來源盤點 | 標題、規格、說明、觀察 |
+| `.excerpt` + `<mark>` | 原文摘錄 | 出處一行＋原文，重點用 `<mark>` |
+| `.rows` | 帶標籤清單 | 左邊項目、右邊來源或狀態 |
+| `.steps` | 直向步驟 | 下一步、做法；`.is-current` 標目前這步 |
+| `.milestones.vertical` | 直向時間軸 | 歷程、募資紀錄 |
+| `.options.compact` | 方案 4–5 欄 | 價格縮成 heading |
+
+### 連接線
+
+流程圖、架構圖的箭頭不用自己畫。外層加 `.diagram`，每個節點給 `id`，起點加 `data-to="目標id"`，`slides.js` 會自動畫直角箭頭；`data-to-style="dashed"` 畫虛線、`"accent"` 畫藍線。
+
+```html
+<div class="lanes diagram" style="--steps: 4;">
+  <div class="node is-human" id="a" data-to="b" style="--lane: 1; --step: 1;"><b>一句話下指令</b></div>
+  <div class="node is-ai" id="b" style="--lane: 2; --step: 2;"><b>讀取資料</b></div>
+</div>
+```
+
+節點顏色：`.node` 一般、`.is-ai` ANIMA 做的、`.is-human` 人做的、`.is-done` 完成、`.is-gap` 缺口（紅虛線）、`.is-ghost` 之後才有的（灰虛線）。
 
 - 有深色面板的版型（`.case`、`.ratio`、`.stages`、`.compare`、`.options`、`.layers`、`.hub`）一頁只放一塊。
 - 示範頁裡的數字都是示意，寫進真的簡報前要換成有出處的數字。
