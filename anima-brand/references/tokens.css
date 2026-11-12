@@ -1,5 +1,5 @@
-/* ANIMA Design Tokens — v1.3
-   六組色階（50–900）與語意色。不引入色階以外的顏色；深色模式只換用同一組色階裡不同的階數。 */
+/* ANIMA Design Tokens — v1.4（草稿）
+   六組色階（50–900）、三組狀態色階與語意色；簡報專用 token 在檔案後段（--deck-*）。不引入色階以外的顏色；深色模式只換用同一組色階裡不同的階數。 */
 
 :root {
   /* Primary — 天空藍 Anima Sky（標誌主色） */
@@ -76,6 +76,42 @@
   --sand-800: #574736;
   --sand-900: #312A23;
 
+  /* 狀態色 — Success／Warning／Error（只表達狀態：成功、提醒、錯誤；不當裝飾色）
+     Error 沿用 Web DS（OKLCH 色相 27，各階明度跟 Current 同）；Success（色相 158，彩度 ×0.7）、Warning（色相 73）用同一方法推出。
+     淺底文字用 700、淺底用 50；點、圖示、線條用 600。 */
+  --success-50:  #EEF6F1;
+  --success-100: #CEE7D7;
+  --success-200: #B2D9C1;
+  --success-300: #88C4A1;
+  --success-400: #5DAF82;
+  --success-500: #339B68;
+  --success-600: #1E8857;
+  --success-700: #116D44; /* 對 success-50：5.79:1 */
+  --success-800: #0B5434;
+  --success-900: #063D25;
+
+  --warning-50:  #FAF2E9;
+  --warning-100: #F3DCBD;
+  --warning-200: #EBC898;
+  --warning-300: #DFA95B;
+  --warning-400: #CF8C05;
+  --warning-500: #B17805;
+  --warning-600: #9A6702;
+  --warning-700: #7C5200; /* 對 warning-50：6.18:1 */
+  --warning-800: #603F01;
+  --warning-900: #472D01;
+
+  --error-50:  #FEF0EE;
+  --error-100: #FED4CF;
+  --error-200: #FBBCB3;
+  --error-300: #F5978C;
+  --error-400: #EA7267;
+  --error-500: #DA5047;
+  --error-600: #C33E38;
+  --error-700: #9F2E29; /* 對 error-50：6.53:1 */
+  --error-800: #7C221E;
+  --error-900: #5C1714;
+
   /* 漸層 */
   --bg-cta:  linear-gradient(to bottom right, var(--sky-100) 0%, var(--sky-50) 40%, var(--sand-50) 100%); /* CTA 字卡、片尾 */
   --bg-work: linear-gradient(180deg, var(--sand-100) 0%, var(--sand-100) 35%, var(--sand-50) 100%);         /* 「ANIMA 處理中」畫面；主句用 Depth 900 */
@@ -131,6 +167,139 @@
     --button-confirm-bg-disabled: var(--mist-700);
     --button-confirm-text-disabled: var(--mist-500);
   }
+}
+
+/* ============================================================
+   簡報 Deck — v1.4 新增（--deck-*）
+   - 以 1920×1080 畫布為準。尺寸類 token 都乘上 --deck-scale：1920 畫布設 1，1440×810 畫布設 0.75。
+   - 只指向色階，不放進上面的深色模式區塊；簡報的深色頁直接用 --deck-ground-dark 等 token，不靠 prefers-color-scheme。
+   - 字重以「看起來的粗細」為準。Nunito Sans 同數值看起來比思源黑體輕一階，拉丁字的換算由使用端處理。
+   ============================================================ */
+:root {
+  --deck-scale: 1;
+  --deck-width: 1920px;
+  --deck-height: 1080px;
+  --deck-font: "Nunito Sans", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+
+  /* 字級表（8 階；投影最小 24px） */
+  --deck-fs-display:    calc(120px * var(--deck-scale)); /* 封面主標、主張頁大字 */
+  --deck-fs-number:     calc(96px  * var(--deck-scale)); /* KPI 大數字 */
+  --deck-fs-title:      calc(64px  * var(--deck-scale)); /* 每頁標題 */
+  --deck-fs-heading:    calc(44px  * var(--deck-scale)); /* 區塊標題、卡片大標 */
+  --deck-fs-subheading: calc(36px  * var(--deck-scale)); /* 副標、卡片標題 */
+  --deck-fs-body-lg:    calc(30px  * var(--deck-scale)); /* 重點內文、引言 */
+  --deck-fs-body:       calc(26px  * var(--deck-scale)); /* 一般內文 */
+  --deck-fs-caption:    calc(24px  * var(--deck-scale)); /* 註解、標籤、chip、圖表軸、資料來源；最小字級 */
+
+  --deck-lh-tight: 1.15; /* display、number */
+  --deck-lh-title: 1.3;  /* title、heading、subheading */
+  --deck-lh-body:  1.6;  /* 內文、caption（中文需要較寬行高） */
+
+  /* 字重（4 階，以看起來的粗細為準） */
+  --deck-fw-regular:  400; /* 內文 */
+  --deck-fw-medium:   500; /* 標籤、chip、表頭 */
+  --deck-fw-semibold: 600; /* 卡片標題、標語 */
+  --deck-fw-bold:     700; /* 頁標題、display、數字 */
+
+  /* 底色（一頁一種；深底只用在章節頁、主張頁、深色面板） */
+  --deck-ground-page:      #FFFFFF;
+  --deck-ground-neutral:   var(--depth-50);  /* 資料、脈絡頁 */
+  --deck-ground-brand:     var(--sand-50);   /* ANIMA 說話：方案、標語、CTA */
+  --deck-ground-sky:       var(--sky-50);
+  --deck-ground-dark:      var(--depth-900); /* 章節頁、主張頁 */
+  --deck-ground-dark-warm: var(--sand-900);
+  --deck-ground-ambient:   linear-gradient(135deg, #FFFFFF 0%, var(--sky-50) 55%, var(--sand-50) 100%); /* 頁底氛圍漸層 */
+
+  /* 文字 */
+  --deck-text:                var(--depth-700); /* 白底 9.99:1 */
+  --deck-text-strong:         var(--depth-900); /* 標題可選 */
+  --deck-text-muted:          var(--depth-600); /* 白底 6.10:1、Depth 50 底 5.73:1 */
+  --deck-text-accent:         var(--current-500); /* 重點數字、強調字；白底 5.89:1 */
+  --deck-text-on-dark:        #FFFFFF;
+  --deck-text-on-dark-muted:  var(--depth-200); /* Depth 900 底 11.78:1 */
+  --deck-text-on-dark-accent: var(--sky-300);   /* Depth 900 底 10.40:1 */
+  --deck-brand:               var(--sky-500);   /* 識別點：logo、小圓點；不當文字色 */
+
+  /* 線條 */
+  --deck-line:        var(--depth-100);
+  --deck-line-strong: var(--depth-200);
+  --deck-line-on-dark: color-mix(in srgb, #FFFFFF 16%, transparent);
+
+  /* 圓角 */
+  --deck-radius-sm:   calc(6px  * var(--deck-scale)); /* 按鈕 */
+  --deck-radius-md:   calc(8px  * var(--deck-scale)); /* 標籤、說明條、icon 底 */
+  --deck-radius-lg:   calc(12px * var(--deck-scale)); /* 卡片 */
+  --deck-radius-xl:   calc(16px * var(--deck-scale)); /* 深色面板、截圖框 */
+  --deck-radius-pill: 999px;                          /* chip */
+
+  /* 間距 */
+  --deck-pad-x:      calc(128px * var(--deck-scale)); /* 左右安全邊界 */
+  --deck-pad-top:    calc(112px * var(--deck-scale));
+  --deck-pad-bottom: calc(96px  * var(--deck-scale));
+  --deck-space-1: calc(8px  * var(--deck-scale));
+  --deck-space-2: calc(16px * var(--deck-scale));
+  --deck-space-3: calc(24px * var(--deck-scale));
+  --deck-space-4: calc(32px * var(--deck-scale));
+  --deck-space-5: calc(48px * var(--deck-scale));
+  --deck-space-6: calc(64px * var(--deck-scale));
+  --deck-space-7: calc(96px * var(--deck-scale));
+
+  /* 卡片：不用陰影，靠底色分層 */
+  --deck-card-bg:     var(--depth-50); /* 白底頁上 */
+  --deck-card-bg-alt: #FFFFFF;         /* Depth 50／Sand 50 底頁上 */
+  --deck-card-line:   none;
+  --deck-card-radius: var(--deck-radius-lg);
+  --deck-card-pad:    calc(40px * var(--deck-scale));
+  --deck-card-shadow: none;
+
+  /* Chip（分類、關鍵字） */
+  --deck-chip-bg:     var(--sky-50);
+  --deck-chip-text:   var(--sky-800); /* Sky 50 底 5.63:1 */
+  --deck-chip-radius: var(--deck-radius-pill);
+  --deck-chip-pad-y:  calc(8px  * var(--deck-scale));
+  --deck-chip-pad-x:  calc(20px * var(--deck-scale));
+
+  /* 標籤（狀態：自動／人工、完成／進行中／風險） */
+  --deck-tag-radius: var(--deck-radius-md);
+  --deck-tag-pad-y:  calc(6px  * var(--deck-scale));
+  --deck-tag-pad-x:  calc(14px * var(--deck-scale));
+  --deck-success-text: var(--success-700);
+  --deck-success-bg:   var(--success-50);
+  --deck-success-mark: var(--success-600);
+  --deck-warning-text: var(--warning-700);
+  --deck-warning-bg:   var(--warning-50);
+  --deck-warning-mark: var(--warning-600);
+  --deck-error-text:   var(--error-700);
+  --deck-error-bg:     var(--error-50);
+  --deck-error-mark:   var(--error-600);
+
+  /* 按鈕（封面影片按鈕、結尾 CTA） */
+  --deck-button-bg:     var(--current-500);
+  --deck-button-text:   #FFFFFF; /* 5.89:1 */
+  --deck-button-radius: var(--deck-radius-sm);
+
+  /* 說明條（頁面下方的一句補充說明；不加裝飾色條） */
+  --deck-callout-bg:     var(--sky-50);
+  --deck-callout-text:   var(--depth-700);
+  --deck-callout-radius: var(--deck-radius-md);
+  --deck-callout-pad:    calc(24px * var(--deck-scale)) calc(32px * var(--deck-scale));
+
+  /* 深色面板（淺色頁裡的一塊深底，例如 ANIMA 方案、重點結論） */
+  --deck-panel-dark-bg:     var(--depth-900);
+  --deck-panel-dark-glow:   radial-gradient(60% 80% at 85% 0%, color-mix(in srgb, var(--sky-500) 24%, transparent) 0%, transparent 70%);
+  --deck-panel-dark-radius: var(--deck-radius-xl);
+  --deck-panel-dark-pad:    calc(56px * var(--deck-scale));
+
+  /* 圖表系列色（依序取用；6 色兩兩色差 ≥ 14（OKLab ×100）；超過 6 組把次要的併成「其他」） */
+  --deck-chart-1: var(--current-500);
+  --deck-chart-2: var(--sky-500);
+  --deck-chart-3: var(--ripple-700);
+  --deck-chart-4: var(--sky-800);
+  --deck-chart-5: var(--ripple-300);
+  --deck-chart-6: var(--depth-800);
+  --deck-chart-other: var(--depth-200); /* 「其他」、對照組、基準線 */
+  --deck-chart-grid:  var(--depth-100);
+  --deck-chart-axis:  var(--depth-600);
 }
 
 /*
