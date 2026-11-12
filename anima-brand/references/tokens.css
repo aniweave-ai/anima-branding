@@ -290,6 +290,17 @@
   --deck-panel-dark-radius: var(--deck-radius-lg);
   --deck-panel-dark-pad:    calc(56px * var(--deck-canvas-scale));
 
+  /* 液態玻璃（照 Web DS 原值，不自創其他模糊、透明度、光邊）
+     玻璃框：包住產品畫面，只放在流動玻璃底圖或有色底上。展示台：模糊的流動玻璃底圖，示意畫面浮在上面。 */
+  --deck-glass-bg:          color-mix(in srgb, #FFFFFF 32%, transparent);
+  --deck-glass-ring:        color-mix(in srgb, #FFFFFF 70%, transparent);
+  --deck-glass-backdrop:    blur(20px) saturate(140%);
+  --deck-glass-pad:         10px;
+  --deck-glass-shadow:      0 32px 80px -32px color-mix(in srgb, var(--depth-800) 28%, transparent);
+  --deck-glass-shadow-soft: 0 24px 60px -24px color-mix(in srgb, var(--depth-800) 18%, transparent);
+  --deck-stage-blur:        10px;
+  --deck-stage-radius:      var(--deck-radius-xl);
+
   /* 圖表系列色（依序取用；6 色兩兩色差 ≥ 14（OKLab ×100）；超過 6 組把次要的併成「其他」） */
   --deck-chart-1: var(--current-500);
   --deck-chart-2: var(--sky-500);

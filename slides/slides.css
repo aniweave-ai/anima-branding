@@ -1,6 +1,7 @@
 /* Hallmark · built: the project · redesign: polish · scope: slides (1920×1080 paged deck, not a scrolling page) · theme: brand (ANIMA tokens.css v1.4) · genre: modern-minimal */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V3 · weakest: V, the demo deck shares one head-then-body skeleton across 55 pages; that sameness is the point of a locked deck system */
 /* Hallmark · waive 29 · the dark panel glow is the brand's own component (Depth 900 with a Sky radial), specified in tokens.css as --deck-panel-dark-glow */
+/* Hallmark · waive 47c · the frosted frame and the blurred stage are the brand's liquid-glass recipe from ANIMA Web DS, copied value for value */
 /* Hallmark · dismissed 58 · a slide is read while someone presents it; the word budget per slide is set in slides/README.md (split the slide, never shrink the type) */
 /* Hallmark · dismissed 44b · no hero and no scroll: every slide is a fixed 1920×1080 canvas scaled to fit */
 /* Hallmark · dismissed 44d · the canvas is fixed at 1920×1080 and scaled as a whole; there is no container to cap */
@@ -709,7 +710,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 左側文字區壓一層頁面底色，文字不跟圖上的元素打架；圖的主體放右半邊 */
 .cover-media::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, var(--deck-ground-page) 0%, color-mix(in srgb, var(--deck-ground-page) 92%, transparent) 38%, transparent 62%); }
-.cover-media ~ .cover-main { max-width: calc(760px * var(--u)); }
+.cover-media ~ .cover-main { max-width: calc(900px * var(--u)); }
+.cover-media ~ .cover-main .lede { max-width: calc(760px * var(--u)); }
 .slide.cover > :not(.cover-media) { position: relative; z-index: 1; }
 .slide.center { align-items: center; text-align: center; justify-content: center; }
 .slide.center .cover-logo, .slide.center .closing-logo { align-self: center; }
@@ -736,6 +738,62 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .options.compact .option-price small { font-size: var(--deck-fs-caption); }
 
 
+/* ============================================================
+   液態玻璃（照 ANIMA Web DS 原值）
+   三種用法，不要混出第四種：
+   1. 流動玻璃底圖 .ground-flow：封面、章節頁、主張頁、引言、結尾。選玻璃跟文字錯開的那張。
+   2. 玻璃框 .glass：包住產品畫面，只放在流動玻璃底圖或有色底上（白底上只剩一條淡邊）。
+   3. 展示台 .stage：模糊的流動玻璃底圖，流程、對話、調度示意浮在上面。
+   底圖是 JPG，印 PDF 不會拆圖。
+   ============================================================ */
+.flow-01 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-01-wide-wave-21x9.jpg"); --flow-pos: 50% 100%; } /* 玻璃在下方，文字放上方 */
+.flow-02 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-02-closeup-edge-16x9.jpg"); --flow-pos: 100% 100%; } /* 玻璃在右下，文字放左上 */
+.flow-03 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-03-topdown-ring-1x1.jpg"); --flow-pos: 50% 50%; } /* 中間一圈，內容置中 */
+.flow-04 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-04-closeup-crest-21x9.jpg"); --flow-pos: 50% 100%; } /* 玻璃在下方，文字放上方 */
+.flow-05 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-05-closeup-fold-4x3.jpg"); --flow-pos: 100% 50%; } /* 玻璃在右側，文字放左邊 */
+.flow-06 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-06-closeup-droplets-16x9.jpg"); --flow-pos: 100% 50%; } /* 玻璃在右側，文字放左邊 */
+.flow-07 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-07-closeup-layered-16x9.jpg"); --flow-pos: 100% 50%; } /* 玻璃在右側，文字放左邊 */
+.flow-08 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-08-closeup-surface-9x16.jpg"); --flow-pos: 50% 100%; } /* 直式，用在窄欄 */
+.flow-09 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-09-wide-arch-21x9.jpg"); --flow-pos: 0% 100%; } /* 玻璃在左下，文字放右上 */
+.flow-10 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-10-wide-layered-4x3.jpg"); --flow-pos: 100% 50%; } /* 玻璃在右側，文字放左邊 */
+.flow-11 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-11-wide-square-1x1.jpg"); --flow-pos: 100% 100%; } /* 玻璃在右下，文字放左上 */
+.flow-12 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-12-wide-diagonal-16x9.jpg"); --flow-pos: 100% 100%; } /* 斜帶在右下，文字放左上 */
+.flow-13 { --flow: url("../anima-brand/assets/backgrounds/flow/flow-13-closeup-ribbon-2x3.jpg"); --flow-pos: 0% 50%; } /* 直式，玻璃在左，文字放右邊 */
+
+.slide.ground-flow { --s-card: var(--deck-card-bg-alt); --s-inner: var(--deck-ground-page);
+  background: var(--deck-ground-sky) var(--flow, none) var(--flow-pos, 50% 50%) / cover no-repeat; }
+/* 要把底圖壓淡一點時加 .is-faint（例如字很多的頁） */
+.slide.ground-flow.is-faint { background-image: linear-gradient(color-mix(in srgb, var(--deck-ground-page) 55%, transparent), color-mix(in srgb, var(--deck-ground-page) 55%, transparent)), var(--flow, none); }
+
+.glass { box-sizing: border-box; padding: var(--deck-glass-pad); border-radius: calc(var(--deck-radius-lg) + var(--deck-glass-pad));
+  background: var(--deck-glass-bg); -webkit-backdrop-filter: var(--deck-glass-backdrop); backdrop-filter: var(--deck-glass-backdrop);
+  box-shadow: inset 0 0 0 1px var(--deck-glass-ring), var(--deck-glass-shadow); min-width: 0; }
+.glass.is-soft { box-shadow: inset 0 0 0 1px var(--deck-glass-ring), var(--deck-glass-shadow-soft); }
+.glass-in { position: relative; overflow: hidden; border-radius: var(--deck-radius-lg); background: var(--deck-ground-page); height: 100%; }
+.glass-in > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.glass-in.contain > img { object-fit: contain; }
+.glass-in.contain { background: var(--deck-card-bg); }   /* 產品圖本身是 Depth 50 底 */
+.glass > .stage { border-radius: var(--deck-radius-lg); }
+
+.stage { position: relative; overflow: hidden; isolation: isolate; border-radius: var(--deck-stage-radius); padding: var(--deck-space-5);
+  --s-inner: var(--deck-ground-page); --s-card: var(--deck-ground-page); }
+/* 底圖往外多 20px，模糊邊緣才不會變淡 */
+.stage::before { content: ""; position: absolute; inset: -20px; z-index: -1; filter: blur(var(--deck-stage-blur));
+  background: var(--deck-ground-sky) var(--flow, none) var(--flow-pos, 50% 50%) / cover no-repeat; }
+/* 展示台上的示意畫面可以有柔和陰影（Web DS 允許的三種陰影之一） */
+.stage :is(.node, .msg, .hub-item, .card, .hub-core.rect, .node-group) { box-shadow: var(--deck-glass-shadow-soft); }
+.stage .node-group { background: var(--deck-ground-page); outline: 0; }
+.stage .lane { background: color-mix(in srgb, var(--deck-ground-page) 45%, transparent); }
+.stage .links { --s-line-strong: var(--deck-text-muted); }
+
+/* 左文右框：文字在左，玻璃框裝產品畫面在右，底圖在整頁 */
+.showcase { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--deck-space-6); align-items: center; }
+.annotated > .glass { align-self: stretch; min-height: 0; height: 100%; }
+.showcase > .glass { align-self: center; }
+.showcase > .glass > .glass-in > img { height: auto; }
+.annotated { grid-template-rows: minmax(0, 1fr); }
+
+
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
@@ -749,9 +807,11 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 @page { size: 1920px 1080px; margin: 0; }   /* 1440 的 deck 改成 1440px 810px */
 @media print {
   html, body { height: auto; background: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .deck { position: static; display: block; --k: 1; }
+  .deck { position: static; display: block; --k: 1 !important; }   /* slides.js 把螢幕縮放寫在行內，列印時一定要蓋掉 */
   .slide-frame { visibility: visible !important; break-after: page; outline: none !important; border-radius: 0 !important; }
   .slide-frame > .slide { position: relative; transform: none; }
   .deck > .slide { break-after: page; }
   .deck-progress { display: none; }
+  /* 展示台上的柔和陰影疊在模糊底圖上，Chrome 印成 PDF 會變成灰色方塊：列印時拿掉 */
+  .stage * { box-shadow: none !important; }
 }

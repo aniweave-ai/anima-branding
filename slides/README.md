@@ -130,6 +130,21 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 - 品牌 repo 的 `assets/logo/`：`primary_dark` 是深色底用的白字版；`mono_light` 是白色單色、`mono_dark` 是深色單色。深色底用 `primary_dark` 或 `mono_light`。
 - 封面底圖、4A 頁 GIF 的規則照 sales 交接文件；新版素材之後補。
 
+## 液態玻璃（照 ANIMA Web DS）
+
+官網和 Web DS 常用的液態玻璃，在簡報裡只用這三種，數值照 Web DS 原樣，不自創：
+
+| 用法 | class | 用在 |
+|---|---|---|
+| 流動玻璃底圖 | `.ground-flow` ＋ `.flow-01`～`.flow-13` | 封面、章節頁、主張頁、引言、結尾 |
+| 玻璃框 | `.glass` ＞ `.glass-in` | 包住產品畫面；只放在流動玻璃底圖或有色底上 |
+| 展示台 | `.stage` ＋ `.flow-NN` | 流程、對話、調度示意浮在模糊的底圖上 |
+
+- 底圖 13 張在 `anima-brand/assets/backgrounds/flow/`，已轉成 JPG（PDF 不會拆圖）。每張都有一塊留白給文字，挑玻璃跟文字錯開的那張；`slides.css` 裡每張都註明玻璃在哪一側。
+- token：`--deck-glass-bg`（白 32%）、`--deck-glass-ring`（白 70%）、`--deck-glass-backdrop`（blur 20px＋saturate 140%）、`--deck-glass-pad` 10px、`--deck-glass-shadow`、`--deck-stage-blur` 10px。
+- 字多的頁要壓淡底圖，加 `.is-faint`。
+- 列印時展示台上的陰影會自動拿掉（Chrome 會把它印成灰色方塊）。
+
 ## sales deck 現有顏色對照（v1.3 色階外的 26 色）
 
 把 deck 裡寫死的值換成右欄的 token，就能清到零。
