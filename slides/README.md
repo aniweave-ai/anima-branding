@@ -91,10 +91,10 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 |---|---|
 | 卡片 | `--deck-card-bg` Depth 50（在 Depth 50／Sand 50 底上改用 `--deck-card-bg-alt` 白）、圓角 12、內距 40、**不加陰影、不加邊框**。不要卡片裡再放卡片。 |
 | Chip | Sky 50 底、Sky 800 字、pill 圓角、caption 字級、medium 字重。用在分類、關鍵字、系統名稱。 |
-| 狀態標籤 | 圓角 8，字用 `-text`（700）、底用 `-bg`（50），前面可加 `-mark`（600）小圓點。success＝自動／完成，warning＝待確認／部分，error＝風險／錯誤。 |
+| 狀態標籤 | 圓角 8，字用 `-text`（700）、底用 `-bg`（50），不加前置小圓點（標籤本身的底色已經表達狀態）；`-mark`（600）用在圖表、長條這類圖形。success＝自動／完成，warning＝待確認／部分，error＝風險／錯誤。 |
 | 按鈕 | Current 500 底、白字、圓角 6、bold。一頁最多一顆。 |
 | 說明條 | Sky 50 底、Depth 700 字、圓角 8。**不加左側色條**。 |
-| 深色面板 | Depth 900 底＋`--deck-panel-dark-glow`（右上 Sky 光暈）、圓角 16、內距 56。一頁最多一塊，用在 ANIMA 方案或重點結論。 |
+| 深色面板 | Depth 900 底＋`--deck-panel-dark-glow`（右上 Sky 光暈）、圓角 12（跟卡片同一層）、內距 56。一頁最多一塊，用在 ANIMA 方案或重點結論。 |
 | 線條 | `--deck-line` Depth 100、`--deck-line-strong` Depth 200；深底用 `--deck-line-on-dark`。 |
 
 **不用裝飾色條、不用陰影分層、不用 emoji。**

@@ -287,7 +287,7 @@
   /* 深色面板（淺色頁裡的一塊深底，例如 ANIMA 方案、重點結論） */
   --deck-panel-dark-bg:     var(--depth-900);
   --deck-panel-dark-glow:   radial-gradient(60% 80% at 85% 0%, color-mix(in srgb, var(--sky-500) 24%, transparent) 0%, transparent 70%);
-  --deck-panel-dark-radius: var(--deck-radius-xl);
+  --deck-panel-dark-radius: var(--deck-radius-lg);
   --deck-panel-dark-pad:    calc(56px * var(--deck-canvas-scale));
 
   /* 圖表系列色（依序取用；6 色兩兩色差 ≥ 14（OKLab ×100）；超過 6 組把次要的併成「其他」） */

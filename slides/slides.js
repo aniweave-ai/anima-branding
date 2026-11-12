@@ -37,7 +37,7 @@
   function go(i, { updateHash = true } = {}) {
     current = Math.max(0, Math.min(frames.length - 1, i));
     frames.forEach((f, n) => f.classList.toggle('is-active', n === current));
-    progress.style.width = `${((current + 1) / frames.length) * 100}%`;
+    progress.style.transform = `scaleX(${(current + 1) / frames.length})`;
     if (updateHash) history.replaceState(null, '', `#${current + 1}`);
   }
 
