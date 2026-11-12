@@ -413,7 +413,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .ground-neutral .sample, .ground-brand .sample { background: var(--deck-ground-neutral); }
 .pii { background: var(--deck-warning-bg); color: var(--deck-warning-text); border-radius: calc(4px * var(--u)); padding: 0 calc(6px * var(--u)); font-weight: var(--deck-fw-semibold); }
 .token { background: var(--deck-chip-bg); color: var(--deck-chip-text); border-radius: calc(4px * var(--u)); padding: 0 calc(6px * var(--u)); font-weight: var(--deck-fw-semibold);
-         font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .92em; }
+         letter-spacing: .02em; }
 
 /* 團隊：頭像＋姓名＋職稱＋一句經歷 */
 .people { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: var(--deck-space-4); }

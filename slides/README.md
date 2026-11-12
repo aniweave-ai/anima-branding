@@ -121,6 +121,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 - 每一頁不靠動畫也要能完整讀懂，PDF 只會印出最後的狀態。
 - 字型要嵌靜態 TTF（Chrome 會把可變字型嵌成 Type 3，LINE 檢視器會破字）。Nunito Sans 400–800 的靜態檔在 `anima-brand/assets/fonts/static/`；`slides.css` 已經接好，寫 `font-weight: 700` 會自動用重一階的 800 檔。
 - 用 Chrome 列印或 headless `--print-to-pdf`，`slides.css` 會一頁印一張 1920×1080。
+- 只用 `--deck-font` 這組字型。等寬字（`ui-monospace`、SF Mono）這類系統字型在 PDF 裡也會變成 Type 3。
 - 圖片用 JPG 或不透明 PNG；帶透明的 PNG 印成 PDF 會拆成兩張圖。
 
 ## Logo 與素材
