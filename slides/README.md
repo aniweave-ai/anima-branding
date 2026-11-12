@@ -31,8 +31,8 @@
 
 | token | 1920 | 1440 | 用在 | 行高 |
 |---|---|---|---|---|
-| `--deck-fs-display` | 120 | 90 | 封面主標、主張頁大字 | `--deck-lh-tight` 1.15 |
-| `--deck-fs-number` | 96 | 72 | KPI 大數字 | `--deck-lh-tight` |
+| `--deck-fs-display` | 96 | 72 | 封面主標、主張頁大字 | `--deck-lh-tight` 1.15 |
+| `--deck-fs-number` | 80 | 60 | KPI 大數字 | `--deck-lh-tight` |
 | `--deck-fs-title` | 64 | 48 | 每頁標題（一頁一個） | `--deck-lh-title` 1.3 |
 | `--deck-fs-heading` | 44 | 33 | 區塊標題、卡片大標 | `--deck-lh-title` |
 | `--deck-fs-subheading` | 36 | 27 | 副標、卡片標題 | `--deck-lh-title` |
@@ -132,13 +132,20 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## 液態玻璃（照 ANIMA Web DS）
 
-官網和 Web DS 常用的液態玻璃，在簡報裡只用這三種，數值照 Web DS 原樣，不自創：
+官網和 Web DS 常用的液態玻璃，在簡報裡只用這三種，數值照 Web DS 原樣，不自創。
+
+**用量要少，它是重點，不是底色。** 一份簡報：
+- 流動玻璃底圖：封面、結尾必用；中間最多再一頁（例如淺色章節頁）。
+- 玻璃框：只包產品畫面，一份最多兩頁。
+- 展示台：只放「產品在做事」的示意（群組對話、操作畫面），一份最多兩頁。流程圖、架構圖、資料頁不要放。
+- 合計大約 5 頁以內。主張頁、引言、圖表、表格、流程圖不要加玻璃，用平面底色。
+
 
 | 用法 | class | 用在 |
 |---|---|---|
-| 流動玻璃底圖 | `.ground-flow` ＋ `.flow-01`～`.flow-13` | 封面、章節頁、主張頁、引言、結尾 |
+| 流動玻璃底圖 | `.ground-flow` ＋ `.flow-01`～`.flow-13` | 封面、結尾，中間最多再一頁 |
 | 玻璃框 | `.glass` ＞ `.glass-in` | 包住產品畫面；只放在流動玻璃底圖或有色底上 |
-| 展示台 | `.stage` ＋ `.flow-NN` | 流程、對話、調度示意浮在模糊的底圖上 |
+| 展示台 | `.stage` ＋ `.flow-NN` | 產品在做事的示意（群組對話、操作畫面） |
 
 - 底圖 13 張在 `anima-brand/assets/backgrounds/flow/`，已轉成 JPG（PDF 不會拆圖）。每張都有一塊留白給文字，挑玻璃跟文字錯開的那張；`slides.css` 裡每張都註明玻璃在哪一側。
 - token：`--deck-glass-bg`（白 32%）、`--deck-glass-ring`（白 70%）、`--deck-glass-backdrop`（blur 20px＋saturate 140%）、`--deck-glass-pad` 10px、`--deck-glass-shadow`、`--deck-stage-blur` 10px。

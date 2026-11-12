@@ -182,8 +182,8 @@
   --deck-font: "Nunito Sans", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 
   /* 字級表（8 階；投影最小 24px） */
-  --deck-fs-display:    calc(120px * var(--deck-canvas-scale)); /* 封面主標、主張頁大字 */
-  --deck-fs-number:     calc(96px  * var(--deck-canvas-scale)); /* KPI 大數字 */
+  --deck-fs-display:    calc(96px  * var(--deck-canvas-scale)); /* 封面主標、主張頁大字 */
+  --deck-fs-number:     calc(80px  * var(--deck-canvas-scale)); /* KPI 大數字 */
   --deck-fs-title:      calc(64px  * var(--deck-canvas-scale)); /* 每頁標題 */
   --deck-fs-heading:    calc(44px  * var(--deck-canvas-scale)); /* 區塊標題、卡片大標 */
   --deck-fs-subheading: calc(36px  * var(--deck-canvas-scale)); /* 副標、卡片標題 */
