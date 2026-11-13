@@ -911,6 +911,13 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .donut-layout > .kpis { align-self: end; }
 .deck .slide .donut-layout > .donut-wrap { order: -1; align-self: end; }
 .deck .slide .person { align-items: center; text-align: center; }
+/* 勾選清單：每行同樣裁切，方框對齊字的中線，行距加大 */
+.deck .slide .list.boxes { gap: var(--deck-space-5); }
+.deck .slide .list.boxes > li { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .list.boxes > li::before { top: 50%; transform: translateY(-50%); }
+.deck .slide .card-head + .list.boxes { margin-top: calc(var(--deck-space-5) - var(--deck-space-2)); }
+/* card-head 右邊是文字 label 時，跟標題對齊基線 */
+.deck .slide .card-head:has(> .label) { align-items: flex-end; }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
