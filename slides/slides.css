@@ -1102,3 +1102,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   .cover-glass { box-shadow: inset 0 0 0 1px var(--deck-glass-ring) !important; -webkit-backdrop-filter: none; backdrop-filter: none;
     background: color-mix(in srgb, var(--deck-ground-page) 45%, transparent); }
 }
+
+/* 大數字裡的中文單位（個月、萬、家、項、天、分鐘）：中文字面比數字大，單位一律縮成 0.5em、跟數字同一條基線。
+   寫法：<span class="kpi-value">1<small>個月</small></span> */
+.slide :is(.kpi-value, .stat-value, .option-price, .fact-value, .ask-value, .ratio-value) small { font-size: max(.5em, var(--deck-fs-caption)); margin-left: .12em; margin-right: .06em; color: inherit; vertical-align: baseline; }
+.slide :is(.kpi-value, .stat-value, .option-price, .fact-value, .ask-value, .ratio-value) small:first-child { margin-left: 0; }
