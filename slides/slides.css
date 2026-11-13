@@ -1174,6 +1174,12 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 放在灰底卡片裡的 chip：Sky 50 跟 Depth 50 太接近，改用深一階的 Sky 100 */
 .deck .slide :is(.card, .option, .layer, .stat, .node:not(.is-ai), .ground-neutral) .chip { background: var(--sky-100); }
 
+/* 灰底卡片裡的狀態標籤也深一階（50 → 100），不然跟 Depth 50 融在一起 */
+.deck .slide :is(.card, .option, .stat, .ground-neutral) .tag.is-success { background: var(--success-100); }
+.deck .slide :is(.card, .option, .stat, .ground-neutral) .tag.is-warning { background: var(--warning-100); }
+.deck .slide :is(.card, .option, .stat, .ground-neutral) .tag.is-error   { background: var(--error-100); }
+.deck .slide :is(.card, .option, .stat, .ground-neutral) .tag:not(.is-success, .is-warning, .is-error) { background: var(--depth-100); }
+
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
