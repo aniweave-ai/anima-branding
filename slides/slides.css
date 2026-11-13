@@ -880,8 +880,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .ask-row .kpi-value { font-size: var(--deck-fs-title); color: var(--s-strong); }
 
 /* 點陣比例：--cols 欄的圓點，.is-on 亮起來。用在「每 N 家有 M 家」這種比例 */
-.dots { display: grid; grid-template-columns: repeat(var(--cols, 10), calc(36px * var(--u))); gap: calc(18px * var(--u)); align-content: start; }
-.dots > i { width: calc(36px * var(--u)); aspect-ratio: 1; border-radius: 50%; background: var(--s-line-strong); }
+.dots { display: grid; grid-template-columns: repeat(var(--cols, 10), calc(30px * var(--u))); gap: calc(24px * var(--u)); align-content: start; }
+.dots > i { width: calc(30px * var(--u)); aspect-ratio: 1; border-radius: 50%; background: var(--s-line-strong); }
 .dots > i.is-on { background: var(--deck-chart-1); }
 :is(.ground-dark, .ground-dark-warm) .dots > i:not(.is-on) { background: var(--depth-600); }
 :is(.ground-dark, .ground-dark-warm) .dots > i.is-on { background: var(--s-accent); }
