@@ -914,10 +914,15 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 勾選清單：每行同樣裁切，方框對齊字的中線，行距加大 */
 .deck .slide .list.boxes { gap: var(--deck-space-5); }
 .deck .slide .list.boxes > li { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
-.deck .slide .list.boxes > li::before { top: 50%; transform: translateY(-50%); }
 .deck .slide .card-head + .list.boxes { margin-top: calc(var(--deck-space-5) - var(--deck-space-2)); }
 /* card-head 右邊是文字 label 時，跟標題對齊基線 */
 .deck .slide .card-head:has(> .label) { align-items: flex-end; }
+/* 清單：每一項上下都裁到字身（cap 到 baseline），符號對齊第一行字的中線（約 .36em），首末項不再錯位 */
+.deck .slide .list > li { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .list { gap: var(--deck-space-4); }
+.deck .slide .list > li::before { top: calc(.36em - 5px * var(--u)); }
+.deck .slide .list.checks > li::before { top: calc(.36em - 6px * var(--u)); }
+.deck .slide .list.boxes > li::before { top: calc(.36em - 13px * var(--u)); transform: none; }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
@@ -1015,7 +1020,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .slide-body:has(.title) { align-content: stretch; align-items: stretch; }
 /* 階梯版型的高度用百分比，要撐滿才有參照 */
 .slide-body:is(.stages, .roadmap) { align-content: stretch; }
-.ratio { align-items: flex-end; }
+.ratio { align-items: stretch; flex-wrap: wrap; align-content: flex-end; }
 .transform { align-items: stretch; align-content: end; }
 .transform-arrow { align-self: center; }
 :is(.grid, .flow, .options, .split-3, .features, .facts, .people, .logos, .kpis, .stats, .numcols, .shares) { align-content: end; }
