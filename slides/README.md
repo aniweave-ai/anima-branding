@@ -32,7 +32,7 @@
 | token | 1920 | 1440 | 用在 | 行高 |
 |---|---|---|---|---|
 | `--deck-fs-display` | 96 | 72 | 封面主標、主張頁大字 | `--deck-lh-tight` 1.15 |
-| `--deck-fs-number` | 80 | 60 | KPI 大數字 | `--deck-lh-tight` |
+| `--deck-fs-number` | 112 | 84 | KPI 大數字（資料頁的主角，比標題大） | `--deck-lh-tight` |
 | `--deck-fs-title` | 64 | 48 | 每頁標題（一頁一個） | `--deck-lh-title` 1.3 |
 | `--deck-fs-heading` | 44 | 33 | 區塊標題、卡片大標 | `--deck-lh-title` |
 | `--deck-fs-subheading` | 36 | 27 | 副標、卡片標題 | `--deck-lh-title` |
@@ -42,6 +42,18 @@
 
 - **字放不下就刪字或拆頁，不要縮字。** 沒有比 caption 更小的字。
 - 一頁最多用 4 個字級。
+
+## 版面 v2（2026-11-13，依兩份參考簡報重訂）
+
+- **頁首列**：左上頁名、右上 logo。封面、章節頁、結尾不放。不放頁碼、不放頁尾。標記仍寫 `<footer class="slide-foot">`，CSS 會把它放到上方；深底頁自動換白字 logo。
+- **字重**：標題、大字、數字都用 regular，主次靠大小和顏色分。粗體只留給表格第一欄這類小地方。
+- **數字**：大數字用 `--deck-fs-number` 112，顏色 `--s-accent`（白底 Current 500、深底 Sky 300）。說明一行小字。
+- **深淺底交替**：一份簡報白底和 Depth 900 深底大約各半，翻頁才有節奏。深底上的卡片用 `--deck-card-bg-dark`（Depth 800）。
+- **亮點卡** `.is-highlight`：實心 Current 500 ＋白字，一頁最多一張，標這頁最重要的一項。`.option.is-featured`、`.compare-col.after` 自動套用。深色面板不再加光暈。
+- **畫面塊** `.art` ＋ `.flow-NN`：流動玻璃裁成圓角矩形放進版面；深底頁自動轉深色版。`.is-band` 是橫條、`.is-fill` 撐滿格子。
+- **標題右側說明** `.slide-head.split`：標題左、兩三行說明靠右上。
+- **標題不上色**：顏色交給數字和亮點卡，不在標題裡挑幾個字變色。
+- **所有版型**：每頁右下角有按鈕（列印時不出現），點了看全部縮圖，點縮圖跳過去；也可以按 O。
 
 ## 字重（4 階）
 
@@ -111,7 +123,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## 圖表
 
-- 系列色依序取用 `--deck-chart-1`～`6`：Current 500、Sky 500、Ripple 700、Sky 800、Ripple 300、Depth 800。兩兩色差 ≥ 14（OKLab ×100）。
+- 系列色依序取用 `--deck-chart-1`～`6`：Current 500、Sky 300、Current 800、Ripple 700、Depth 600、Depth 900，藍色系為主。兩兩色差 ≥ 16（OKLab ×100）。多數圖表只用前兩色加 other。
 - 超過 6 組，把次要的併成「其他」，用 `--deck-chart-other`（Depth 200）。對照組、基準線也用它。
 - 格線 `--deck-chart-grid`、軸與標籤 `--deck-chart-axis`，字級用 caption。
 - 只有一組資料時用 chart-1；要強調其中一根，強調那根用 chart-1、其餘用 other。
@@ -182,7 +194,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## slides.css 版型
 
-`examples/layouts.html` 是 55 頁版型示範；三份舊簡報每一頁要用哪個版型，見 `examples/coverage.md`，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
+`examples/layouts.html` 是 68 頁版型示範；三份舊簡報每一頁要用哪個版型，見 `examples/coverage.md`，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
 
 | class | 版型 | 用在 |
 |---|---|---|
@@ -221,6 +233,19 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.features` | 功能格 | icon＋標題＋一句話，6–8 格 |
 | `.split-3` | 合作分工 | 我方／一起做／夥伴 |
 | `.fullbleed` | 全版圖片 | 圖片用 JPG，文字壓在下方漸層 |
+| `.ask` | 大數字主張 | 一個超大數字置中＋一排小數字（募資、核心成果） |
+| `.dots` | 點陣比例 | 100 個點亮 N 個，「每 100 人有 93 人」 |
+| `.stats.is-big` | 大數字卡 | 一排 3～4 張，一張 `.is-highlight` |
+| `.tiles` | 指標拼貼 | 3×2 數字磚，一亮一深（`.stat.is-dark`） |
+| `.donut` | 甜甜圈 | `--a --b --c` 是前三段百分比，中間放總數 |
+| `.section-band` | 章節帶 | 上方畫面塊、下方色帶、超大淡色編號 |
+| `.quotes` | 見證 | 一則大的亮點＋兩則小的；只用取得同意的原話 |
+| `.roadmap` | 路線圖 | 階梯式，`--i` 是第幾階 |
+| `.toc-big` | 目錄 | 兩欄大編號 |
+| `.sharebar` ＋ `.shares` | 比例條 | 一條堆疊條＋每段數字 |
+| `.numlist` | 編號清單 | 大字條列＋小編號，常搭畫面塊 |
+| `.numcols` | 編號三欄 | 大編號＋標題＋說明，不放卡片 |
+| `.contact-row` | 聯絡資訊 | 結尾頁三欄 |
 | `.cover-body` + `.cover-aside` + `.toc` | 封面＋目錄 | 右邊深色面板列今天的議程 |
 | `.cover-media` | 封面＋底圖 | 底圖用 JPG，左側留文字區 |
 | `.slide.center` | 置中封面、logo 結尾頁 | logo 結尾頁可用深色底 |

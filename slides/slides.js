@@ -23,6 +23,13 @@
   progress.className = 'deck-progress';
   deck.after(progress);
 
+  // 右下角「所有版型」按鈕：隨時回到一次看全部的總覽
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'deck-toggle';
+  progress.after(toggle);
+  const syncToggle = () => { toggle.textContent = deck.classList.contains('is-overview') ? '回到投影片' : '所有版型'; };
+
   let current = 0;
   const overview = () => deck.classList.contains('is-overview');
 
@@ -43,6 +50,7 @@
 
   function toggleOverview(force) {
     deck.classList.toggle('is-overview', force);
+    syncToggle();
     document.body.style.overflow = overview() ? 'auto' : 'hidden';
     fit();
     if (overview()) frames[current].scrollIntoView({ block: 'center' });
@@ -50,6 +58,7 @@
 
   addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target.closest && e.target.closest('button, a, input, textarea, select')) return;   // 讓按鈕自己處理 Enter／空白
     const k = e.key;
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(k)) { if (overview()) toggleOverview(false); else go(current + 1); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(k)) go(current - 1);
@@ -71,6 +80,8 @@
     }
     go(current + (e.clientX > innerWidth / 3 ? 1 : -1));
   });
+
+  toggle.addEventListener('click', e => { e.stopPropagation(); toggleOverview(); });
 
   addEventListener('hashchange', () => go(parseInt(location.hash.slice(1), 10) - 1 || 0, { updateHash: false }));
   addEventListener('resize', fit);
@@ -141,6 +152,7 @@
   addEventListener('beforeprint', drawLinks);
 
   document.body.style.overflow = 'hidden';
+  syncToggle();
   fit();
   go((parseInt(location.hash.slice(1), 10) || 1) - 1, { updateHash: false });
   if (new URLSearchParams(location.search).has('overview')) toggleOverview(true);

@@ -183,7 +183,7 @@
 
   /* 字級表（8 階；投影最小 24px） */
   --deck-fs-display:    calc(96px  * var(--deck-canvas-scale)); /* 封面主標、主張頁大字 */
-  --deck-fs-number:     calc(80px  * var(--deck-canvas-scale)); /* KPI 大數字 */
+  --deck-fs-number:     calc(112px * var(--deck-canvas-scale)); /* KPI 大數字（數字是資料頁的主角，比標題大） */
   --deck-fs-title:      calc(64px  * var(--deck-canvas-scale)); /* 每頁標題 */
   --deck-fs-heading:    calc(44px  * var(--deck-canvas-scale)); /* 區塊標題、卡片大標 */
   --deck-fs-subheading: calc(36px  * var(--deck-canvas-scale)); /* 副標、卡片標題 */
@@ -200,6 +200,7 @@
   --deck-fw-medium:   500; /* 標籤、chip、表頭 */
   --deck-fw-semibold: 600; /* 卡片標題、標語 */
   --deck-fw-bold:     700; /* 頁標題、display、數字 */
+  /* 標題、大字、數字用 regular：主次靠大小和顏色分，不靠粗體 */
 
   /* 底色（一頁一種；深底只用在章節頁、主張頁、深色面板） */
   --deck-ground-page:      #FFFFFF;
@@ -234,7 +235,7 @@
 
   /* 間距 */
   --deck-pad-x:      calc(128px * var(--deck-canvas-scale)); /* 左右安全邊界 */
-  --deck-pad-top:    calc(112px * var(--deck-canvas-scale));
+  --deck-pad-top:    calc(144px * var(--deck-canvas-scale)); /* 上方留給頁首列：左頁名、右 logo */
   --deck-pad-bottom: calc(96px  * var(--deck-canvas-scale));
   --deck-space-1: calc(8px  * var(--deck-canvas-scale));
   --deck-space-2: calc(16px * var(--deck-canvas-scale));
@@ -301,13 +302,20 @@
   --deck-stage-blur:        10px;
   --deck-stage-radius:      var(--deck-radius-xl);
 
-  /* 圖表系列色（依序取用；6 色兩兩色差 ≥ 14（OKLab ×100）；超過 6 組把次要的併成「其他」） */
+  /* 亮點卡：一頁最多一張，實心 Current 500 ＋白字，標出這頁最重要的那一項 */
+  --deck-highlight-bg:   var(--current-500);
+  --deck-highlight-text: #FFFFFF;
+  --deck-highlight-muted: color-mix(in srgb, #FFFFFF 78%, transparent);
+  /* 深底頁上的卡片 */
+  --deck-card-bg-dark:   var(--depth-800);
+
+  /* 圖表系列色（依序取用；藍色系為主，6 色兩兩色差 ≥ 16（OKLab ×100）；超過 6 組把次要的併成「其他」） */
   --deck-chart-1: var(--current-500);
-  --deck-chart-2: var(--sky-500);
-  --deck-chart-3: var(--ripple-700);
-  --deck-chart-4: var(--sky-800);
-  --deck-chart-5: var(--ripple-300);
-  --deck-chart-6: var(--depth-800);
+  --deck-chart-2: var(--sky-300);
+  --deck-chart-3: var(--current-800);
+  --deck-chart-4: var(--ripple-700);
+  --deck-chart-5: var(--depth-600);
+  --deck-chart-6: var(--depth-900);
   --deck-chart-other: var(--depth-200); /* 「其他」、對照組、基準線 */
   --deck-chart-grid:  var(--depth-100);
   --deck-chart-axis:  var(--depth-600);
