@@ -910,6 +910,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .donut.is-lg + .donut-center b { font-size: var(--deck-fs-title); }
 .deck .slide .donut-layout > .kpis { align-self: end; }
 .deck .slide .donut-layout > .donut-wrap { order: -1; align-self: end; }
+.deck .slide .person { align-items: center; text-align: center; }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
