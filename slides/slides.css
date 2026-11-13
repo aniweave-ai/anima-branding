@@ -940,6 +940,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide :is(.compare-item b, .entry-title) { font-size: var(--deck-fs-body); font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
 .deck .slide :is(.compare-item span, .entry-text) { font-size: var(--deck-fs-caption); color: var(--s-muted); line-height: var(--deck-lh-body); }
 .deck .slide .entry { align-items: end; }
+/* 對照欄標題：下方分隔線用深一階的線色（跟 card-head 一致），標題裁到字身、上下 24 */
+.deck .slide .compare-head { padding: var(--deck-space-3) 0; }
+.deck .slide .compare-head:not(:has(> *)) { display: block; line-height: var(--deck-lh-title); text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .compare-head + .compare-item { border-top-color: var(--s-line-strong); }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
