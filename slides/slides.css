@@ -1140,6 +1140,14 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .node-group.is-ai > .node { background: var(--deck-ground-page); padding: var(--deck-space-2) var(--deck-space-3); }
 .deck .slide .node-group.is-ai > .node + .node { margin-top: var(--deck-space-1); }
 
+/* 直向步驟：編號圓的中心對齊標題第一行的中心 */
+.deck .slide .steps > li :is(b, span) { text-box: normal; }
+.deck .slide .steps > li { align-items: start; }
+.deck .slide .steps > li::before { margin-top: calc((var(--deck-fs-body) * 1.3 - 44px * var(--u)) / 2); }
+.deck .slide .steps > li:not(:has(span)) { align-items: center; }
+.deck .slide .steps > li:not(:has(span))::before { margin-top: 0; }
+.deck .slide .panel-dark .steps > li:last-child { padding-bottom: 0; }
+
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
