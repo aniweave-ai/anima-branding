@@ -30,6 +30,35 @@
   progress.after(toggle);
   const syncToggle = () => { toggle.textContent = deck.classList.contains('is-overview') ? '回到投影片' : '所有版型'; };
 
+  // 深色頁開關：<main class="deck" data-dark="all | sections | off">
+  //   all（預設）照每頁設定；sections 只留章節頁、logo 結尾頁是深底；off 全部白底。
+  //   網址加 ?dark=sections 可以臨時預覽；右下角按鈕可以循環切換。
+  const DARK = ['ground-dark', 'ground-dark-warm'];
+  const darkSlides = slides.filter(s => DARK.some(c => s.classList.contains(c)));
+  darkSlides.forEach(s => { s.dataset.darkClass = DARK.find(c => s.classList.contains(c)); });
+  const keepDark = s => s.matches('.section, .closing.center');
+  const MODES = { all: '深色頁：照設定', sections: '深色頁：只留章節頁', off: '深色頁：全部白底' };
+  function applyDark(mode) {
+    if (!MODES[mode]) mode = 'all';
+    deck.dataset.dark = mode;
+    darkSlides.forEach(s => {
+      const on = mode === 'all' || (mode === 'sections' && keepDark(s));
+      s.classList.toggle(s.dataset.darkClass, on);
+    });
+    darkToggle.textContent = MODES[mode];
+  }
+  const darkToggle = document.createElement('button');
+  darkToggle.type = 'button';
+  darkToggle.className = 'deck-toggle is-dark-mode';
+  toggle.before(darkToggle);
+  darkToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const order = Object.keys(MODES);
+    applyDark(order[(order.indexOf(deck.dataset.dark) + 1) % order.length]);
+  });
+  applyDark(new URLSearchParams(location.search).get('dark') || deck.dataset.dark || 'all');
+  if (!darkSlides.length) darkToggle.hidden = true;
+
   let current = 0;
   const overview = () => deck.classList.contains('is-overview');
 

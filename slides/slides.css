@@ -70,6 +70,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck-toggle:hover, .deck-toggle:focus-visible, .deck.is-overview ~ .deck-toggle { opacity: 1; }
 .deck-toggle:focus-visible { outline: 3px solid var(--deck-text-accent); outline-offset: 3px; }
 .deck-toggle:active { transform: translateY(1px); }
+.deck-toggle.is-dark-mode { right: calc(140px + env(safe-area-inset-right, 0px)); background: var(--deck-ground-dark); color: var(--deck-text-on-dark); }
 @media (prefers-reduced-motion: reduce) { .deck-toggle { transition: none; } }
 /* 總覽裡每張縮圖下方標頁碼 */
 .deck.is-overview .slide-frame::after { content: attr(data-index); position: absolute; left: 8px; bottom: 8px; padding: 4px 10px; border-radius: 999px;
@@ -859,7 +860,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .stat.is-dark { background: var(--deck-ground-dark); --s-strong: var(--deck-text-on-dark); --s-muted: var(--deck-text-on-dark-muted); color: var(--deck-text-on-dark); }
 
 /* 甜甜圈：--a --b --c 是前三段的百分比，其餘是第四段；中間放總數 */
-.donut { position: relative; aspect-ratio: 1; width: var(--size, calc(440px * var(--u))); border-radius: 50%; flex: none;
+.donut { position: relative; aspect-ratio: 1; width: var(--size, calc(380px * var(--u))); border-radius: 50%; flex: none;
   background: conic-gradient(var(--deck-chart-1) 0 calc(var(--a, 0) * 1%),
     var(--deck-chart-2) 0 calc((var(--a, 0) + var(--b, 0)) * 1%),
     var(--deck-chart-3) 0 calc((var(--a, 0) + var(--b, 0) + var(--c, 0)) * 1%), var(--deck-chart-other) 0);
@@ -943,6 +944,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .features.is-stacked .feature { grid-template-columns: minmax(0, 1fr); row-gap: calc(4px * var(--u)); }
 /* 甜甜圈旁的圖例數字用標題字級 */
 .kpis.is-legend .kpi-value { font-size: var(--deck-fs-title); }
+.kpis.is-legend .kpi { gap: 0; }
 
 
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
