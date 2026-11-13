@@ -910,7 +910,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .donut.is-lg + .donut-center b { font-size: var(--deck-fs-title); }
 .deck .slide .donut-layout > .kpis { align-self: end; }
 .deck .slide .donut-layout > .donut-wrap { order: -1; align-self: end; }
-.deck .slide .person { align-items: center; text-align: center; }
+.deck .slide .people > .person { align-items: center; text-align: center; }
 /* 勾選清單：每行同樣裁切，方框對齊字的中線，行距加大 */
 .deck .slide .list.boxes { gap: var(--deck-space-5); }
 .deck .slide .list.boxes > li { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
@@ -944,6 +944,17 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .compare-head { padding: var(--deck-space-3) 0; }
 .deck .slide .compare-head:not(:has(> *)) { display: block; line-height: var(--deck-lh-title); text-box-trim: trim-both; text-box-edge: cap alphabetic; }
 .deck .slide .compare-head + .compare-item { border-top-color: var(--s-line-strong); }
+/* 小標題＋小副標：全 deck 同一個間距。兩行都裁到字身（cap→baseline），中間固定 16。
+   外層是 flex/grid 且自帶 gap 的，用 --pair-g 扣掉，避免 gap＋margin 疊加。 */
+.deck .slide :is(.kpi-label, .feature-title, .milestone-title, .entry-title, .person-name, .stat-label, .roadmap-head b, .steps b, .notes b, .numcols b, .compare-item b, .card-title, .option-rows .label) { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide :is(.kpi-label, .feature-title, .milestone-title, .entry-title, .person-name, .stat-label, .roadmap-head b, .steps b, .notes b, .numcols b, .compare-item b, .card-title, .option-rows .label) + :is(span, small, p, b, .kpi-text, .card-text, .feature-text, .person-text, .milestone-text, .entry-text):not(.stat-value, .stat-delta, .chip, .tag) { display: block; text-box-trim: trim-both; text-box-edge: cap alphabetic; margin-top: calc(var(--deck-space-2) - var(--pair-g, 0px)) !important; }
+.deck .slide :is(.kpi, .fact, .person, .numcols > div) { --pair-g: var(--deck-space-1); }
+.deck .slide .stat { --pair-g: var(--deck-space-1); }
+.deck .slide :is(.card, .panel-dark, .stages > li) { --pair-g: var(--deck-space-2); }
+.deck .slide :has(> .milestone-title) { --pair-g: var(--deck-space-1); }
+.deck .slide :is(.compare-item, .entry, .option-rows > div) { --pair-g: var(--deck-space-2); }
+.deck .slide .feature { --pair-g: calc(4px * var(--u)); }
+.deck .slide .roadmap-head span { display: block; }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
