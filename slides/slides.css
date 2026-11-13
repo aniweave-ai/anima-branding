@@ -1111,6 +1111,11 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 
 /* 流程節點高度一致：同一張圖裡每個節點一樣高（以最高的為準），內容一律從上方開始排 */
+/* 連接線比分隔線深，一眼分得出哪條是流程 */
+.deck .slide .links path { stroke: color-mix(in srgb, var(--s-muted) 75%, var(--s-bg)); }
+.deck .slide .links .head { fill: color-mix(in srgb, var(--s-muted) 75%, var(--s-bg)); }
+.deck .slide .links path.is-accent { stroke: var(--s-accent); }
+.deck .slide .links .head.is-accent { fill: var(--s-accent); }
 .deck .slide .lanes { grid-auto-rows: auto; padding-right: var(--deck-space-2); row-gap: var(--deck-space-3); }   /* 道與道之間留 24，跨道的線轉完彎還有一段直線才到箭頭 */   /* 每一列各自等高；右邊內距＝上下內距 16 */
 .deck .slide .lanes > .lane { margin-right: calc(-1 * var(--deck-space-2)); }
 /* 泳道不鋪灰底，改用細線分道：淺藍（ANIMA）、淺橘（同仁）節點直接放在頁面底色上才看得清楚；一般節點改用卡片灰底 */

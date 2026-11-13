@@ -133,6 +133,8 @@
       svg.setAttribute('width', box.offsetWidth); svg.setAttribute('height', box.offsetHeight);
       const unit = parseFloat(getComputedStyle(box).getPropertyValue('--u')) || 1;
       const ah = 14 * unit;                                     // 箭頭長度
+      const sign0 = v => (v > 0 ? 1 : v < 0 ? -1 : 0);
+      const dividers = [...box.querySelectorAll(':scope > .lane')].map(l => (l.getBoundingClientRect().top - br.top) / k);
       // 直角折線 → 轉角導圓角（半徑 12，線段太短就縮小）
       const roundPath = pts => {
         const r0 = 10 * unit;
@@ -174,7 +176,14 @@
             // 上下：有水平重疊就直線；沒有就從來源中央出、在兩列中間轉折，進目標時靠近來源那一側（不同來源不共用同一段線）
             const x1 = hi - lo > 20 ? (lo + hi) / 2 : Math.min(Math.max(t.cx, s.l + pad), s.r - pad);   // 出口也靠向目標那一側
             const x2 = hi - lo > 20 ? x1 : Math.min(Math.max(s.cx, t.l + pad), t.r - pad);
-            const ym = y1 + (y2 - y1) * 0.3;                    // 轉折靠來源側，箭頭前留一段直線
+            // 轉折高度：避開泳道分隔線，並在箭頭前留至少 18 的直線
+            const minEnd = ah + 18 * unit, minStart = 8 * unit;
+            let ym = y1 + (y2 - y1) * 0.3, best = -1;
+            const lo2 = Math.min(y1 + sign0(y2 - y1) * minStart, y2 - sign0(y2 - y1) * minEnd), hi2 = Math.max(y1 + sign0(y2 - y1) * minStart, y2 - sign0(y2 - y1) * minEnd);
+            for (let y = lo2; y <= hi2; y += 1) {
+              const dist = dividers.length ? Math.min(...dividers.map(v => Math.abs(v - y))) : 999;
+              if (dist > best + 0.5) { best = dist; ym = y; }
+            }
             end = [x2, y2]; const sign = down ? 1 : -1;
             const ye = y2 - sign * ah;
             d = roundPath(x1 === x2 ? [[x1, y1], [x1, ye]] : [[x1, y1], [x1, ym], [x2, ym], [x2, ye]]);
