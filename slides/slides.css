@@ -955,6 +955,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide :is(.compare-item, .entry, .option-rows > div) { --pair-g: var(--deck-space-2); }
 .deck .slide .feature { --pair-g: calc(4px * var(--u)); }
 .deck .slide .roadmap-head span { display: block; }
+/* 標題字 30 以上（卡片標題、feature、KPI 標籤、notes、numcols、橫向里程碑）跟副標間距加大到 24；26 以下維持 16 */
+.deck .slide :is(.card-title, .feature-title, .kpi-label, .notes b, .numcols b, .milestones:not(.vertical) .milestone-title) + :is(span, small, p, b, .kpi-text, .card-text, .feature-text, .person-text, .milestone-text, .entry-text):not(.stat-value, .stat-delta, .chip, .tag) { margin-top: calc(var(--deck-space-3) - var(--pair-g, 0px)) !important; }
 /* 橫向里程碑：日期、點、小標題三者等距（日期 baseline→點、點→小標題 cap 都是 --ms-g） */
 .deck .slide .milestones:not(.vertical) { --ms-g: calc(40px * var(--u)); }
 .deck .slide .milestones:not(.vertical) .milestone-when { text-box-trim: trim-both; text-box-edge: cap alphabetic; margin-bottom: 0; }
