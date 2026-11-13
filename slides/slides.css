@@ -1180,6 +1180,14 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide :is(.card, .option, .stat, .ground-neutral) .tag.is-error   { background: var(--error-100); }
 .deck .slide :is(.card, .option, .stat, .ground-neutral) .tag:not(.is-success, .is-warning, .is-error) { background: var(--depth-100); }
 
+/* 團隊頁：左右兩欄撐滿內容區，人物在上、數字在下；時間軸平均分布到整個高度 */
+.deck .slide .team-split { align-items: stretch; align-content: stretch; grid-template-rows: minmax(0, 1fr); }
+.deck .slide .team-split > .split-text { justify-content: space-between; }
+.deck .slide .milestones.vertical { display: flex; flex-direction: column; justify-content: space-between; height: 100%; gap: 0; }
+.deck .slide .milestones.vertical::before { top: calc(var(--deck-fs-body) * .65); bottom: calc(var(--deck-fs-body) * .65); }
+.deck .slide .milestones.vertical > li > * { text-box: normal; line-height: 1.3; }
+.deck .slide .milestones.vertical > li::after { top: calc(var(--deck-fs-body) * .65 - 11px * var(--u)); }
+
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
