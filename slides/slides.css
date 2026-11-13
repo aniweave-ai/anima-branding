@@ -966,6 +966,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .layer > .layer-items { margin-top: 0 !important; }
 /* 卡片上方 chip 列到標題：跟標題到內文一樣 28 */
 .deck .slide :is(.card, .stages > li) > :is(.chips, .tags):first-child + .card-title { margin-top: calc(28px * var(--u) - var(--deck-space-2)); }
+/* 封面：logo 貼齊左上外框，上、左都是 96（跟內頁 header 同一條線） */
+.deck .slide.cover { padding-top: var(--deck-pad-x); }
 /* 階段卡：編號圓到標題的距離 = 標題到副標（28） */
 .deck .slide .stages > li > .card-title:first-child { margin-top: calc(28px * var(--u) - var(--deck-space-2)); }
 /* 標題字 30 以上（卡片標題、feature、KPI 標籤、notes、numcols、橫向里程碑）跟副標間距 28；26 以下維持 16 */
