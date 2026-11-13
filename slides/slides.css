@@ -1150,6 +1150,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .partners-head img { margin-top: calc(-6px * var(--u)); }
 /* 大數字裁掉行距後，跟下面的說明留固定間距 */
 :is(.kpi, .stat) > :is(.kpi-value, .stat-value) { margin-bottom: var(--deck-space-2); }
+/* 數字卡：標籤在大數字上方時也留 16（原本只有 gap 2，數字裁掉行距後幾乎貼住標籤） */
+.deck .slide .stat > .stat-label + .stat-value { margin-top: var(--deck-space-2); }
 
 
 
