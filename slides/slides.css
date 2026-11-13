@@ -1181,7 +1181,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide :is(.card, .option, .stat, .ground-neutral) .tag:not(.is-success, .is-warning, .is-error) { background: var(--depth-100); }
 
 /* 團隊頁：左右兩欄撐滿內容區，人物在上、數字在下；時間軸平均分布到整個高度 */
-.deck .slide .team-split { align-items: stretch; align-content: stretch; grid-template-rows: minmax(0, 1fr); }
+.deck .slide .team-split { align-items: stretch; align-content: stretch; grid-template-rows: minmax(0, 1fr); margin-top: var(--deck-space-6); }
 .deck .slide .team-split > .split-text { justify-content: space-between; }
 .deck .slide .milestones.vertical { display: flex; flex-direction: column; justify-content: space-between; height: 100%; gap: 0; }
 .deck .slide .milestones.vertical::before { top: calc(var(--deck-fs-body) * .65); bottom: calc(var(--deck-fs-body) * .65); }
