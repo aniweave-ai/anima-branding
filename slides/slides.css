@@ -979,8 +979,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* 路線圖：一階比一階低的編號方塊，下面接一條直線到說明 */
 .roadmap { list-style: none; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 0; flex: 1; counter-reset: rm; }
-.roadmap > li { counter-increment: rm; display: flex; flex-direction: column; padding-top: calc(var(--i, 0) * 72px * var(--u)); border-left: 2px solid var(--s-line); padding-left: var(--deck-space-2); padding-right: var(--deck-space-3); }
-.roadmap-head { display: flex; gap: var(--deck-space-2); align-items: center; background: var(--s-card); border-radius: var(--deck-radius-md); padding: var(--deck-space-2); margin-left: calc(-1 * var(--deck-space-2)); }
+.roadmap > li { counter-increment: rm; display: flex; flex-direction: column; padding-top: calc(var(--i, 0) * 72px * var(--u)); border-left: 2px solid var(--s-line); padding-left: var(--deck-space-2); padding-right: var(--deck-space-2); }
+.roadmap-head { display: flex; gap: var(--deck-space-2); align-items: center; background: var(--s-card); border-radius: var(--deck-radius-md); padding: var(--deck-space-2); }
 .roadmap-head::before { content: counter(rm, decimal-leading-zero); flex: none; display: grid; place-items: center; width: calc(56px * var(--u)); height: calc(56px * var(--u));
   border-radius: var(--deck-radius-sm); background: var(--deck-highlight-bg); color: var(--deck-highlight-text); font-size: var(--deck-fs-caption); }
 .roadmap-head b { display: block; font-weight: var(--deck-fw-medium); color: var(--s-strong); line-height: 1.25; }
