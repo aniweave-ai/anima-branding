@@ -460,7 +460,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 方案欄的延伸：部署選項等「沒有價格」的比較，用 .option-rows 排一列一個面向 */
 .option-head { display: flex; align-items: center; gap: var(--deck-space-2); }
 .option-rows { display: flex; flex-direction: column; }
-.option-rows > div { padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line); display: flex; flex-direction: column; gap: calc(2px * var(--u)); }
+.option-rows > div { padding: var(--deck-space-3) 0; border-top: 2px solid var(--s-line); display: flex; flex-direction: column; gap: calc(2px * var(--u)); }
 .option-rows b { font-weight: var(--deck-fw-medium); color: var(--s-strong); }
 .option-rows .label { font-weight: var(--deck-fw-medium); }
 
