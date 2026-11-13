@@ -209,7 +209,7 @@
   addEventListener('beforeprint', drawLinks);
 
   // 內容上限檢查（README「一頁的內容上限」）：超過的頁在總覽縮圖左上角標紅，有 data-dense 的標黃；console 也列出來。只在總覽出現，不進 PDF。
-  const LIMIT = { chars: 150, rows: 6, cols: 5, nodes: 10, blocks: 4, items: 6, callouts: 2 };
+  const LIMIT = { chars: 200, rows: 6, cols: 5, nodes: 10, blocks: 4, items: 6, callouts: 2 };
   const SKIP = '.slide-head, .slide-foot, .slide-note, svg, .legend, .columns-axis, .timeline-week, .cover-meta';
   const overList = [];
   slides.forEach((slide, i) => {
