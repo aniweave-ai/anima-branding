@@ -1009,7 +1009,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 階梯版型的高度用百分比，要撐滿才有參照 */
 .slide-body:is(.stages, .roadmap) { align-content: stretch; }
 .ratio { align-items: flex-end; }
-.transform { align-items: start; }
+.transform { align-items: stretch; align-content: end; }
 .transform-arrow { align-self: center; }
 :is(.grid, .flow, .options, .split-3, .features, .facts, .people, .logos, .kpis, .stats, .numcols, .shares) { align-content: end; }
 :is(.grid, .flow, .options, .split-3).slide-body { align-content: end; }
