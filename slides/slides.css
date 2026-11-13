@@ -517,7 +517,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
    ============================================================ */
 
 /* 市場規模：同心圓，外到內 TAM／SAM／SOM */
-.market { flex: 1; min-height: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--deck-space-7); align-items: center; }
+.market { flex: 1; min-height: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: calc(2 * var(--deck-space-7)); align-items: center; }
 .market-rings { position: relative; height: calc(540px * var(--u)); aspect-ratio: 1; }
 .market-rings > i { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); border-radius: 50%; aspect-ratio: 1; display: flex; justify-content: center;
   padding-top: calc(28px * var(--u)); font-style: normal; font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-bold); }
@@ -905,7 +905,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .donut-center span { font-size: var(--deck-fs-caption); color: var(--s-muted); }
 .donut.is-sm { --size: calc(200px * var(--u)); }
 /* 甜甜圈頁：圖例在左、甜甜圈在右，甜甜圈撐滿內容區高度 */
-.deck .slide .donut-layout { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--deck-space-7); align-items: center; }
+.deck .slide .donut-layout { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: calc(2 * var(--deck-space-7)); align-items: center; }
 .donut.is-lg { --size: calc(620px * var(--u)); }
 .donut.is-lg + .donut-center b { font-size: var(--deck-fs-title); }
 .deck .slide .donut-layout > .kpis { align-self: end; }
