@@ -1165,7 +1165,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .entry { padding: var(--deck-space-3) 0; row-gap: calc(22px * var(--u)) !important; align-items: baseline; }
 .deck .slide .entry > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; line-height: 1.4; }
 .deck .slide .card-head { padding-bottom: var(--deck-space-3); margin-bottom: 0; }
-.deck .slide .card-head > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .card-head > .card-title { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+/* 卡片頭：tag 跟標題頂端對齊；頭下面的線比筆與筆之間的線深一階，分得出層級 */
+.deck .slide .card-head { align-items: flex-start; border-bottom-color: var(--s-line-strong); }
+.deck .slide .card-head > .chip, .deck .slide .card-head > .tag { margin-top: calc(-8px * var(--u)); }
 .deck .slide .entries > .entry:last-child { padding-bottom: 0; }
 
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
