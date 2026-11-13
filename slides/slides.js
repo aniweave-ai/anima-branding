@@ -135,7 +135,7 @@
       const ah = 14 * unit;                                     // 箭頭長度
       // 直角折線 → 轉角導圓角（半徑 12，線段太短就縮小）
       const roundPath = pts => {
-        const r0 = 12 * unit;
+        const r0 = 10 * unit;
         let d = `M${pts[0][0]},${pts[0][1]}`;
         for (let i = 1; i < pts.length - 1; i++) {
           const [px, py] = pts[i - 1], [cx, cy] = pts[i], [nx, ny] = pts[i + 1];
@@ -161,7 +161,7 @@
             const lo = Math.max(s.t, t.t), hi = Math.min(s.b, t.b);
             const y1 = hi - lo > 20 ? (lo + hi) / 2 : s.cy, y2 = hi - lo > 20 ? y1 : t.cy;
             dir = right ? 1 : -1;
-            const xm = x1 + (x2 - x1) * 0.35;                    // 轉折靠來源側，箭頭前留一段直線
+            const xm = x1 + (x2 - x1) * 0.3;                    // 轉折靠來源側，箭頭前留一段直線
             end = [x2, y2];
             const xe = x2 - dir * ah;
             d = roundPath(y1 === y2 ? [[x1, y1], [xe, y1]] : [[x1, y1], [xm, y1], [xm, y2], [xe, y2]]);
@@ -174,7 +174,7 @@
             // 上下：有水平重疊就直線；沒有就從來源中央出、在兩列中間轉折，進目標時靠近來源那一側（不同來源不共用同一段線）
             const x1 = hi - lo > 20 ? (lo + hi) / 2 : Math.min(Math.max(t.cx, s.l + pad), s.r - pad);   // 出口也靠向目標那一側
             const x2 = hi - lo > 20 ? x1 : Math.min(Math.max(s.cx, t.l + pad), t.r - pad);
-            const ym = y1 + (y2 - y1) * 0.35;                    // 轉折靠來源側，箭頭前留一段直線
+            const ym = y1 + (y2 - y1) * 0.3;                    // 轉折靠來源側，箭頭前留一段直線
             end = [x2, y2]; const sign = down ? 1 : -1;
             const ye = y2 - sign * ah;
             d = roundPath(x1 === x2 ? [[x1, y1], [x1, ye]] : [[x1, y1], [x1, ym], [x2, ym], [x2, ye]]);
