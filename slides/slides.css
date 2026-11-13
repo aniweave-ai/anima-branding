@@ -928,6 +928,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .layers-side > :is(.label, .card-title) { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
 .deck .slide .layers-side > .label + .card-title { margin-top: var(--deck-space-3); }
 .deck .slide .layers-side > .chips { margin-top: auto; padding-top: var(--deck-space-5); gap: var(--deck-space-2); }
+/* 案例列：最後一列有底線，上下 padding 要一樣；label 和內文都裁到字身、頂端對齊 */
+.deck .slide .case-story > .case-row:last-child { padding-bottom: var(--deck-space-3); }
+.deck .slide .case-row > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .case-row .label { padding-top: 0; }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
