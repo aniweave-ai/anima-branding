@@ -1148,6 +1148,9 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .steps > li:not(:has(span))::before { margin-top: 0; }
 .deck .slide .panel-dark .steps > li:last-child { padding-bottom: 0; }
 
+/* 流程節點：標題和說明之間留 8（說明是直接接在 <b> 後的文字，所以間距加在標題下面） */
+.deck .slide .slide-body :is(.node, .hub-item) > b, .deck .slide .diagram :is(.node, .hub-item) > b { display: block; margin-bottom: var(--deck-space-1) !important; }
+
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
