@@ -1132,6 +1132,14 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .arch-cell { align-items: stretch; }
 .deck .slide .arch-cell > .node { justify-content: flex-start; }
 
+/* 編號步驟統一：編號圓、標題、說明的樣式和位置一樣；「同時進行」的組也照這個排法，子項目放在下面 */
+.deck .slide :is(.node, .node-group) > .node-num { margin-bottom: var(--deck-space-1); }
+.deck .slide .node-group.is-ai { background: var(--deck-chip-bg); outline: 0; padding: var(--deck-space-3); gap: 0; }
+.deck .slide .node-group > b { font-size: var(--deck-fs-body); font-weight: var(--deck-fw-semibold); line-height: var(--deck-lh-title); color: var(--s-strong); margin-bottom: var(--deck-space-2); }
+.deck .slide .node-group.is-ai > b { color: var(--deck-chip-text); }
+.deck .slide .node-group.is-ai > .node { background: var(--deck-ground-page); padding: var(--deck-space-2) var(--deck-space-3); }
+.deck .slide .node-group.is-ai > .node + .node { margin-top: var(--deck-space-1); }
+
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
