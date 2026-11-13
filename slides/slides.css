@@ -247,7 +247,14 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .slide.statement > :is(.statement-text, .quote) { position: relative; isolation: isolate; }
 .slide.statement > .quote::before { content: "\201C"; position: absolute; z-index: -1; left: 50%; top: 50%; transform: translate(-50%, -24%);
   font-family: var(--deck-font); font-size: calc(960px * var(--u)); line-height: 1; font-weight: var(--deck-fw-regular);
-  color: color-mix(in srgb, var(--s-accent) 9%, transparent); pointer-events: none; text-box: normal; }
+  color: var(--s-deco); pointer-events: none; text-box: normal; }
+/* 裝飾色：跟這頁底色同色系、深一階 */
+.slide { --s-deco: var(--depth-100); }
+.ground-brand { --s-deco: var(--sand-200); }
+.ground-sky, .ground-ambient { --s-deco: var(--sky-100); }
+.ground-neutral { --s-deco: var(--depth-100); }
+:is(.ground-dark, .ground-dark-warm) { --s-deco: var(--depth-800); }
+.ground-dark-warm { --s-deco: var(--sand-800); }
 .slide.statement .statement-text { font-size: var(--deck-fs-title); line-height: 1.45; max-width: none; margin-inline: auto; text-wrap: nowrap; }
 .slide.statement .quote { align-items: center; margin-inline: auto; }
 .slide.statement .quote-text { font-size: var(--deck-fs-heading); }
