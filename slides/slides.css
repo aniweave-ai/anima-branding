@@ -329,7 +329,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .table th.is-us { color: var(--s-accent); font-weight: var(--deck-fw-bold); }
 :is(.ground-dark, .ground-dark-warm) .table .is-us { background: color-mix(in srgb, var(--deck-highlight-bg) 22%, transparent); }
 .table .num { text-align: right; font-variant-numeric: tabular-nums; }
-/* 列數多的表：只縮列距，不縮字。表格上限 6 列（README「一頁的內容上限」），超過要拆頁或先告知 Victor */
+/* 列數多的表：只縮列距，不縮字。表格上限 8 列（README「一頁的內容上限」），超過要拆頁或先告知 Victor */
 .table.is-dense td { padding-top: calc(14px * var(--u)); padding-bottom: calc(14px * var(--u)); }
 
 /* 時程（甘特）：--weeks 欄，每條 .bar 用 --from / --to（第幾週，含頭含尾） */
