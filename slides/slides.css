@@ -932,6 +932,14 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .case-story > .case-row:last-child { padding-bottom: var(--deck-space-3); }
 .deck .slide .case-row > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
 .deck .slide .case-row .label { padding-top: 0; }
+/* 分隔線列的「小標題＋小副標」統一一套：
+   列上下 padding 24、字都裁到字身、標題與副標間距 16；
+   小標題 26 semibold 深色，小副標 24 muted。用在 compare-item、entry、option-rows */
+.deck .slide :is(.compare-item, .option-rows > div, .entry) { padding: var(--deck-space-3) 0; justify-content: flex-start; gap: var(--deck-space-2) !important; row-gap: var(--deck-space-2) !important; }
+.deck .slide :is(.compare-item, .option-rows > div, .entry) > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; margin-top: 0 !important; }
+.deck .slide :is(.compare-item b, .entry-title) { font-size: var(--deck-fs-body); font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.deck .slide :is(.compare-item span, .entry-text) { font-size: var(--deck-fs-caption); color: var(--s-muted); line-height: var(--deck-lh-body); }
+.deck .slide .entry { align-items: end; }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
