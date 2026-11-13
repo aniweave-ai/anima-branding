@@ -923,6 +923,11 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .list > li::before { top: calc(.36em - 5px * var(--u)); }
 .deck .slide .list.checks > li::before { top: calc(.36em - 6px * var(--u)); }
 .deck .slide .list.boxes > li::before { top: calc(.36em - 13px * var(--u)); transform: none; }
+/* 架構側欄：label 與標題靠在一起，chip 壓到底、間距加大 */
+.deck .slide .layers-side { justify-content: flex-start; gap: 0; }
+.deck .slide .layers-side > :is(.label, .card-title) { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .layers-side > .label + .card-title { margin-top: var(--deck-space-3); }
+.deck .slide .layers-side > .chips { margin-top: auto; padding-top: var(--deck-space-5); gap: var(--deck-space-2); }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
