@@ -955,6 +955,12 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide :is(.compare-item, .entry, .option-rows > div) { --pair-g: var(--deck-space-2); }
 .deck .slide .feature { --pair-g: calc(4px * var(--u)); }
 .deck .slide .roadmap-head span { display: block; }
+/* 橫向里程碑：日期、點、小標題三者等距（日期 baseline→點、點→小標題 cap 都是 --ms-g） */
+.deck .slide .milestones:not(.vertical) { --ms-g: calc(40px * var(--u)); }
+.deck .slide .milestones:not(.vertical) .milestone-when { text-box-trim: trim-both; text-box-edge: cap alphabetic; margin-bottom: 0; }
+.deck .slide .milestones:not(.vertical) > li::after { font-size: var(--deck-fs-subheading); top: calc(1cap + var(--ms-g)); }
+.deck .slide .milestones:not(.vertical)::before { font-size: var(--deck-fs-subheading); top: calc(1cap + var(--ms-g) + 11px * var(--u) - 2px); }
+.deck .slide .milestones:not(.vertical) .milestone-title { margin-top: calc(var(--ms-g) * 2 + 22px * var(--u) - var(--deck-space-1)); }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
