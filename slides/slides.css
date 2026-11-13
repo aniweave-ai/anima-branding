@@ -1035,7 +1035,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .cover-bg.is-faded::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, color-mix(in srgb, var(--deck-ground-page) 92%, transparent) 0%, color-mix(in srgb, var(--deck-ground-page) 80%, transparent) 40%, transparent 58%); }
 :is(.ground-dark, .ground-dark-warm) .cover-bg { filter: invert(1) hue-rotate(180deg) brightness(.9) saturate(1.25); }
-.cover-phone { --deck-glass-pad: calc(20px * var(--u)); --deck-glass-bg: color-mix(in srgb, var(--deck-highlight-text) 14%, transparent); --deck-glass-ring: color-mix(in srgb, var(--deck-highlight-text) 55%, transparent); --dev-w: calc(620px * var(--u)); --dev-r: calc(110px * var(--u)); --dev-x: calc(var(--deck-pad-x) + var(--deck-glass-pad)); --dev-y: calc(242px * var(--u)); }
+.cover-phone { --deck-glass-backdrop: blur(8px) saturate(140%); --deck-glass-pad: calc(20px * var(--u)); --deck-glass-bg: color-mix(in srgb, var(--deck-highlight-text) 14%, transparent); --deck-glass-ring: color-mix(in srgb, var(--deck-highlight-text) 55%, transparent); --dev-w: calc(700px * var(--u)); --dev-r: calc(124px * var(--u)); --dev-x: calc(var(--deck-pad-x) + var(--deck-glass-pad)); --dev-y: calc(242px * var(--u)); }
 /* 手機本體：單獨一張 <img>（包在 div 裡 Chrome 列印時圖會消失） */
 .cover-device { position: absolute; z-index: 2; right: var(--dev-x); top: var(--dev-y); width: var(--dev-w); aspect-ratio: 964 / 1928; border-radius: var(--dev-r); }
 /* 毛玻璃外框：獨立一塊墊在手機後面，Web DS 玻璃框數值；外圓角＝手機圓角＋框寬 */
