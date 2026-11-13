@@ -24,7 +24,7 @@
 :root { --deck-canvas-scale: 0.75; } /* 1440×810 的 deck 只要加這行，放在 tokens.css 之後 */
 ```
 
-- 安全邊界：左右 `--deck-pad-x` 128、上 `--deck-pad-top` 112、下 `--deck-pad-bottom` 96。
+- 外圈邊距：左右、底、頁首到頂端都是 96（`--deck-pad-x`、`--deck-pad-bottom`）；標題頂線 `--deck-pad-top` 192。
 - 間距只用 `--deck-space-1`～`7`：8／16／24／32／48／64／96。
 
 ## 字級（8 階，最小 24）
@@ -48,6 +48,11 @@
 - **頁首列**：左上頁名、右上 logo。封面、章節頁、結尾不放。不放頁碼、不放頁尾。標記仍寫 `<footer class="slide-foot">`，CSS 會把它放到上方；深底頁自動換白字 logo。
 - **字重**：標題、大字、數字都用 regular，主次靠大小和顏色分。粗體只留給表格第一欄這類小地方。
 - **數字**：大數字用 `--deck-fs-number` 112，顏色 `--s-accent`（白底 Current 500、深底 Sky 300）。說明一行小字。
+- **內容框**：整頁外圈只有一個邊距 `--deck-pad-x` 96：左、右、底、頁首到頂端都一樣。標題頂線固定在 `--deck-pad-top` 192，內容底線在 984。每一頁的內容都落在這個框裡：
+  - 標題永遠在頂線，不垂直置中（封面、章節頁、主張頁、引言、結尾例外）。
+  - 內容撐到底線；內容少的頁整組靠底線放，不放在中間。
+  - 有底色的框四邊同一個內距（`--deck-card-pad` 40；流程節點、對話泡泡 24）。框照內容高度，不撐出空白；標題和大數字用 `text-box` 裁掉上下行距，字的頂和底才會切齊內距。
+- **封面＋手機** `.cover-phone`：背景鋪滿、手機在右邊往下超出頁面、文字在左。背景三選一：`.cover-bg` 放自己的底圖（圖案太滿加 `.is-faded`）、`.cover-bg.flow-NN` 品牌流動玻璃、整頁 `.ground-dark` 深色玻璃。手機圖用 JPG，圓角由 CSS 裁。
 - **深底頁**：白底為主，深底（Depth 900）大約三分之一，放在想讓人停下來的頁（目錄、重點數字、做法、見證）。深底上的卡片用 `--deck-card-bg-dark`（Depth 800）。
 - **深色頁開關**：寫在 `<main class="deck" data-dark="…">`，整份一起切換，印 PDF 也照這個設定：
   - `all`（預設）：照每頁設的底色。
@@ -200,7 +205,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## slides.css 版型
 
-`examples/layouts.html` 是 68 頁版型示範；三份舊簡報每一頁要用哪個版型，見 `examples/coverage.md`，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
+`examples/layouts.html` 是 70 頁版型示範；三份舊簡報每一頁要用哪個版型，見 `examples/coverage.md`，每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
 
 | class | 版型 | 用在 |
 |---|---|---|
@@ -253,7 +258,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.numcols` | 編號三欄 | 大編號＋標題＋說明，不放卡片 |
 | `.contact-row` | 聯絡資訊 | 結尾頁三欄 |
 | `.cover-body` + `.cover-aside` + `.toc` | 封面＋目錄 | 右邊深色面板列今天的議程 |
-| `.cover-media` | 封面＋底圖 | 底圖用 JPG，左側留文字區 |
+| `.cover-phone` | 封面＋手機 | 三種背景：自己的底圖、流動玻璃、深色玻璃 |
 | `.slide.center` | 置中封面、logo 結尾頁 | logo 結尾頁可用深色底 |
 | `.chain` | 單列流程 | 節點橫排，`.node-group` 是同時進行的一組 |
 | `.lanes` + `.lane` | 泳道流程 | As-is／To-be；節點用 `--lane`、`--step`、`--span` 定位 |

@@ -234,8 +234,8 @@
   --deck-radius-pill: 999px;                          /* chip */
 
   /* 間距 */
-  --deck-pad-x:      calc(128px * var(--deck-canvas-scale)); /* 左右安全邊界 */
-  --deck-pad-top:    calc(144px * var(--deck-canvas-scale)); /* 上方留給頁首列：左頁名、右 logo */
+  --deck-pad-x:      calc(96px  * var(--deck-canvas-scale)); /* 外圈邊距：左右、底、頁首到頂端都用這一個值 */
+  --deck-pad-top:    calc(192px * var(--deck-canvas-scale)); /* 標題頂線＝外圈邊距 96 ＋頁首列 ＋間距 */
   --deck-pad-bottom: calc(96px  * var(--deck-canvas-scale));
   --deck-space-1: calc(8px  * var(--deck-canvas-scale));
   --deck-space-2: calc(16px * var(--deck-canvas-scale));
