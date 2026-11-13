@@ -894,7 +894,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .section-band-bar { position: relative; height: calc(460px * var(--u)); background: var(--deck-highlight-bg); color: var(--deck-highlight-text);
   display: flex; align-items: flex-end; justify-content: space-between; padding: var(--deck-pad-x); overflow: hidden; }
 .section-band-bar .display { color: inherit; }
-.section-band-num { font-size: calc(var(--deck-fs-number) * 3.2); line-height: 1; font-weight: var(--deck-fw-regular); color: color-mix(in srgb, var(--deck-highlight-text) 22%, transparent); text-box: trim-both cap alphabetic; }
+.section-band-num { font-size: calc(var(--deck-fs-number) * 3.2); line-height: 1; font-weight: var(--deck-fw-semibold); color: color-mix(in srgb, var(--deck-highlight-text) 22%, transparent); text-box: trim-both cap alphabetic; }
 .section-band-bar .display { text-box: trim-both cap alphabetic; }
 
 /* 見證：左邊一則大的（亮點），右邊兩則小的 */
@@ -1019,6 +1019,12 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 頁尾註解、內容區最後一個元素：一律裁到底線（後面跟著頁首列標記，不是 last-child） */
 .slide :is(.slide-note, .slide-body > :nth-last-child(1 of :not(footer)) :is(.kpi-text, .stat-text, .stat-label):last-of-type) { text-box: trim-both cap alphabetic; }
 .partners-head { text-box: trim-both cap alphabetic; }
+/* 橫排的一組字（日期、圖例、清單左右兩欄）：每個都同樣裁，基線才會對齊 */
+.deck .slide :is(.cover-meta, .legend, .marks-legend, .rows > li, .card-head, .bars-row, .option-head, .market-row, .quote-by, .stat-delta, .timeline-week) > *, .deck .slide :is(.cover-meta, .legend, .marks-legend, .bars-row, .quote-by) > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .bars-row > .bars-track { text-box: normal; }
+.deck .slide :is(.quote-by, .marks-legend, .legend, .partners-head, .columns-axis, .milestones.vertical > li) > *, .deck .slide :is(.quote-by, .legend, .marks-legend) > * > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .milestones.vertical > li { align-items: baseline; }
+.deck .slide :is(.quote-by, .legend, .marks-legend) { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--deck-space-3); }
 .partners-head img { margin-top: calc(-6px * var(--u)); }
 /* 大數字裁掉行距後，跟下面的說明留固定間距 */
 :is(.kpi, .stat) > :is(.kpi-value, .stat-value) { margin-bottom: var(--deck-space-2); }
