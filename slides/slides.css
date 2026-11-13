@@ -72,6 +72,12 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck-toggle:active { transform: translateY(1px); }
 .deck-toggle.is-dark-mode { right: calc(140px + env(safe-area-inset-right, 0px)); background: var(--deck-ground-dark); color: var(--deck-text-on-dark); }
 @media (prefers-reduced-motion: reduce) { .deck-toggle { transition: none; } }
+/* 總覽裡超過內容上限的頁：左上角標紅（寫哪一項超過）；有 data-dense（Victor 同意過）的標黃 */
+.deck.is-overview .slide-frame[data-over]::before { content: "超過上限：" attr(data-over); position: absolute; left: 8px; top: 8px; right: 8px; z-index: 5;
+  padding: 6px 10px; border-radius: 6px; font: 600 14px/1.35 var(--deck-font); background: var(--deck-error-mark); color: #fff; }
+.deck.is-overview .slide-frame[data-over][data-dense-ok]::before { content: "已同意塞同一頁：" attr(data-over); background: var(--deck-warning-bg); color: var(--deck-warning-text); }
+.deck.is-overview .slide-frame[data-over] { outline: 3px solid var(--deck-error-mark); }
+.deck.is-overview .slide-frame[data-over][data-dense-ok] { outline-color: var(--warning-300); }
 /* 總覽裡每張縮圖下方標頁碼 */
 .deck.is-overview .slide-frame::after { content: attr(data-index); position: absolute; left: 8px; bottom: 8px; padding: 4px 10px; border-radius: 999px;
   font: 600 14px/1 var(--deck-font); background: var(--deck-text-strong); color: var(--deck-ground-page); }
@@ -297,7 +303,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .compare { display: grid; grid-template-columns: minmax(0, 1fr) calc(64px * var(--u)) minmax(0, 1fr); column-gap: var(--deck-space-3); row-gap: 0;
            grid-template-rows: auto; align-content: start; }
 .compare-col { display: grid; grid-template-rows: subgrid; grid-row: span var(--rows, 4); border-radius: var(--deck-radius-lg);
-               padding: 0 var(--deck-space-5); }
+               padding: 0 var(--deck-card-pad); }
 .compare-col.before { grid-column: 1; background: var(--s-card); }
 .compare-col.after { grid-column: 3; }
 .compare-arrows { grid-column: 2; display: grid; grid-template-rows: subgrid; grid-row: span var(--rows, 4); }
@@ -323,7 +329,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .table th.is-us { color: var(--s-accent); font-weight: var(--deck-fw-bold); }
 :is(.ground-dark, .ground-dark-warm) .table .is-us { background: color-mix(in srgb, var(--deck-highlight-bg) 22%, transparent); }
 .table .num { text-align: right; font-variant-numeric: tabular-nums; }
-/* 列數多的表（7 列以上）：只縮列距，不縮字 */
+/* 列數多的表：只縮列距，不縮字。表格上限 6 列（README「一頁的內容上限」），超過要拆頁或先告知 Victor */
 .table.is-dense td { padding-top: calc(14px * var(--u)); padding-bottom: calc(14px * var(--u)); }
 
 /* 時程（甘特）：--weeks 欄，每條 .bar 用 --from / --to（第幾週，含頭含尾） */
@@ -801,7 +807,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* 調度中心：.hub 中間改成長方形面板，放分工清單 */
 .hub.wide-core { grid-template-columns: minmax(0, 1fr) calc(600px * var(--u)) minmax(0, 1fr); }
-.hub-core.rect { aspect-ratio: auto; border-radius: var(--deck-panel-dark-radius); align-items: stretch; text-align: left; padding: var(--deck-space-5); gap: var(--deck-space-2); }
+.hub-core.rect { aspect-ratio: auto; border-radius: var(--deck-panel-dark-radius); align-items: stretch; text-align: left; padding: var(--deck-card-pad); gap: var(--deck-space-2); }
 .hub-core.rect .steps { gap: 0; }
 
 /* 方案很多欄（4–5 欄）時用 .compact，價格縮成 heading */
@@ -940,8 +946,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide :is(.compare-item b, .entry-title) { font-size: var(--deck-fs-body); font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
 .deck .slide :is(.compare-item span, .entry-text) { font-size: var(--deck-fs-caption); color: var(--s-muted); line-height: var(--deck-lh-body); }
 .deck .slide .entry { align-items: end; }
-/* 對照欄標題：下方分隔線用深一階的線色（跟 card-head 一致），標題裁到字身、上下 24 */
-.deck .slide .compare-head { padding: var(--deck-space-3) 0; }
+/* 對照欄標題：下方分隔線用深一階的線色（跟 card-head 一致），標題裁到字身。
+   欄框四邊同一個內距 --deck-card-pad（40）：標題上方、最後一項下方、左右都一樣；標題下方到分隔線 24 */
+.deck .slide .compare-head { padding: var(--deck-card-pad) 0 var(--deck-space-3); }
+.deck .slide .compare-col > .compare-item:last-child { padding-bottom: var(--deck-card-pad); }
 .deck .slide .compare-head:not(:has(> *)) { display: block; line-height: var(--deck-lh-title); text-box-trim: trim-both; text-box-edge: cap alphabetic; }
 .deck .slide .compare-head + .compare-item { border-top-color: var(--s-line-strong); }
 /* 小標題＋小副標：全 deck 同一個間距。兩行都裁到字身（cap→baseline），中間固定 16。
@@ -1073,7 +1081,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
    上緣＝標題頂線（--deck-pad-top）、下緣＝底線（--deck-pad-bottom）、左右＝--deck-pad-x。
    1. 標題永遠在頂線，不垂直置中。
    2. 內容撐到底線：卡片、表格、圖往下延伸；內容少的頁整組靠底線放（ref 的做法），不放在中間。
-   3. 卡片裡：開頭的標記（chip、小標、卡片頭）留在頂，其餘內容一起靠卡片底。
+   3. 卡片裡：內容從上往下排（靠上）。只有方案欄例外，最後的清單、說明壓在卡底，同一排的底部才對齊。
    例外：封面、章節頁、主張頁、引言、結尾（沒有頁首列的頁）可以置中。
    ============================================================ */
 .slide-body { justify-content: flex-end; }

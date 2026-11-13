@@ -208,6 +208,41 @@
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(drawLinks);
   addEventListener('beforeprint', drawLinks);
 
+  // 內容上限檢查（README「一頁的內容上限」）：超過的頁在總覽縮圖左上角標紅，有 data-dense 的標黃；console 也列出來。只在總覽出現，不進 PDF。
+  const LIMIT = { chars: 150, rows: 6, cols: 5, nodes: 10, blocks: 4, items: 6, callouts: 2 };
+  const SKIP = '.slide-head, .slide-foot, .slide-note, svg, .legend, .columns-axis, .timeline-week, .cover-meta';
+  const overList = [];
+  slides.forEach((slide, i) => {
+    const copy = slide.cloneNode(true);
+    copy.querySelectorAll(SKIP).forEach(el => el.remove());
+    const text = (copy.textContent || '').replace(/\s+/g, '');
+    const cjk = (text.match(/[\u3400-\u9fff\u3000-\u303f\uff00-\uffef]/g) || []).length;
+    const chars = Math.round(cjk + (text.length - cjk) / 2);
+    const max = (sel, fn) => Math.max(0, ...[...slide.querySelectorAll(sel)].map(fn));
+    const over = [];
+    if (chars > LIMIT.chars) over.push(`內文 ${chars} 字＞${LIMIT.chars}`);
+    const rows = max('table', t => t.querySelectorAll('tbody > tr').length);
+    if (rows > LIMIT.rows) over.push(`表格 ${rows} 列＞${LIMIT.rows}`);
+    const cols = max('table', t => ((t.querySelector('thead tr') || t.querySelector('tr'))?.children.length || 1) - 1);   // 不算第一欄的項目名
+    if (cols > LIMIT.cols) over.push(`表格 ${cols} 欄＞${LIMIT.cols}`);
+    const nodes = slide.querySelectorAll('.node').length;
+    if (nodes > LIMIT.nodes) over.push(`節點 ${nodes} 個＞${LIMIT.nodes}`);
+    const blocks = Math.max(max('.grid', g => g.querySelectorAll(':scope > .card').length),
+      max('.options:not(.compact)', g => g.querySelectorAll(':scope > .option').length),
+      max('.stats', g => g.querySelectorAll(':scope > .stat').length));
+    if (blocks > LIMIT.blocks) over.push(`並列 ${blocks} 塊＞${LIMIT.blocks}`);
+    const items = max('ul, ol', l => l.children.length);
+    if (items > LIMIT.items) over.push(`清單 ${items} 項＞${LIMIT.items}`);
+    const callouts = slide.querySelectorAll('.callout').length;
+    if (callouts > LIMIT.callouts) over.push(`說明條 ${callouts} 個＞${LIMIT.callouts}`);
+    if (!over.length) return;
+    const frame = frames[i];
+    frame.dataset.over = over.join('、');
+    if (slide.dataset.dense) frame.dataset.denseOk = slide.dataset.dense;
+    overList.push(`第 ${i + 1} 頁：${over.join('、')}${slide.dataset.dense ? `（已同意：${slide.dataset.dense}）` : ''}`);
+  });
+  if (overList.length) console.warn('超過內容上限的頁（README「一頁的內容上限」）：\n' + overList.join('\n'));
+
   document.body.style.overflow = 'hidden';
   syncToggle();
   fit();

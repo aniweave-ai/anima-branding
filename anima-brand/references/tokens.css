@@ -230,7 +230,7 @@
   --deck-radius-sm:   calc(6px  * var(--deck-canvas-scale)); /* 按鈕 */
   --deck-radius-md:   calc(8px  * var(--deck-canvas-scale)); /* 標籤、說明條、icon 底 */
   --deck-radius-lg:   calc(12px * var(--deck-canvas-scale)); /* 卡片 */
-  --deck-radius-xl:   calc(16px * var(--deck-canvas-scale)); /* 深色面板、截圖框 */
+  --deck-radius-xl:   calc(16px * var(--deck-canvas-scale)); /* 展示台（深色面板用 lg 12，跟卡片同一層） */
   --deck-radius-pill: 999px;                          /* chip */
 
   /* 間距 */
