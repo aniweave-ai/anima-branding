@@ -1058,13 +1058,14 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .slide :is(.compare-item, .case-row, .fact, .kpi, .entry, .person, .feature, .option-rows > div) { row-gap: var(--deck-space-1); gap: var(--deck-space-1); }
 .timeline-label small, .layer-name small, .numlist > li small, .roadmap-head span { display: block; margin-top: calc(6px * var(--u)); }
 .timeline { row-gap: var(--deck-space-3); }
-.slide :is(p, li, .card-text, .kpi-text, .entry-text, .feature-text, .person-text, .lede, small, span) { line-height: var(--deck-lh-body); }
-.slide :is(.title, .display, .kpi-value, .stat-value, .option-price, .ratio-value, .fact-value, .ask-value, .section-num, .section-band-num, .chip, .tag, .button) { line-height: revert-layer; }
+.slide :is(p, li, .card-text, .kpi-text, .entry-text, .feature-text, .person-text, .lede):not(.statement-text, .quote-text) { line-height: var(--deck-lh-body); }
+/* 標題和副標之間用間距分開，不靠行高 */
+.slide :is(.title, .display) + :is(.lede, p) { margin-top: var(--deck-space-3); }
 
 
 /* 大數字、價格後面一律留 16；說明條標題、架構標題的小字也要分開 */
 .slide :is(.kpi-value, .stat-value, .option-price, .ratio-value, .fact-value, .market-row .kpi-value) + * { margin-top: var(--deck-space-2); }
-.callout-title { margin-bottom: var(--deck-space-1); }
+.callout-title { margin-bottom: var(--deck-space-2); }
 /* 一組數字後面接另一組（直排的 KPI、案例結果），組與組之間留 32 */
 .slide :is(.case-result, .split-text, .kpis[style*="--cols: 1"]) > .kpi + .kpi, .case-result > .label + .kpi { margin-top: var(--deck-space-4); }
 .slide .label + .kpi-value, .slide .label + .callout-title { margin-top: var(--deck-space-1); }
