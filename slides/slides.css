@@ -1237,6 +1237,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .options.compact .option-text { margin-top: auto; }
 /* logo 結尾頁：logo 放大 */
 .deck .slide.closing.center .closing-logo { height: calc(200px * var(--u)); }
+.deck .slide.closing.center { gap: var(--deck-space-3); }
+.deck .slide.closing.center .lede { font-size: var(--deck-fs-subheading); }
 
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
