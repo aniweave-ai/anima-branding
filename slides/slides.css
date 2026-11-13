@@ -1151,6 +1151,11 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 流程節點：標題和說明之間留 8（說明是直接接在 <b> 後的文字，所以間距加在標題下面） */
 .deck .slide .slide-body :is(.node, .hub-item) > b, .deck .slide .diagram :is(.node, .hub-item) > b { display: block; margin-bottom: var(--deck-space-1) !important; }
 
+/* 架構矩陣：欄標題的字對齊下面卡片裡的字（卡片內距 24）；格子本身不再加內距 */
+.deck .slide .arch-cell { padding: 0; }
+.deck .slide .arch-head { padding-left: var(--deck-space-3); margin-bottom: calc(var(--deck-space-2) - var(--deck-space-4)); }   /* 標題列和第一層只隔 16 */
+.deck .slide .arch { row-gap: var(--deck-space-4); }   /* 層與層之間留 32，連接線才看得到線段 */   /* 層與層之間留 48，連接線才看得到線段 */
+
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
