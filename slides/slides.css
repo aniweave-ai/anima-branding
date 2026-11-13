@@ -552,6 +552,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .quadrant-axis { position: absolute; font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-muted); white-space: nowrap; }
 .quadrant-axis.x { right: 0; bottom: calc(-1 * var(--deck-space-5)); }
 .quadrant-axis.y { left: calc(-1 * var(--deck-space-2)); top: 0; transform: translateX(-100%); text-align: right; }
+/* 2×2 撐滿內容框：左右到外圈邊距，軸標放在框內（y 軸標在左上、x 軸標在右下） */
+.deck .slide .quadrant { width: 100%; height: 100%; max-height: none; aspect-ratio: auto; margin: 0; }
+.deck .slide .quadrant-axis.y { left: var(--deck-space-2); top: var(--deck-space-1); transform: none; text-align: left; }
+.deck .slide .quadrant-axis.x { right: var(--deck-space-1); bottom: var(--deck-space-2); }
 .quadrant-dot { position: absolute; left: calc(var(--x) * 1%); bottom: calc(var(--y) * 1%); transform: translate(-50%, 50%); z-index: 1;
                 display: flex; align-items: center; gap: var(--deck-space-1); font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-muted); white-space: nowrap; }
 .quadrant-dot::before { content: ""; width: calc(22px * var(--u)); height: calc(22px * var(--u)); border-radius: 50%; background: var(--deck-chart-other); flex: none; }
