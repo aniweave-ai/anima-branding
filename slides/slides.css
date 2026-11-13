@@ -961,6 +961,15 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .milestones:not(.vertical) > li::after { font-size: var(--deck-fs-subheading); top: calc(1cap + var(--ms-g)); }
 .deck .slide .milestones:not(.vertical)::before { font-size: var(--deck-fs-subheading); top: calc(1cap + var(--ms-g) + 11px * var(--u) - 2px); }
 .deck .slide .milestones:not(.vertical) .milestone-title { margin-top: calc(var(--ms-g) * 2 + 22px * var(--u) - var(--deck-space-1)); }
+/* 深色底（ground-dark、panel-dark）上的圖表：Current 500 對比不夠，主色換成 Sky，其餘換亮一階 */
+:is(.ground-dark, .ground-dark-warm, .panel-dark) {
+  --deck-chart-1: var(--sky-300); --deck-chart-2: var(--current-300); --deck-chart-3: var(--ripple-300);
+  --deck-chart-4: var(--depth-300); --deck-chart-5: var(--sky-100); --deck-chart-6: var(--depth-500);
+}
+:is(.ground-dark, .ground-dark-warm, .panel-dark) .bar:not(.is-milestone),
+:is(.ground-dark, .ground-dark-warm, .panel-dark) .market-rings > i:nth-child(3) { color: var(--deck-ground-dark); }
+:is(.ground-dark, .ground-dark-warm, .panel-dark) .chart .dot-1 { fill: var(--s-bg, var(--deck-ground-dark)); }
+:is(.ground-dark, .ground-dark-warm, .panel-dark) .chart .mark-ring { fill: var(--deck-chart-1); opacity: .3; }
 .donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
 .kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
 .kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
