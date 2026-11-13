@@ -1156,6 +1156,18 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .arch-head { padding-left: var(--deck-space-3); margin-bottom: calc(var(--deck-space-2) - var(--deck-space-4)); }   /* 標題列和第一層只隔 16 */
 .deck .slide .arch { row-gap: var(--deck-space-4); }   /* 層與層之間留 32，連接線才看得到線段 */   /* 層與層之間留 48，連接線才看得到線段 */
 
+/* 並排的卡片同一列一樣高（以最高的為準） */
+.deck .slide .grid { align-items: stretch; }
+/* 卡片頭下面已有一條線，第一筆資料不再畫上框線 */
+.deck .slide .card-head + .entries > .entry:first-child { border-top: 0; }
+
+/* 資料盤點的每一筆：字的上下都裁掉行距，上下線到字的距離都是 24，行與行之間 12 */
+.deck .slide .entry { padding: var(--deck-space-3) 0; row-gap: calc(22px * var(--u)) !important; align-items: baseline; }
+.deck .slide .entry > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; line-height: 1.4; }
+.deck .slide .card-head { padding-bottom: var(--deck-space-3); margin-bottom: 0; }
+.deck .slide .card-head > * { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide .entries > .entry:last-child { padding-bottom: 0; }
+
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
