@@ -739,6 +739,9 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .msg.is-me { align-self: flex-end; background: var(--deck-chip-bg); color: var(--deck-chip-text); }
 .msg-name { font-weight: var(--deck-fw-bold); color: var(--s-muted); }
 .msg.is-me .msg-name { color: inherit; }
+/* 深底頁的展示台上，對話泡泡還是淺底：字改回淺底用的顏色，不吃深底頁的白字 */
+:is(.ground-dark, .ground-dark-warm) .stage .msg:not(.is-me) { color: var(--deck-text); }
+:is(.ground-dark, .ground-dark-warm) .stage .msg:not(.is-me) .msg-name { color: var(--deck-text-muted); }
 
 /* 原文摘錄：出處一行＋原文 */
 .excerpt { padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line);
@@ -960,7 +963,9 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .stat { --pair-g: var(--deck-space-1); }
 .deck .slide :is(.card, .panel-dark, .stages > li) { --pair-g: var(--deck-space-2); }
 .deck .slide :has(> .milestone-title) { --pair-g: var(--deck-space-1); }
-.deck .slide :is(.ratio-part, .callout).ratio-part, .deck .slide .callout.callout { --pair-g: var(--deck-space-3); }
+.deck .slide :is(.ratio-part, .callout).ratio-part { --pair-g: var(--deck-space-3); }
+/* 說明條是一般區塊（不是 flex，沒有 gap），不用扣：label 接標題就是 16。扣 24 會變成 −8，字疊在一起 */
+.deck .slide .callout.callout { --pair-g: 0px; }
 .deck .slide :is(.compare-item, .entry, .option-rows > div) { --pair-g: var(--deck-space-2); }
 .deck .slide .feature { --pair-g: calc(4px * var(--u)); }
 .deck .slide .roadmap-head span { display: block; }
