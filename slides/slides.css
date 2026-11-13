@@ -1116,8 +1116,9 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .links .head { fill: color-mix(in srgb, var(--s-muted) 75%, var(--s-bg)); }
 .deck .slide .links path.is-accent { stroke: var(--s-accent); }
 .deck .slide .links .head.is-accent { fill: var(--s-accent); }
-.deck .slide .lanes { grid-auto-rows: auto; padding-right: var(--deck-space-2); row-gap: var(--deck-space-3); }   /* 道與道之間留 24，跨道的線轉完彎還有一段直線才到箭頭 */   /* 每一列各自等高；右邊內距＝上下內距 16 */
-.deck .slide .lanes > .lane { margin-right: calc(-1 * var(--deck-space-2)); }
+.deck .slide .lanes { grid-auto-rows: auto; padding-right: var(--deck-space-3); row-gap: 0; }   /* 卡片到上下分隔線、到右邊都是 24 */
+.deck .slide .lanes > :is(.node, .node-group) { margin: var(--deck-space-3) 0; }   /* 道與道之間留 24，跨道的線轉完彎還有一段直線才到箭頭 */   /* 每一列各自等高；右邊內距＝上下內距 16 */
+.deck .slide .lanes > .lane { margin-right: calc(-1 * var(--deck-space-3)); }
 /* 泳道不鋪灰底，改用細線分道：淺藍（ANIMA）、淺橘（同仁）節點直接放在頁面底色上才看得清楚；一般節點改用卡片灰底 */
 .deck .slide .lanes > .lane { background: none; border-radius: 0; border-top: 2px solid var(--s-line); }
 .deck .slide .lanes { border-bottom: 2px solid var(--s-line); }
