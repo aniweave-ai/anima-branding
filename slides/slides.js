@@ -140,7 +140,8 @@
           if (!tgt) return;
           const s = rect(src), t = rect(tgt);
           let d, end, dir;
-          if (t.l >= s.r - 1 || t.r <= s.l + 1) {                 // 左右：從側邊出、進側邊，中間轉折
+          const sameRow = !(t.b <= s.t + 1 || t.t >= s.b - 1);   // 上下有重疊＝同一列
+          if (sameRow && (t.l >= s.r - 1 || t.r <= s.l + 1)) {     // 同一列：從側邊出、進側邊
             const right = t.l >= s.r - 1;
             const x1 = right ? s.r : s.l, x2 = right ? t.l : t.r;
             const lo = Math.max(s.t, t.t), hi = Math.min(s.b, t.b);
@@ -154,7 +155,10 @@
             const down = t.t >= s.cy;
             const y1 = down ? s.b : s.t, y2 = down ? t.t : t.b;
             const lo = Math.max(s.l, t.l), hi = Math.min(s.r, t.r);
-            const x1 = hi - lo > 20 ? (lo + hi) / 2 : s.cx, x2 = hi - lo > 20 ? x1 : t.cx;
+            const pad = 28 * unit;
+            // 上下：有水平重疊就直線；沒有就從來源中央出、在兩列中間轉折，進目標時靠近來源那一側（不同來源不共用同一段線）
+            const x1 = hi - lo > 20 ? (lo + hi) / 2 : Math.min(Math.max(t.cx, s.l + pad), s.r - pad);   // 出口也靠向目標那一側
+            const x2 = hi - lo > 20 ? x1 : Math.min(Math.max(s.cx, t.l + pad), t.r - pad);
             const ym = (y1 + y2) / 2;
             end = [x2, y2]; const sign = down ? 1 : -1;
             const ye = y2 - sign * ah;
