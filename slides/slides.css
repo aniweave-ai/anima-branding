@@ -1113,6 +1113,11 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 流程節點高度一致：同一張圖裡每個節點一樣高（以最高的為準），內容一律從上方開始排 */
 .deck .slide .lanes { grid-auto-rows: auto; padding-right: var(--deck-space-2); }   /* 每一列各自等高；右邊內距＝上下內距 16 */
 .deck .slide .lanes > .lane { margin-right: calc(-1 * var(--deck-space-2)); }
+/* 泳道不鋪灰底，改用細線分道：淺藍（ANIMA）、淺橘（同仁）節點直接放在頁面底色上才看得清楚；一般節點改用卡片灰底 */
+.deck .slide .lanes > .lane { background: none; border-radius: 0; border-top: 2px solid var(--s-line); }
+.deck .slide .lanes { border-bottom: 2px solid var(--s-line); }
+.deck .slide .lanes > .node:not(.is-ai, .is-human, .is-done, .is-gap, .is-ghost) { background: var(--deck-card-bg); }
+.deck .slide:is(.ground-dark, .ground-dark-warm) .lanes > .node:not(.is-ai, .is-human, .is-done, .is-gap, .is-ghost) { background: var(--s-card); }
 .deck .slide .lanes > :is(.node, .node-group) { align-self: stretch; justify-content: flex-start; }
 .deck .slide .chain { align-items: stretch; }
 .deck .slide .chain > :is(.node, .node-group) { justify-content: flex-start; }
