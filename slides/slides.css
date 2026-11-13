@@ -904,6 +904,14 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .donut-center b { font-size: var(--deck-fs-heading); font-weight: var(--deck-fw-regular); color: var(--s-accent); line-height: 1.1; }
 .donut-center span { font-size: var(--deck-fs-caption); color: var(--s-muted); }
 .donut.is-sm { --size: calc(200px * var(--u)); }
+/* 甜甜圈頁：圖例在左、甜甜圈在右，甜甜圈撐滿內容區高度 */
+.deck .slide .donut-layout { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--deck-space-7); align-items: center; }
+.donut.is-lg { --size: calc(620px * var(--u)); }
+.donut.is-lg + .donut-center b { font-size: var(--deck-fs-title); }
+.deck .slide .donut-layout > .kpis { align-self: end; }
+.donut.is-lg + .donut-center span { font-size: var(--deck-fs-body); margin-top: var(--deck-space-1); }
+.kpis.is-legend .kpi-value { display: flex; align-items: center; gap: var(--deck-space-2); }
+.kpis.is-legend .key { width: calc(28px * var(--u)); height: calc(28px * var(--u)); margin: 0; flex: none; }
 .key { display: inline-block; width: calc(22px * var(--u)); height: calc(22px * var(--u)); border-radius: calc(4px * var(--u)); background: var(--c, var(--deck-chart-1)); vertical-align: -.1em; margin-right: var(--deck-space-1); }
 .chart .area-solid { fill: var(--deck-chart-1); stroke: none; }
 .chart .series-light { stroke: var(--s-strong); fill: none; stroke-width: 5; }
