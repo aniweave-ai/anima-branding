@@ -133,6 +133,20 @@
       svg.setAttribute('width', box.offsetWidth); svg.setAttribute('height', box.offsetHeight);
       const unit = parseFloat(getComputedStyle(box).getPropertyValue('--u')) || 1;
       const ah = 14 * unit;                                     // 箭頭長度
+      // 直角折線 → 轉角導圓角（半徑 12，線段太短就縮小）
+      const roundPath = pts => {
+        const r0 = 12 * unit;
+        let d = `M${pts[0][0]},${pts[0][1]}`;
+        for (let i = 1; i < pts.length - 1; i++) {
+          const [px, py] = pts[i - 1], [cx, cy] = pts[i], [nx, ny] = pts[i + 1];
+          const r = Math.min(r0, Math.hypot(cx - px, cy - py) / 2, Math.hypot(nx - cx, ny - cy) / 2);
+          const a = [cx - Math.sign(cx - px) * r, cy - Math.sign(cy - py) * r];
+          const b = [cx + Math.sign(nx - cx) * r, cy + Math.sign(ny - cy) * r];
+          d += ` L${a[0]},${a[1]} Q${cx},${cy} ${b[0]},${b[1]}`;
+        }
+        const last = pts[pts.length - 1];
+        return d + ` L${last[0]},${last[1]}`;
+      };
       sources.forEach(src => {
         const style = src.dataset.toStyle || '';
         src.dataset.to.split(/\s+/).filter(Boolean).forEach(id => {
@@ -146,10 +160,11 @@
             const x1 = right ? s.r : s.l, x2 = right ? t.l : t.r;
             const lo = Math.max(s.t, t.t), hi = Math.min(s.b, t.b);
             const y1 = hi - lo > 20 ? (lo + hi) / 2 : s.cy, y2 = hi - lo > 20 ? y1 : t.cy;
-            const xm = (x1 + x2) / 2;
-            end = [x2, y2]; dir = right ? 1 : -1;
+            dir = right ? 1 : -1;
+            const xm = x1 + (x2 - x1) * 0.35;                    // 轉折靠來源側，箭頭前留一段直線
+            end = [x2, y2];
             const xe = x2 - dir * ah;
-            d = y1 === y2 ? `M${x1},${y1} H${xe}` : `M${x1},${y1} H${xm} V${y2} H${xe}`;
+            d = roundPath(y1 === y2 ? [[x1, y1], [xe, y1]] : [[x1, y1], [xm, y1], [xm, y2], [xe, y2]]);
             dir = right ? 'r' : 'l';
           } else {                                              // 上下
             const down = t.t >= s.cy;
@@ -159,10 +174,10 @@
             // 上下：有水平重疊就直線；沒有就從來源中央出、在兩列中間轉折，進目標時靠近來源那一側（不同來源不共用同一段線）
             const x1 = hi - lo > 20 ? (lo + hi) / 2 : Math.min(Math.max(t.cx, s.l + pad), s.r - pad);   // 出口也靠向目標那一側
             const x2 = hi - lo > 20 ? x1 : Math.min(Math.max(s.cx, t.l + pad), t.r - pad);
-            const ym = (y1 + y2) / 2;
+            const ym = y1 + (y2 - y1) * 0.35;                    // 轉折靠來源側，箭頭前留一段直線
             end = [x2, y2]; const sign = down ? 1 : -1;
             const ye = y2 - sign * ah;
-            d = x1 === x2 ? `M${x1},${y1} V${ye}` : `M${x1},${y1} V${ym} H${x2} V${ye}`;
+            d = roundPath(x1 === x2 ? [[x1, y1], [x1, ye]] : [[x1, y1], [x1, ym], [x2, ym], [x2, ye]]);
             dir = down ? 'd' : 'u';
           }
           const path = document.createElementNS(NS, 'path');
