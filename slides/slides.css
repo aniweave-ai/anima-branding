@@ -946,21 +946,24 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .compare-head + .compare-item { border-top-color: var(--s-line-strong); }
 /* 小標題＋小副標：全 deck 同一個間距。兩行都裁到字身（cap→baseline），中間固定 16。
    外層是 flex/grid 且自帶 gap 的，用 --pair-g 扣掉，避免 gap＋margin 疊加。 */
-.deck .slide :is(.kpi-label, .feature-title, .milestone-title, .entry-title, .person-name, .stat-label, .roadmap-head b, .steps b, .notes b, .numcols b, .compare-item b, .card-title, .option-rows .label) { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
-.deck .slide :is(.kpi-label, .feature-title, .milestone-title, .entry-title, .person-name, .stat-label, .roadmap-head b, .steps b, .notes b, .numcols b, .compare-item b, .card-title, .option-rows .label) + :is(span, small, p, b, .kpi-text, .card-text, .feature-text, .person-text, .milestone-text, .entry-text):not(.stat-value, .stat-delta, .chip, .tag) { display: block; text-box-trim: trim-both; text-box-edge: cap alphabetic; margin-top: calc(var(--deck-space-2) - var(--pair-g, 0px)) !important; }
+.deck .slide :is(.kpi-label, .feature-title, .milestone-title, .entry-title, .person-name, .stat-label, .roadmap-head b, .steps b, .notes b, .numcols b, .compare-item b, .card-title, .option-rows .label, .label) { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.deck .slide :is(.kpi-label, .feature-title, .milestone-title, .entry-title, .person-name, .stat-label, .roadmap-head b, .steps b, .notes b, .numcols b, .compare-item b, .card-title, .option-rows .label, .label) + :is(span, small, p, b, .list, .kpi-text, .card-text, .feature-text, .person-text, .milestone-text, .entry-text):not(.stat-value, .stat-delta, .chip, .tag) { display: block; text-box-trim: trim-both; text-box-edge: cap alphabetic; margin-top: calc(var(--deck-space-2) - var(--pair-g, 0px)) !important; }
 .deck .slide :is(.kpi, .fact, .person, .numcols > div) { --pair-g: var(--deck-space-1); }
 .deck .slide .stat { --pair-g: var(--deck-space-1); }
 .deck .slide :is(.card, .panel-dark, .stages > li) { --pair-g: var(--deck-space-2); }
 .deck .slide :has(> .milestone-title) { --pair-g: var(--deck-space-1); }
+.deck .slide :is(.ratio-part, .callout).ratio-part, .deck .slide .callout.callout { --pair-g: var(--deck-space-3); }
 .deck .slide :is(.compare-item, .entry, .option-rows > div) { --pair-g: var(--deck-space-2); }
 .deck .slide .feature { --pair-g: calc(4px * var(--u)); }
 .deck .slide .roadmap-head span { display: block; }
 /* 亮點卡（藍底）裡的編號圓：白底藍字，不會跟底色融在一起 */
 :is(.stages, .steps, .notes) > li.is-highlight::before, .is-highlight .roadmap-head::before { background: var(--deck-highlight-text); color: var(--deck-highlight-bg); }
+/* 標題後面接清單：清單本身維持 flex，只吃標題間距 */
+.deck .slide .list { display: flex !important; text-box-trim: none !important; }
 /* 階段卡：編號圓到標題的距離 = 標題到副標（28） */
 .deck .slide .stages > li > .card-title:first-child { margin-top: calc(28px * var(--u) - var(--deck-space-2)); }
 /* 標題字 30 以上（卡片標題、feature、KPI 標籤、notes、numcols、橫向里程碑）跟副標間距 28；26 以下維持 16 */
-.deck .slide :is(.card-title, .feature-title, .kpi-label, .notes b, .numcols b, .milestones:not(.vertical) .milestone-title) + :is(span, small, p, b, .kpi-text, .card-text, .feature-text, .person-text, .milestone-text, .entry-text):not(.stat-value, .stat-delta, .chip, .tag) { margin-top: calc(28px * var(--u) - var(--pair-g, 0px)) !important; }
+.deck .slide :is(.card-title, .feature-title, .kpi-label, .notes b, .numcols b, .milestones:not(.vertical) .milestone-title) + :is(span, small, p, b, .list, .kpi-text, .card-text, .feature-text, .person-text, .milestone-text, .entry-text):not(.stat-value, .stat-delta, .chip, .tag) { margin-top: calc(28px * var(--u) - var(--pair-g, 0px)) !important; }
 /* 橫向里程碑：日期、點、小標題三者等距（日期 baseline→點、點→小標題 cap 都是 --ms-g） */
 .deck .slide .milestones:not(.vertical) { --ms-g: calc(40px * var(--u)); }
 .deck .slide .milestones:not(.vertical) .milestone-when { text-box-trim: trim-both; text-box-edge: cap alphabetic; margin-bottom: 0; }
