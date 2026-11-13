@@ -956,6 +956,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide :is(.compare-item, .entry, .option-rows > div) { --pair-g: var(--deck-space-2); }
 .deck .slide .feature { --pair-g: calc(4px * var(--u)); }
 .deck .slide .roadmap-head span { display: block; }
+/* 亮點卡（藍底）裡的 chip：白底藍字（灰卡 chip 用 Sky 100 的規則不能套到藍底上） */
+.deck .slide :is(.is-highlight, .option.is-featured, .compare-col.after) .chip.chip { background: var(--deck-highlight-text); color: var(--deck-highlight-bg); }
 /* 亮點卡（藍底）裡的編號圓：白底藍字，不會跟底色融在一起 */
 :is(.stages, .steps, .notes) > li.is-highlight::before, .is-highlight .roadmap-head::before { background: var(--deck-highlight-text); color: var(--deck-highlight-bg); }
 /* 標題後面接清單：清單本身維持 flex，只吃標題間距 */
