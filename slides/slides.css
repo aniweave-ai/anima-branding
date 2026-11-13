@@ -1014,11 +1014,19 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .cover-bg.is-faded::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, color-mix(in srgb, var(--deck-ground-page) 92%, transparent) 0%, color-mix(in srgb, var(--deck-ground-page) 80%, transparent) 40%, transparent 58%); }
 :is(.ground-dark, .ground-dark-warm) .cover-bg { filter: invert(1) hue-rotate(180deg) brightness(.9) saturate(1.25); }
-.cover-device { position: absolute; z-index: 1; right: calc(var(--deck-pad-x) + 72px * var(--u)); top: calc(232px * var(--u)); width: calc(620px * var(--u));
-  aspect-ratio: 964 / 1928; border-radius: 17.7% / 8.85%; box-shadow: var(--deck-glass-shadow); }
+.cover-phone { --dev-w: calc(620px * var(--u)); --dev-r: calc(110px * var(--u)); --dev-x: calc(var(--deck-pad-x) + 82px * var(--u)); --dev-y: calc(242px * var(--u)); }
+/* 手機本體：單獨一張 <img>（包在 div 裡 Chrome 列印時圖會消失） */
+.cover-device { position: absolute; z-index: 2; right: var(--dev-x); top: var(--dev-y); width: var(--dev-w); aspect-ratio: 964 / 1928; border-radius: var(--dev-r); }
+/* 毛玻璃外框：獨立一塊墊在手機後面，Web DS 玻璃框數值；外圓角＝手機圓角＋框寬 */
+.cover-glass { position: absolute; z-index: 1; right: calc(var(--dev-x) - var(--deck-glass-pad)); top: calc(var(--dev-y) - var(--deck-glass-pad));
+  width: calc(var(--dev-w) + 2 * var(--deck-glass-pad)); height: calc(var(--dev-w) * 2 + 2 * var(--deck-glass-pad));
+  border-radius: calc(var(--dev-r) + var(--deck-glass-pad));
+  background: var(--deck-glass-bg); -webkit-backdrop-filter: var(--deck-glass-backdrop); backdrop-filter: var(--deck-glass-backdrop);
+  box-shadow: inset 0 0 0 1px var(--deck-glass-ring), var(--deck-glass-shadow); }
 .slide.cover.cover-phone > .cover-bg { position: absolute; z-index: 0; }
-.slide.cover.cover-phone > .cover-device { position: absolute; z-index: 1; }
-.slide.cover.cover-phone > :not(.cover-bg):not(.cover-device) { position: relative; z-index: 2; }
+.slide.cover.cover-phone > .cover-device { position: absolute; z-index: 2; }
+.slide.cover.cover-phone > .cover-glass { position: absolute; z-index: 1; }
+.slide.cover.cover-phone > :not(.cover-bg):not(.cover-device):not(.cover-glass) { position: relative; z-index: 3; }
 .slide.cover-phone .cover-main { max-width: calc(860px * var(--u)); }
 
 /* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
@@ -1040,5 +1048,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   .deck > .slide { break-after: page; }
   .deck-progress, .deck-toggle { display: none; }
   /* 展示台上的柔和陰影疊在模糊底圖上，Chrome 印成 PDF 會變成灰色方塊：列印時拿掉 */
-  .stage *, .cover-device { box-shadow: none !important; }
+  .stage * { box-shadow: none !important; }
+  /* PDF：長陰影會變灰塊、backdrop-filter 會讓裡面的圖消失，改成只留光邊＋半透明白框 */
+  .cover-glass { box-shadow: inset 0 0 0 1px var(--deck-glass-ring) !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+    background: color-mix(in srgb, var(--deck-ground-page) 45%, transparent); }
 }
