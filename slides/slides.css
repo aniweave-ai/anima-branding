@@ -406,6 +406,18 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .hub-core { aspect-ratio: 1; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
             gap: var(--deck-space-1); padding: var(--deck-space-5); }
 .hub-core .card-title { font-size: var(--deck-fs-heading); }
+/* 圓形核心：寬度＝中間欄寬，正圓，水平垂直都置中；左右兩欄等寬、項目等高對齊圓心 */
+.deck .slide .hub { align-items: center; grid-template-columns: minmax(0, 1fr) calc(440px * var(--u)) minmax(0, 1fr); }
+.deck .slide .hub > .hub-core:not(.rect) { width: 100%; height: auto; aspect-ratio: 1; align-self: center; justify-self: center; padding: var(--deck-space-5); gap: var(--deck-space-2); }
+.deck .slide .hub > .hub-side { align-self: center; position: relative; }
+/* 欄標題放在項目上方、不佔高度，讓項目群的中心對齊圓心 */
+.deck .slide .hub > .hub-side > .label { position: absolute; bottom: 100%; left: 0; margin-bottom: var(--deck-space-2); }
+/* 虛線一路接到圓心（被圓蓋住），上下的項目也接得到圓邊 */
+.deck .slide .hub:not(.wide-core) .hub-item::after { width: calc(var(--deck-space-6) + 220px * var(--u)); z-index: 0; }
+.deck .slide .hub > .hub-core { position: relative; z-index: 1; }
+.deck .slide .hub > .hub-side { z-index: 0; }
+.deck .slide .hub .hub-item { z-index: auto; }
+.deck .slide .hub.wide-core { grid-template-columns: minmax(0, 1fr) calc(600px * var(--u)) minmax(0, 1fr); }
 
 /* 案例：左邊背景／問題／做法，右邊深色面板放結果 */
 .case { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--deck-space-5); }
