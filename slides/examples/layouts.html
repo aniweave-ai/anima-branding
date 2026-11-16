@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ANIMA 簡報版型示範</title>
 <link rel="stylesheet" href="../../anima-brand/references/tokens.css?v=2">
-<link rel="stylesheet" href="../slides.css?v=70">
+<link rel="stylesheet" href="../slides.css?v=152">
 </head>
 <body>
 <!-- 版型示範：每一頁是一種版型，內容是示意文字與示意數字。
@@ -97,7 +97,7 @@
     <header class="slide-head">
       <h2 class="title">今天談四件事</h2>
     </header>
-    <ol class="agenda slide-body">
+    <ol class="agenda is-big slide-body">
       <li class="is-current"><span class="agenda-title">現況與卡點</span><span class="agenda-text">報價從收單到送出，時間花在哪裡</span></li>
       <li><span class="agenda-title">ANIMA 怎麼做</span><span class="agenda-text">四個步驟，最後一步由人確認</span></li>
       <li><span class="agenda-title">導入方式</span><span class="agenda-text">八週 PoC，先跑一條流程</span></li>
@@ -109,9 +109,9 @@
   <!-- 8 目錄（大編號兩欄＋畫面塊） -->
   <section class="slide ground-dark">
     <header class="slide-head"><h2 class="title">今天談六件事</h2></header>
-    <div class="slide-body" style="display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--deck-space-6);">
+    <div class="slide-body" style="display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); grid-template-rows: minmax(0, 1fr); align-content: stretch; gap: var(--deck-space-6);">
       <div class="art flow-09 is-fill"></div>
-      <ol class="toc-big"><li>現況與卡點</li><li>ANIMA 怎麼做</li><li>導入成果</li><li>導入方式</li><li>方案</li><li>下一步</li></ol>
+      <ol class="agenda is-big" style="--rows: 3; height: 100%;"><li><span class="agenda-title">現況與卡點</span></li><li><span class="agenda-title">ANIMA 怎麼做</span></li><li><span class="agenda-title">導入成果</span></li><li><span class="agenda-title">導入方式</span></li><li><span class="agenda-title">方案</span></li><li><span class="agenda-title">下一步</span></li></ol>
     </div>
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">目錄</span></footer>
   </section>
@@ -147,18 +147,21 @@
         <div class="chips"><span class="chip">業務</span><span class="chip">Gmail</span></div>
         <h3 class="card-title">收單與報價</h3>
         <p class="card-text">讀取客戶信件與附件，對照 ERP 價目，產出報價草稿。</p>
+        <ul class="list checks"><li>讀信件、附件和照片</li><li>料號對不上才問業務</li><li>自動套用折扣規則</li></ul>
         <div class="tags"><span class="tag is-success">自動</span></div>
       </article>
       <article class="card">
         <div class="chips"><span class="chip">財務</span><span class="chip">ERP</span></div>
         <h3 class="card-title">送審與核准</h3>
         <p class="card-text">依金額與客戶等級分流，超過門檻才請主管核准。</p>
+        <ul class="list checks"><li>小額確認後直接送出</li><li>超過門檻才排主管簽核</li><li>每筆核准都留紀錄</li></ul>
         <div class="tags"><span class="tag is-success">自動</span><span class="tag is-warning">待確認</span></div>
       </article>
       <article class="card is-highlight">
         <div class="chips"><span class="chip">業務助理</span></div>
         <h3 class="card-title">送出與追蹤</h3>
         <p class="card-text">負責人確認後寄出，三天沒回覆就提醒業務追蹤。</p>
+        <ul class="list checks"><li>對外一律由人按確認</li><li>三天沒回就提醒業務</li><li>客戶回覆後更新看板</li></ul>
         <div class="tags"><span class="tag">人工確認</span></div>
       </article>
     </div>
@@ -168,13 +171,13 @@
   <!-- 13 KPI 大數字 -->
   <section class="slide ground-ambient">
     <header class="slide-head">
-      <h2 class="title">交件從一週縮到 30 分鐘</h2>
+      <h2 class="title">交件從一週縮到 <span class="accent">30 分鐘</span></h2>
     </header>
-    <div class="slide-body" style="justify-content: flex-end;">
-      <div class="kpis">
-        <div class="kpi"><div class="kpi-value">30<small>分鐘</small></div><div class="kpi-label">行程、報價交件</div><p class="kpi-text">原本要一週，高端訂製旅行社</p></div>
-        <div class="kpi"><div class="kpi-value">20<small>位</small></div><div class="kpi-label">每位顧問服務的客戶</div><p class="kpi-text">原本 10 位，同一家旅行社</p></div>
-        <div class="kpi"><div class="kpi-value">當天</div><div class="kpi-label">報修派工結案</div><p class="kpi-text">原本兩天以上，工業設備服務商</p></div>
+    <div class="slide-body">
+      <div class="kpis is-before-after">
+        <div class="kpi"><div class="columns"><div class="col is-other"><div class="col-bar" data-v="一週" style="--v: 100;"></div></div><div class="col"><div class="col-bar" data-v="30 分鐘" style="--v: 2;"></div></div></div><div class="columns-axis"><span>原本</span><span>導入後</span></div><div class="kpi-value">30<small>分鐘</small></div><div class="kpi-label">行程、報價交件</div><p class="kpi-text">原本要一週，高端訂製旅行社</p></div>
+        <div class="kpi"><div class="columns"><div class="col is-other"><div class="col-bar" data-v="10 位" style="--v: 50;"></div></div><div class="col"><div class="col-bar" data-v="20 位" style="--v: 100;"></div></div></div><div class="columns-axis"><span>原本</span><span>導入後</span></div><div class="kpi-value">20<small>位</small></div><div class="kpi-label">每位顧問服務的客戶</div><p class="kpi-text">原本 10 位，同一家旅行社</p></div>
+        <div class="kpi"><div class="columns"><div class="col is-other"><div class="col-bar" data-v="兩天以上" style="--v: 100;"></div></div><div class="col"><div class="col-bar" data-v="當天" style="--v: 45;"></div></div></div><div class="columns-axis"><span>原本</span><span>導入後</span></div><div class="kpi-value">當天</div><div class="kpi-label">報修派工結案</div><p class="kpi-text">原本兩天以上，工業設備服務商</p></div>
       </div>
     </div>
     <p class="slide-note">導入客戶的實際數字，出自 sales deck「導入成果」。</p>
@@ -184,7 +187,7 @@
   <!-- 14 大數字卡（一排四張，一張亮點） -->
   <section class="slide ground-dark">
     <header class="slide-head split"><h2 class="title">上線三個月的成績</h2><p class="lede">2026 年 7 月在台灣上線，9 月的數字。</p></header>
-    <div class="stats is-big slide-body" style="--cols: 4; align-content: end;">
+    <div class="stats is-big is-tall slide-body" style="--cols: 4;">
       <div class="stat"><span class="stat-value">9</span><span class="stat-label">SMB 部署</span><span class="stat-text">分布在 9 個產業</span></div>
       <div class="stat"><span class="stat-value">9</span><span class="stat-label">產業</span><span class="stat-text">旅遊、家具、工業設備等</span></div>
       <div class="stat"><span class="stat-value">2</span><span class="stat-label">大企業 PoC</span><span class="stat-text">付費客戶 2 家</span></div>
@@ -230,7 +233,7 @@
     <header class="slide-head">
       <h2 class="title">拿得到資料、做得了事，送出前由人確認</h2>
     </header>
-    <ol class="flow slide-body">
+    <ol class="flow is-tall slide-body">
       <li><div class="card"><h3 class="card-title">拍照上傳</h3><p class="card-text">業務把客戶的需求單拍照傳到群組。</p></div></li>
       <li><div class="card"><h3 class="card-title">辨識與對照</h3><p class="card-text">讀出品項與數量，對照 ERP 的料號和價目。</p></div></li>
       <li><div class="card"><h3 class="card-title">產生草稿</h3><p class="card-text">依客戶等級套用折扣，排好報價單格式。</p></div></li>
@@ -424,7 +427,7 @@
         <div class="layer"><div class="layer-name">Context<small>企業知識層</small></div><div class="layer-items"><span class="chip">Index</span><span class="chip">KM</span><span class="chip">Memory</span></div></div>
         <div class="layer"><div class="layer-name">Data<small>已經在用的工具</small></div><div class="layer-items"><span class="chip">LINE</span><span class="chip">Slack</span><span class="chip">Google Drive</span><span class="chip">ERP</span><span class="chip">200+ connectors</span></div></div>
       </div>
-      <div class="panel-dark layers-side">
+      <div class="panel-dark panel-flow flow-11 layers-side">
         <div class="label">統籌四層</div>
         <div class="card-title" style="font-size: var(--deck-fs-heading);">Orchestration</div>
         <div class="chips"><span class="chip">Delegation</span><span class="chip">Prioritization</span><span class="chip">Automation</span><span class="chip">Learning</span></div>
@@ -465,7 +468,7 @@
   <!-- 29 案例 -->
   <section class="slide">
     <header class="slide-head">
-      <h2 class="title">報修派工從兩天縮到當天結案</h2>
+      <h2 class="title">報修派工從兩天縮到<span class="accent">當天結案</span></h2>
     </header>
     <div class="case slide-body">
       <div class="case-story">
@@ -473,7 +476,7 @@
         <div class="case-row"><div class="label">卡點</div><p>判斷類型要看經驗，資深客服請假就卡住，派工平均要兩天以上。</p></div>
         <div class="case-row"><div class="label">做法</div><p>ANIMA 讀取報修內容、判斷類型、指派負責人，排進看板，由主管確認。</p></div>
       </div>
-      <div class="panel-dark case-result">
+      <div class="panel-dark panel-flow flow-05 case-result">
         <div class="label">導入後</div>
         <div class="kpi"><div class="kpi-value">當天</div><div class="kpi-label">報修結案</div></div>
         <div class="kpi"><div class="kpi-value">0</div><div class="kpi-label">需要人工轉單</div></div>
@@ -493,7 +496,7 @@
         <div class="card-title">例行工作交給 agent</div>
         <ul class="list"><li>整理各處的資訊並附出處</li><li>比對清單與文件差異</li><li>產出草稿、清單與表單</li><li>盯期限與待回應項目</li></ul>
       </div>
-      <div class="ratio-part panel-dark" style="--share: 42;">
+      <div class="ratio-part panel-dark panel-flow flow-07" style="--share: 42;">
         <div class="ratio-value">20<small>%</small></div>
         <div class="card-title">判斷與決策留給人</div>
         <ul class="list"><li>優先順序與資源分配</li><li>對客戶的專業判斷</li><li>對外送出前的確認</li></ul>
@@ -508,13 +511,16 @@
       <h2 class="title">三成問題卡在權限與帳號</h2>
       <p class="lede">先補權限排解的 SOP，影響最大。</p>
     </header>
-    <div class="slide-body" style="justify-content: flex-end;">
+    <div class="slide-body">
+      <div class="bars-split">
+      <div class="kpi"><div class="kpi-value">34%</div><div class="kpi-label">權限／帳號</div><p class="kpi-text">所有問題裡佔比最高</p></div>
       <div class="bars">
         <div class="bars-row"><div class="bars-label">權限／帳號</div><div class="bars-track"><i class="bars-fill" style="--v: 34;"></i></div><div class="bars-value">34%</div></div>
         <div class="bars-row is-other"><div class="bars-label">報價／合約</div><div class="bars-track"><i class="bars-fill" style="--v: 24;"></i></div><div class="bars-value">24%</div></div>
         <div class="bars-row is-other"><div class="bars-label">交付／缺件</div><div class="bars-track"><i class="bars-fill" style="--v: 19;"></i></div><div class="bars-value">19%</div></div>
         <div class="bars-row is-other"><div class="bars-label">上傳／同步</div><div class="bars-track"><i class="bars-fill" style="--v: 13;"></i></div><div class="bars-value">13%</div></div>
         <div class="bars-row is-other"><div class="bars-label">其他</div><div class="bars-track"><i class="bars-fill" style="--v: 10;"></i></div><div class="bars-value">10%</div></div>
+      </div>
       </div>
     </div>
     <p class="slide-note">數字取自 sales deck 場景 C 的產品示意頁。</p>
@@ -524,12 +530,12 @@
   <!-- 32 比例條（一條堆疊條＋每段數字） -->
   <section class="slide">
     <header class="slide-head split"><h2 class="title">8 個工項，自動給燈號</h2><p class="lede">結構期 113/12/16～12/22，會議預定 vs LINE 實際。</p></header>
-    <div class="slide-body" style="justify-content: flex-end; gap: var(--deck-space-6);">
-      <div class="sharebar" role="img" aria-label="照預定 3 項、晚了 2 項、延後或沒有回報 3 項"><i style="--v: 3; --c: var(--deck-success-mark);"></i><i style="--v: 2; --c: var(--deck-warning-mark);"></i><i style="--v: 3; --c: var(--deck-error-mark);"></i></div>
-      <div class="shares">
-        <div class="kpi" style="--c: var(--deck-success-text);"><div class="kpi-value">3<small>項</small></div><div class="kpi-label">照預定</div><p class="kpi-text">13F 頂版澆置準時</p></div>
-        <div class="kpi" style="--c: var(--deck-warning-text);"><div class="kpi-value">2<small>項</small></div><div class="kpi-label">晚了</div><p class="kpi-text">9F 石膏磚隔間晚 7 天以上</p></div>
-        <div class="kpi" style="--c: var(--deck-error-text);"><div class="kpi-value">3<small>項</small></div><div class="kpi-label">延後或沒有回報</div><p class="kpi-text">10～11F 防火門已延 2 次</p></div>
+    <div class="slide-body" style="gap: var(--deck-space-6);">
+      <div class="status-tiles" role="img" aria-label="8 個工項的燈號"><div class="is-ok"><b>13F<br>頂版澆置</b><span>準時</span></div><div class="is-ok"><b>5～8F<br>鋁窗安裝</b><span>照進度</span></div><div class="is-ok"><b>浴廁防水</b><span>進行中</span></div><div class="is-late"><b>AB 棟<br>外牆泥作</b><span>晚 1 天</span></div><div class="is-late"><b>9F<br>石膏磚隔間</b><span>晚 7 天以上</span></div><div class="is-bad"><b>10～11F<br>防火門</b><span>已延 2 次</span></div><div class="is-bad"><b>外牆吊線<br>4～11F</b><span>沒有回報</span></div><div class="is-bad"><b>C 棟<br>內外牆泥作</b><span>沒有回報</span></div></div>
+      <div class="shares" style="--cols-tpl: 3fr 2fr 3fr;">
+        <div class="kpi" style="--c: var(--deck-success-text);"><div class="kpi-value">3<small>項</small></div><div class="kpi-label">照預定</div></div>
+        <div class="kpi" style="--c: var(--deck-warning-text);"><div class="kpi-value">2<small>項</small></div><div class="kpi-label">晚了</div></div>
+        <div class="kpi" style="--c: var(--deck-error-text);"><div class="kpi-value">3<small>項</small></div><div class="kpi-label">延後或沒有回報</div></div>
       </div>
     </div>
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">進度表</span></footer>
@@ -555,7 +561,7 @@
     </header>
     <div class="options slide-body">
       <div class="option">
-        <div class="option-head"><span class="icon"><svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6 9.5 4.25 4.25 0 0 0 7 18Z"/></svg></span><div class="option-name">雲端專用環境</div></div>
+        <div class="option-head"><span class="icon"><i class="ico ico-hosted" style="--ico-size: 100%;"></i></span><div class="option-name">雲端專用環境</div></div>
         <div class="option-rows">
           <div><span class="label">資料</span><b>專用環境，與其他客戶隔離</b></div>
           <div><span class="label">模型推論</span><b>商用模型服務，雲端推論</b></div>
@@ -563,7 +569,7 @@
         </div>
       </div>
       <div class="option">
-        <div class="option-head"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.5 7 10 4-1.5 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg></span><div class="option-name">Hybrid 部署</div></div>
+        <div class="option-head"><span class="icon"><i class="ico ico-de-identify" style="--ico-size: 100%;"></i></span><div class="option-name">Hybrid 部署</div></div>
         <div class="option-rows">
           <div><span class="label">資料</span><b>去識別化閘道放在企業端</b></div>
           <div><span class="label">模型推論</span><b>去識別化後在雲端推論</b></div>
@@ -571,7 +577,7 @@
         </div>
       </div>
       <div class="option">
-        <div class="option-head"><span class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="7" rx="2"/><rect x="4" y="13" width="16" height="7" rx="2"/><path d="M8 7.5h.01M8 16.5h.01"/></svg></span><div class="option-name">完全地端</div></div>
+        <div class="option-head"><span class="icon"><i class="ico ico-on-premises" style="--ico-size: 100%;"></i></span><div class="option-name">完全地端</div></div>
         <div class="option-rows">
           <div><span class="label">資料</span><b>留在企業機房，不出網</b></div>
           <div><span class="label">模型推論</span><b>開放權重模型，企業內推論</b></div>
@@ -634,20 +640,21 @@
     <header class="slide-head">
       <h2 class="title">內容送進 AI 模型前，先去識別化</h2>
     </header>
-    <div class="transform slide-body">
+    <div class="transform is-tall slide-body">
       <div class="card">
-        <div class="label">1　群組裡的原文</div>
+        <div class="step-num">01</div><div class="label">群組裡的原文</div>
         <p class="sample"><span class="pii">陳小姐</span>想把交期改到下週五，電話 <span class="pii">0912-345-678</span>，統編 <span class="pii">12345678</span>。</p>
       </div>
       <div class="transform-arrow"></div>
       <div class="card">
-        <div class="label">2　模型看到的內容</div>
+        <div class="step-num">02</div><div class="label">模型看到的內容</div>
         <p class="sample"><span class="token">客戶A12</span>想把交期改到下週五，電話 <span class="token">P1</span>，統編 <span class="token">T1</span>。</p>
-        <p class="card-text" style="font-size: var(--deck-fs-caption);">對照表留在企業端，不送進模型。</p>
+        <div class="map"><span class="pii">陳小姐</span><i>→</i><span><span class="token">客戶A12</span></span><span class="pii">0912-345-678</span><i>→</i><span><span class="token">P1</span></span><span class="pii">12345678</span><i>→</i><span><span class="token">T1</span></span></div>
+        <p class="card-text" style="font-size: var(--deck-fs-caption); margin-top: var(--deck-space-2);">對照表留在企業端，不送進模型。</p>
       </div>
       <div class="transform-arrow"></div>
       <div class="card">
-        <div class="label">3　還原給負責人</div>
+        <div class="step-num">03</div><div class="label">還原給負責人</div>
         <p class="sample">已草擬回覆給<span class="pii">陳小姐</span>，交期改為下週五，等您確認後送出。</p>
       </div>
     </div>
@@ -682,10 +689,15 @@
     <header class="slide-head">
       <h2 class="title">上線三個月，九個產業在用</h2>
     </header>
-    <div class="logos slide-body" style="--cols: 3; align-content: end;">
+    <div class="slide-body">
+      <div class="logo-wall">
+      <div class="kpi"><div class="kpi-value">9<small>個產業</small></div><div class="kpi-label">上線三個月</div><p class="kpi-text">9 家 SMB 部署，分布在 9 個產業</p></div>
+      <div class="logos" style="--cols: 3;">
       <div class="logo-cell">高端訂製旅遊</div><div class="logo-cell">家具零售通路</div><div class="logo-cell">工業設備服務</div>
       <div class="logo-cell">酒商</div><div class="logo-cell">太陽能與儲能</div><div class="logo-cell">室內設計</div>
       <div class="logo-cell">整合行銷</div><div class="logo-cell">補教業</div><div class="logo-cell">共享空間</div>
+      </div>
+      </div>
     </div>
     <p class="slide-note">有客戶授權的換成 logo（&lt;img&gt;，會自動轉單色）；沒有授權的寫產業名。</p>
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">導入成果</span><span data-page></span></footer>
@@ -728,7 +740,7 @@
   <!-- 42 成長曲線 -->
   <section class="slide">
     <header class="slide-head">
-      <h2 class="title">上線一個月第一個付費客戶，三個月九家部署</h2>
+      <h2 class="title">上線一個月第一個付費客戶，三個月<span class="accent">九家部署</span></h2>
     </header>
     <div class="split slide-body" style="grid-template-columns: 8fr 4fr;">
       <div class="chart" style="height: 100%;">
@@ -756,7 +768,7 @@
   <section class="slide ground-dark">
     <div class="slide-body" style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--deck-space-6);">
       <div style="display: flex; flex-direction: column; gap: var(--deck-space-4);">
-        <div class="slide-head"><h2 class="title">結構段很準，<br>後段差了 50 天</h2><p class="lede" style="font-size: var(--deck-fs-body);">用 12 月的資料推算各節點，再拿實際回頭對。</p></div>
+        <div class="slide-head"><h2 class="title">結構段很準，<br>後段差了 <span class="accent">50 天</span></h2><p class="lede" style="font-size: var(--deck-fs-body);">用 12 月的資料推算各節點，再拿實際回頭對。</p></div>
         <div class="kpi" style="margin-top: auto;"><div class="kpi-value">+50<small>天</small></div><p class="kpi-text">使照取得，延誤集中在拆架</p></div>
       </div>
       <div class="chart">
@@ -846,7 +858,8 @@
     <header class="slide-head">
       <h2 class="title">13 個月推出三個產品</h2>
     </header>
-    <div class="slide-body" style="justify-content: flex-end;">
+    <div class="slide-body" style="gap: var(--deck-space-6);">
+      <div class="art flow-01 is-band" style="height: calc(240px * var(--u));"></div>
       <ol class="milestones">
         <li class="is-done"><div class="milestone-when">2025.06</div><div class="milestone-title">ANIWEAVE 成立</div></li>
         <li class="is-done"><div class="milestone-when">2025.11</div><div class="milestone-title">WEAVE Space Touring</div><p class="milestone-text">簽下半導體大廠年約</p></li>
@@ -884,7 +897,7 @@
     <header class="slide-head">
       <h2 class="title">一個 ANIMA，接起整間公司的事</h2>
     </header>
-    <div class="slide-body" style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--deck-space-6);"><div class="art flow-05 is-fill"></div><div class="features is-stacked" style="--cols: 2; align-content: center;">
+    <div class="slide-body" style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--deck-space-6);"><div class="art flow-05 is-fill"></div><div class="features is-stacked" style="--cols: 2; align-content: start;">
       <div class="feature"><div class="feature-title">在群組裡用</div><p class="feature-text">LINE、Slack、Teams 直接 @ANIMA</p></div>
       <div class="feature"><div class="feature-title">跨來源查詢</div><p class="feature-text">文件、對話、表單一起找，附出處</p></div>
       <div class="feature"><div class="feature-title">草擬文件</div><p class="feature-text">報價、回覆、會議紀錄照公司格式</p></div>
@@ -903,7 +916,7 @@
       <div class="partners-head"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="x">×</span><span class="partner-name slot">〔合作夥伴〕</span></div>
       <h2 class="title">各做最擅長的，一起把導入做完</h2>
     </header>
-    <div class="split-3 slide-body">
+    <div class="split-3 is-tall slide-body">
       <div class="card"><div class="label">ANIWEAVE 負責</div><ul class="list checks"><li>產品與 AI 模型</li><li>系統串接與資安</li><li>二線技術支援</li></ul></div>
       <div class="callout"><div class="label">一起做</div><ul class="list checks"><li>客戶提案與 PoC</li><li>導入時程與驗收</li><li>成效檢視</li></ul></div>
       <div class="card"><div class="label">合作夥伴負責</div><ul class="list checks"><li>客戶關係與銷售</li><li>到場導入與教育訓練</li><li>一線客服</li></ul></div>
@@ -924,7 +937,7 @@
     <header class="slide-head">
       <h2 class="title">讀取 → 判斷 → 產出清單 → 主管確認</h2>
     </header>
-    <div class="slide-body" style="justify-content: flex-end; gap: var(--deck-space-4);">
+    <div class="slide-body" style="gap: var(--deck-space-4);">
       <div class="chain diagram">
         <div class="node" id="a0" data-to="a1"><span class="label">開始</span><b>每日 08:00</b></div>
         <div class="node is-ai" id="a1" data-to="a2"><span class="node-num">1</span><b>讀取昨日訊號</b>客戶訊息、內部討論、表格更新</div>
@@ -973,7 +986,7 @@
       <h2 class="title">同仁說一句「做這週的報告」，週會資料由 AI 產出</h2>
     </header>
     <div class="slide-body" style="gap: var(--deck-space-3);">
-      <div class="lanes diagram" style="--steps: 5;">
+      <div class="lanes diagram is-dense" style="--steps: 5;">
         <div class="lane" style="--lane: 1;"></div><div class="lane-label" style="--lane: 1;">同仁</div>
         <div class="lane" style="--lane: 2;"></div><div class="lane-label" style="--lane: 2;">ANIMA</div>
         <div class="lane" style="--lane: 3;"></div><div class="lane-label" style="--lane: 3;">資料來源</div>
@@ -1114,7 +1127,7 @@
     <header class="slide-head">
       <h2 class="title">用去年 12 月的資料推算，再拿實際回頭對</h2>
     </header>
-    <div class="split slide-body" style="grid-template-columns: 8fr 4fr; align-items: end;">
+    <div class="split slide-body" style="grid-template-columns: 8fr 4fr;">
       <table class="table">
         <thead><tr><th>節點</th><th>推算</th><th>實際</th><th style="width: 40%;">差異</th><th class="num">天</th></tr></thead>
         <tbody>
@@ -1136,9 +1149,9 @@
   <!-- 61 直條圖 -->
   <section class="slide">
     <header class="slide-head">
-      <h2 class="title">13F 多花 6 天，沒有記錄原因</h2>
+      <h2 class="title">13F 多花 6 天，<span class="accent">沒有記錄原因</span></h2>
     </header>
-    <div class="slide-body" style="justify-content: flex-end; gap: 0;">
+    <div class="slide-body" style="gap: 0;">
       <div class="columns" style="--h: calc(460px * var(--u));"><div class="col is-other"><div class="col-bar" data-v="17" style="--v: 57;"></div></div><div class="col is-other"><div class="col-bar" data-v="21" style="--v: 70;"></div></div><div class="col is-other"><div class="col-bar" data-v="16" style="--v: 53;"></div></div><div class="col is-other"><div class="col-bar" data-v="17" style="--v: 57;"></div></div><div class="col"><div class="col-bar" data-v="21" style="--v: 70;"></div></div><div class="col is-other"><div class="col-bar" data-v="16" style="--v: 53;"></div></div><div class="col is-other"><div class="col-bar" data-v="16" style="--v: 53;"></div></div><div class="col is-other"><div class="col-bar" data-v="17" style="--v: 57;"></div></div><div class="col is-other"><div class="col-bar" data-v="27" style="--v: 90;"></div></div><div class="col is-other"><div class="col-bar" data-v="16" style="--v: 53;"></div></div><div class="col is-other"><div class="col-bar" data-v="22" style="--v: 73;"></div></div></div>
       <div class="columns-axis"><span>9F</span><span>10F</span><span>11F</span><span>12F</span><span>13F</span><span>14F</span><span>15F</span><span>16F</span><span>17F</span><span>18F</span><span>R</span></div>
     </div>
@@ -1261,7 +1274,7 @@
     <header class="slide-head">
       <h2 class="title">清單定好，做 PPT 這件事就能消失</h2>
     </header>
-    <div class="split even slide-body" style="align-items: end;">
+    <div class="split even slide-body">
       <ol class="steps">
         <li class="is-current"><div><b>今天：定好前、中、後期的節點與 KPI</b><span>上一頁的清單</span></div></li>
         <li><div><b>依清單做成固定的進度表、KPI 表範本</b></div></li>
@@ -1334,13 +1347,178 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">商業模式</span><span data-page></span></footer>
   </section>
 
-  <!-- 70 logo 結尾頁（置中，深色底） -->
+  <!-- 70 左長條圖、右三個大數字（ref A「The problem in numbers」）深底 -->
+  <section class="slide ground-dark">
+    <header class="slide-head"><h2 class="title">延誤集中在<span class="accent">開工前置</span>與後段</h2></header>
+    <div class="slide-body numbers-chart">
+      <div class="chart-block">
+        <p class="chart-title">各階段比計畫晚幾天</p>
+        <div class="columns is-wide"><div class="col"><div class="col-bar" data-v="+110" style="--v: 100;"></div></div><div class="col"><div class="col-bar" data-v="+2" style="--v: 2;"></div></div><div class="col"><div class="col-bar" data-v="+49" style="--v: 45;"></div></div><div class="col"><div class="col-bar" data-v="+48" style="--v: 44;"></div></div><div class="col"><div class="col-bar" data-v="+45" style="--v: 41;"></div></div></div>
+        <div class="columns-axis"><span>開工前置</span><span>地上結構</span><span>外飾、拆架</span><span>使照</span><span>交屋</span></div>
+      </div>
+      <div class="kpis is-inline">
+        <div class="kpi"><div class="kpi-value">+110<small>天</small></div><p class="kpi-text">周邊樁完成後暫停，等土方發包決定</p></div>
+        <div class="kpi"><div class="kpi-value">+49<small>天</small></div><p class="kpi-text">拆架延後，原因未記錄</p></div>
+        <div class="kpi"><div class="kpi-value">+2<small>天</small></div><p class="kpi-text">地上結構，每層週期穩定</p></div>
+      </div>
+    </div>
+    <p class="slide-note">數字為示意。</p>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">問題的數字</span><span data-page></span></footer>
+  </section>
+
+  <!-- 71 標題＋右上大數字＋整排長條（ref「Traction」）深底 -->
+  <section class="slide ground-dark">
+    <header class="slide-head head-kpi">
+      <h2 class="title">驗屋漏斗，一張圖看到卡在哪一關</h2>
+      <div class="kpi"><div class="kpi-value">91<small>戶</small></div><p class="kpi-text">離 1 月底目標 250 戶還差</p></div>
+    </header>
+    <div class="slide-body chart-block">
+      <div class="columns is-wide"><div class="col is-other"><div class="col-bar" data-v="390" style="--v: 100;"></div></div><div class="col is-other"><div class="col-bar" data-v="357" style="--v: 92;"></div></div><div class="col is-other"><div class="col-bar" data-v="309" style="--v: 79;"></div></div><div class="col is-other"><div class="col-bar" data-v="259" style="--v: 66;"></div></div><div class="col is-other"><div class="col-bar" data-v="182" style="--v: 47;"></div></div><div class="col"><div class="col-bar" data-v="159" style="--v: 41;"></div></div><div class="col is-other"><div class="col-bar" data-v="91" style="--v: 23;"></div></div><div class="col is-other"><div class="col-bar" data-v="9" style="--v: 2;"></div></div></div>
+      <div class="columns-axis"><span>已售</span><span>已約初驗</span><span>初驗完成</span><span>對保</span><span>核貸</span><span>複驗完成</span><span>確認書已簽</span><span>切交</span></div>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">週會 KPI</span><span data-page></span></footer>
+  </section>
+
+  <!-- 72 摘要大字＋一排大數字（ref A「Executive summary」） -->
+  <section class="slide">
+    <div class="slide-body summary-body">
+      <h2 class="summary">ANIMA 讀懂公司的資料，<br>在群組裡把事做完，<br><span class="accent">送出前由人確認</span>。</h2>
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-value">9<small>家</small></div><p class="kpi-text">SMB 部署</p></div>
+        <div class="kpi"><div class="kpi-value">9<small>個</small></div><p class="kpi-text">產業</p></div>
+        <div class="kpi"><div class="kpi-value">1<small>個月</small></div><p class="kpi-text">上線到第一個付費客戶</p></div>
+      </div>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">摘要</span><span data-page></span></footer>
+  </section>
+
+  <!-- 73 主張＋畫面塊＋使命願景兩欄（ref「Mission & vision」）深底 -->
+  <section class="slide ground-dark">
+    <header class="slide-head"><h2 class="title">使命與願景</h2></header>
+    <div class="slide-body media-split is-flip">
+      <div class="media-text" style="justify-content: space-between;">
+        <p class="statement">AI 什麼都懂，<br>就是不懂你公司。<br>ANIMA 補上這一段。</p>
+        <div class="features is-stacked" style="--cols: 2;">
+          <div class="feature"><div class="feature-title">使命</div><p class="feature-text">讓 AI 讀懂公司的資料，在群組裡把事做完。</p></div>
+          <div class="feature"><div class="feature-title">願景</div><p class="feature-text">一個 ANIMA，接起整間公司的事。</p></div>
+        </div>
+      </div>
+      <div class="art flow-05"></div>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">使命與願景</span><span data-page></span></footer>
+  </section>
+
+  <!-- 74 畫面塊＋編號 2×2（ref A「Key features」）深底 -->
+  <section class="slide ground-dark">
+    <header class="slide-head"><h2 class="title">四個關鍵功能</h2></header>
+    <div class="slide-body media-split">
+      <div class="art flow-13"></div>
+      <div class="numgrid">
+        <div><b>在群組裡用</b><p>LINE、Slack、Teams 直接 @ANIMA</p></div>
+        <div><b>草擬文件</b><p>報價、回覆、會議紀錄照公司格式</p></div>
+        <div><b>200+ 串接</b><p>ERP、CRM、雲端硬碟、Email</p></div>
+        <div><b>送出前確認</b><p>對外的東西一律由人按確認</p></div>
+      </div>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">功能總覽</span><span data-page></span></footer>
+  </section>
+
+  <!-- 75 超大數字＋寬點陣（ref B「The problem」）深底 -->
+  <section class="slide ground-dark">
+    <div class="slide-body" style="justify-content: space-between;">
+      <div class="big-claim">
+        <div class="kpi-value">93%</div>
+        <div><b>15～65 歲的台灣人，每天都在用 LINE</b><p>同仁本來就在群組裡工作，ANIMA 直接加進群組，不用多開一套系統。</p></div>
+      </div>
+      <div class="dots is-wide" role="img" aria-label="100 個點裡 93 個亮起"><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">市場</span><span data-page></span></footer>
+  </section>
+
+  <!-- 76 高卡＋側標題（ref B「Competitive landscape」） -->
+  <section class="slide">
+    <div class="slide-body tallcards">
+      <div class="card"><div class="card-title">M365 Copilot</div><p class="card-text">Teams 群內可用；LINE 群內、地端部署不支援。</p><div class="kpi"><div class="kpi-value">2<small>／4 項</small></div></div></div>
+      <div class="card"><div class="card-title">ChatGPT Business</div><p class="card-text">搜尋公司資料可用；Teams 群內部分支援。</p><div class="kpi"><div class="kpi-value">1<small>／4 項</small></div></div></div>
+      <div class="card is-highlight"><div class="card-title">ANIMA</div><p class="card-text">LINE、Teams 群內都能用，也可以地端部署。</p><div class="kpi"><div class="kpi-value">4<small>／4 項</small></div></div></div>
+      <div class="tallcards-side"><h2 class="title">差在協作介面<br>與部署方式</h2><p class="lede">比四項能力：搜尋公司資料、LINE 群內、Teams 群內、地端部署。只算完整支援。</p></div>
+    </div>
+    <p class="slide-note">各家官方產品資料，查閱日期 2026-08-23。</p>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">競爭</span><span data-page></span></footer>
+  </section>
+
+  <!-- 77 說明＋畫面塊＋定位四象限（ref B「Marketing positioning」） -->
+  <section class="slide">
+    <div class="slide-body media-split is-flip" style="grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);">
+      <div class="media-text">
+        <h2 class="title">右上角只有 <span class="accent">ANIMA</span></h2>
+        <p class="lede">企業知識庫懂資料，但不在群組裡做事；聊天機器人在群組裡，但不懂公司。</p>
+        <div class="art flow-10" style="flex: 1;"></div>
+      </div>
+      <div class="quad">
+        <span class="quad-y">懂公司脈絡 →</span>
+        <div class="quad-cell"><b>企業知識庫</b><span>懂資料，不在群組裡做事</span></div>
+        <div class="quad-cell is-highlight"><b>ANIMA</b><span>懂公司，也在群組裡做事</span></div>
+        <div class="quad-cell"><b>通用 AI 助理</b><span>不懂公司，也不在群組裡</span></div>
+        <div class="quad-cell"><b>聊天機器人</b><span>在群組裡，但不懂公司</span></div>
+        <span class="quad-x">在群組裡做事 →</span>
+      </div>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">市場定位</span><span data-page></span></footer>
+  </section>
+
+  <!-- 78 小甜甜圈 2×2（ref B「Use of funds」） -->
+  <section class="slide">
+    <header class="slide-head split"><h2 class="title">資金用途</h2><p class="lede">Pre-seed SAFE，本輪目標 US$ 3.3M，已 close US$ 1.3M。</p></header>
+    <div class="slide-body donuts">
+      <div class="donut-item"><div class="donut-wrap"><div class="donut" style="--a: 60;" role="img" aria-label="60%"></div><div class="donut-center"><b>60%</b></div></div><div class="kpi"><div class="kpi-value">US$ 1.98M</div><p class="kpi-text">工程與團隊</p></div></div>
+      <div class="donut-item"><div class="donut-wrap"><div class="donut" style="--a: 25;" role="img" aria-label="25%"></div><div class="donut-center"><b>25%</b></div></div><div class="kpi"><div class="kpi-value">US$ 825K</div><p class="kpi-text">GTM</p></div></div>
+      <div class="donut-item"><div class="donut-wrap"><div class="donut" style="--a: 15;" role="img" aria-label="15%"></div><div class="donut-center"><b>15%</b></div></div><div class="kpi"><div class="kpi-value">US$ 495K</div><p class="kpi-text">營運與法務</p></div></div>
+      <div class="donut-item"><div class="donut-wrap"><div class="donut" style="--a: 39;" role="img" aria-label="39%"></div><div class="donut-center"><b>39%</b></div></div><div class="kpi"><div class="kpi-value">US$ 1.3M</div><p class="kpi-text">已 close</p></div></div>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">本輪募資</span><span data-page></span></footer>
+  </section>
+
+  <!-- 79 打勾比較表（ref A「Our advantages」）深底 -->
+  <section class="slide ground-dark">
+    <header class="slide-head"><h2 class="title">四項能力，只有 ANIMA <span class="accent">全部做得到</span></h2></header>
+    <div class="slide-body">
+      <table class="table is-checks">
+        <thead><tr><th>能力</th><th>M365 Copilot</th><th>Gemini Enterprise</th><th>Claude Team</th><th>ChatGPT Business</th><th class="is-us">ANIMA</th></tr></thead>
+        <tbody>
+          <tr><td>搜尋公司資料＋來源引用</td><td><span class="check is-yes" aria-label="支援"></span></td><td><span class="check is-yes" aria-label="支援"></span></td><td><span class="check is-yes" aria-label="支援"></span></td><td><span class="check is-yes" aria-label="支援"></span></td><td class="is-us"><span class="check is-yes" aria-label="支援"></span></td></tr>
+          <tr><td>LINE 群內 @Agent</td><td><span class="check is-no" aria-label="不支援"></span></td><td><span class="check is-no" aria-label="不支援"></span></td><td><span class="check is-no" aria-label="不支援"></span></td><td><span class="check is-no" aria-label="不支援"></span></td><td class="is-us"><span class="check is-yes" aria-label="支援"></span></td></tr>
+          <tr><td>Teams 群內 @Agent</td><td><span class="check is-yes" aria-label="支援"></span></td><td><span class="check is-part" aria-label="部分"></span></td><td><span class="check is-no" aria-label="不支援"></span></td><td><span class="check is-part" aria-label="部分"></span></td><td class="is-us"><span class="check is-yes" aria-label="支援"></span></td></tr>
+          <tr><td>地端部署</td><td><span class="check is-no" aria-label="不支援"></span></td><td><span class="check is-part" aria-label="部分"></span></td><td><span class="check is-no" aria-label="不支援"></span></td><td><span class="check is-no" aria-label="不支援"></span></td><td class="is-us"><span class="check is-yes" aria-label="支援"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="slide-note">打勾＝支援，橫線＝部分支援或需額外設定，叉＝不支援。各家官方產品資料，查閱日期 2026-08-23。</p>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">比較</span><span data-page></span></footer>
+  </section>
+
+  <!-- 80 上下交錯時間軸（ref A「Our path to success」）深底 -->
+  <section class="slide ground-dark">
+    <header class="slide-head"><h2 class="title">13 個月推出<span class="accent">三個產品</span></h2></header>
+    <div class="slide-body">
+      <ol class="track">
+        <li><div class="track-body"><span class="track-when">2025.06</span><b>ANIWEAVE 成立</b></div></li>
+        <li><div class="track-body"><span class="track-when">2025.11</span><b>WEAVE Space Touring</b><p>簽下半導體大廠年約</p></div></li>
+        <li><div class="track-body"><span class="track-when">2026.07</span><b>ANIMA 上線</b><p>一個月後第一個付費客戶</p></div></li>
+        <li><div class="track-body"><span class="track-when">現在</span><b>企業 PoC</b><p>兩家大企業試行中</p></div></li>
+        <li class="is-next"><div class="track-body"><span class="track-when">接下來</span><b>深耕一個產業</b><p>在客戶最重視的產業做深</p></div></li>
+      </ol>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">里程碑</span><span data-page></span></footer>
+  </section>
+
+  <!-- 81 logo 結尾頁（置中，深色底） -->
   <section class="slide closing center ground-dark">
     <img class="closing-logo" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary_dark.svg" alt="ANIMA">
     <p class="lede">aniweave.ai</p>
   </section>
 
-  <!-- 71 結尾＋聯絡資訊 -->
+  <!-- 82 結尾＋聯絡資訊 -->
   <section class="slide closing closing-band ground-ambient">
     <h2 class="display">先跑一條流程，再擴到整間公司</h2>
     <p class="lede">兩週內完成流程訪談，第三週開始串接。</p>
@@ -1353,6 +1531,6 @@
   </section>
 
 </main>
-<script src="../slides.js?v=6"></script>
+<script src="../slides.js?v=20"></script>
 </body>
 </html>
