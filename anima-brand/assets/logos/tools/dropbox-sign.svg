@@ -1,0 +1,6 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect width="100" height="100" fill="white"></rect><defs><clipPath id="dropbox-sign-vb"><rect x="66.0" y="40.0" width="380.0" height="432.0"/></clipPath></defs><g transform="translate(50 50) scale(0.148148) translate(-256.000 -256.000)"><g clip-path="url(#dropbox-sign-vb)"><svg width="432" height="432" viewBox="42 28 63.592 72.27" fill="none" x="40" y="40" preserveAspectRatio="xMidYMid meet">
+<path d="M42 55.6299L73.7957 77.8825V50.3794L42 28V55.6299Z" fill="#0061FE" />
+<path d="M105.591 28.0014L73.7954 50.3808V77.8824L105.591 55.6297V28.0014Z" fill="#1E1919" />
+<path d="M105.591 72.6401L73.7954 50.3874V77.8905L105.591 100.27V72.6401Z" fill="#0061FE" />
+<path d="M42 100.268L73.7957 77.889V50.3874L42 72.6401V100.268Z" fill="#1E1919" />
+</svg></g></g></svg>
