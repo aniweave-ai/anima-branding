@@ -1321,13 +1321,40 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide.closing.center { gap: var(--deck-space-3); }
 .deck .slide.closing.center .lede { font-size: var(--deck-fs-subheading); }
 
-/* ---------- 進場（只在投影時，PDF 印最後狀態） ---------- */
-@media screen and (prefers-reduced-motion: no-preference) {
-  .deck:not(.is-overview) .slide-frame.is-active .slide > * { animation: deck-in .5s cubic-bezier(.2,.7,.2,1) both; }
-  .deck:not(.is-overview) .slide-frame.is-active .slide > :nth-child(2) { animation-delay: .08s; }
-  .deck:not(.is-overview) .slide-frame.is-active .slide > :nth-child(3) { animation-delay: .16s; }
+/* ---------- 換頁與進場（照官網 MOTION.md；只在投影時，總覽、PDF、減少動態效果、data-transition="none" 都不播） ----------
+   換頁：背景跟內容分開動。
+   - 背景（頁面底色、底圖、流動玻璃）：新頁疊在舊頁上，600ms 溶接過去，不會整頁消失再出現。
+   - 內容：舊頁內容淡出＋6px 模糊 200ms → 新頁內容從模糊淡入 400ms（內容不重疊，兩頁字溶接會疊字）。
+   不滑、不推、不翻、不縮放，前進後退同一個效果。
+   進場：淡入 500ms＋往上浮 600ms（文字 16px、圖和畫面 24px），順序由 slides.js 寫在 --enter-delay。連按換頁（600ms 內）直接切到最後狀態。 */
+.deck {
+  --deck-ease-swap: cubic-bezier(.22, .7, .2, 1);    /* 官網 --ease-swap */
+  --deck-ease-rise: linear(0, 0.0369, 0.1219, 0.2275, 0.3374, 0.4422, 0.5372, 0.6204, 0.6916, 0.7513, 0.8009, 0.8414, 0.8743, 0.9008, 0.922, 0.9389, 0.9523, 0.9628, 0.9711, 0.9776, 0.9826, 0.9866, 0.9897, 0.992, 0.9939, 0.9953, 0.9964, 0.9972, 0.9979, 0.9984, 1);   /* 官網 --ease-nav-gentle */
+  --deck-ease-dissolve: cubic-bezier(.45, 0, .2, 1); /* 官網「緩起緩停」，背景溶接用 */
+  --deck-swap-out: 200ms; --deck-swap-in: 400ms; --deck-swap-blur: 6px; --deck-dissolve: 600ms;
+  --deck-rise-fade: 500ms; --deck-rise: 600ms;
 }
-@keyframes deck-in { from { opacity: 0; transform: translateY(calc(16px * var(--u))); } }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-leaving { visibility: visible; z-index: 1; pointer-events: none; }
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-leaving .slide > :not(.cover-bg, .cover-glass, .slide-foot),
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-leaving .slide > .slide-foot > * { animation: deck-swap-out var(--deck-swap-out) var(--deck-ease-swap) both; }
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering { z-index: 2; }
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering > .slide { animation: deck-dissolve var(--deck-dissolve) var(--deck-ease-dissolve) both; }
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering .slide > :not(.cover-bg, .cover-glass, .slide-foot),
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering .slide > .slide-foot > * { animation: deck-swap-in var(--deck-swap-in) var(--deck-ease-swap) var(--deck-swap-out) both; }
+  /* 頁首列兩頁一樣的部分（右上 logo、左上頁名）：舊頁的 logo 不淡出、新頁的 logo 不從模糊進來；新頁整頁溶接時疊在一模一樣的 logo 上，看起來就是不動 */
+  .deck.keep-logo .slide-frame:is(.is-leaving, .is-entering) .slide > .slide-foot > img { animation: none !important; }
+  .deck.keep-section .slide-frame:is(.is-leaving, .is-entering) .slide > .slide-foot > .slide-section { animation: none !important; }
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active [data-enter] {
+    animation: deck-rise-fade var(--deck-rise-fade) var(--deck-ease-rise) calc(var(--enter-base, 0ms) + var(--enter-delay, 0ms)) both,
+               deck-rise var(--deck-rise) var(--deck-ease-rise) calc(var(--enter-base, 0ms) + var(--enter-delay, 0ms)) both;
+  }
+}
+@keyframes deck-swap-out { to { opacity: 0; filter: blur(var(--deck-swap-blur)); } }
+@keyframes deck-swap-in { from { opacity: 0; filter: blur(var(--deck-swap-blur)); } }
+@keyframes deck-dissolve { from { opacity: 0; } }
+@keyframes deck-rise-fade { from { opacity: 0; } }
+@keyframes deck-rise { from { translate: 0 calc(var(--enter-y, 16px) * var(--u)); } }
 
 
 /* ---------- 列印／PDF：一頁一張 ---------- */

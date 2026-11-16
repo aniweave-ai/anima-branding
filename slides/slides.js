@@ -69,6 +69,41 @@
   applyDark(new URLSearchParams(location.search).get('dark') || deck.dataset.dark || 'off');
   if (!darkSlides.length) darkToggle.hidden = true;
 
+  // 頁內進場順序（照官網 MOTION.md 7.1）：標題 0 → 標題區其他 90 → 主內容 180（裡面的卡片、清單每個再錯開 110）→ 備註 320
+  const MEDIA = '.art, figure, .glass, .stage, .panel-flow, img, video';
+  const enter = (el, ms) => { el.dataset.enter = ''; el.style.setProperty('--enter-delay', ms + 'ms'); if (el.matches(MEDIA)) el.style.setProperty('--enter-y', '24px'); };
+  slides.forEach(slide => {
+    const head = slide.querySelector(':scope > .slide-head, :scope .slide-head');
+    const body = slide.querySelector(':scope > .slide-body') || slide.querySelector('.slide-body');
+    let last = 0;
+    if (head) [...head.children].forEach((c, i) => enter(c, c.matches('.title') ? 0 : 90));
+    if (body && body.parentElement === slide) {
+      let items = [...body.children].filter(c => !c.matches('svg.links'));
+      if (items.length === 1 && items[0].children.length > 1 && !items[0].matches(MEDIA)) items = [...items[0].children].filter(c => !c.matches('svg.links'));
+      const container = items.length > 1 && !body.matches('.diagram, .chain, .hub, .lanes, .arch') && !(items[0].parentElement.matches('.diagram, .chain, .hub, .lanes, .arch'));
+      // 卡片組、清單組再往下拆一層，每張卡、每一項各自錯開
+      const GROUP = '.grid, .stats, .options, .flow, .steps, .list, .split-3, .numcols, .logos, .rows-sources, .facts, .people, .kpis, .features, .milestones, .track';
+      if (container) items = items.flatMap(c => c.matches(GROUP) && c.children.length > 1 ? [...c.children] : [c]);
+      if (container) items.forEach((c, i) => { last = 180 + 110 * Math.min(i, 5); enter(c, last); });
+      else { last = 180; enter(body, last); }
+    }
+    [...slide.children].forEach(c => {
+      if (c === head || c === body || c.matches('.slide-foot, .slide-frame-skip')) return;
+      if (c.matches('.slide-note')) enter(c, Math.max(320, last + 110));
+      else if (!head && !body) enter(c, 0);
+      else if (head && c.contains(head)) {   // 標題包在別的版型裡（例：4A 的 .showcase）：標題以外的東西依序進場
+        let i = 0;
+        const walk = el => [...el.children].forEach(d => {
+          if (d === head) return;
+          if (d.contains(head)) walk(d); else enter(d, 180 + 110 * Math.min(i++, 5));
+        });
+        walk(c);
+      }
+      else if (!c.contains(body) && !c.dataset.enter) enter(c, 180);
+    });
+    if (!head && !body) [...slide.children].filter(c => !c.matches('.slide-foot')).forEach((c, i) => enter(c, Math.min(i, 4) * 90));
+  });
+
   let current = 0;
   const overview = () => deck.classList.contains('is-overview');
 
@@ -80,8 +115,38 @@
     deck.style.setProperty('--k', k);
   }
 
+  // 換頁特效（README「換頁與進場」）：背景溶接，內容舊頁淡出＋模糊、新頁從模糊淡入；連按（上一次換頁 600ms 內）直接切，不播
+  let lastGo = 0, leaveTimer = 0;
   function go(i, { updateHash = true } = {}) {
+    const prev = current;
     current = Math.max(0, Math.min(frames.length - 1, i));
+    const now = performance.now();
+    const moved = prev !== current && lastGo !== 0;
+    deck.classList.toggle('is-rushing', moved && now - lastGo < 600);
+    if (moved) lastGo = now; else if (!lastGo) lastGo = now;
+    frames.forEach(f => f.classList.remove('is-leaving', 'is-entering'));
+    clearTimeout(leaveTimer);
+    deck.classList.remove('keep-logo', 'keep-section');
+    if (moved && !deck.classList.contains('is-rushing')) {
+      // 頁首列兩頁一樣的部分（右上 logo、左上頁名）不做轉場，固定不動
+      const logoOf = f => f.querySelector('.slide-foot img');
+      const a = logoOf(frames[prev]), b = logoOf(frames[current]);
+      if (a && b) {
+        const sig = img => { const cs = getComputedStyle(img); return [img.currentSrc || img.src, cs.content, img.offsetLeft, img.offsetTop, img.offsetWidth, img.offsetHeight, cs.opacity].join('|'); };
+        if (sig(a) === sig(b)) deck.classList.add('keep-logo');
+      }
+      // 左上頁名也一樣：同一段字、同字型顏色、同位置就固定不動
+      const secOf = f => f.querySelector('.slide-foot .slide-section');
+      const c = secOf(frames[prev]), d = secOf(frames[current]);
+      if (c && d) {
+        const sig = el => { const cs = getComputedStyle(el); return [el.textContent.trim(), cs.font, cs.color, cs.opacity, el.offsetLeft, el.offsetTop, el.offsetWidth, el.offsetHeight].join('|'); };
+        if (sig(c) === sig(d)) deck.classList.add('keep-section');
+      }
+      frames[prev].classList.add('is-leaving');
+      frames[current].classList.add('is-entering');
+      leaveTimer = setTimeout(() => frames[prev].classList.remove('is-leaving'), 650);   // 背景溶接 600ms 跑完才收掉舊頁
+    }
+    deck.style.setProperty('--enter-base', moved ? '200ms' : '0ms');
     frames.forEach((f, n) => f.classList.toggle('is-active', n === current));
     progress.style.transform = `scaleX(${(current + 1) / frames.length})`;
     if (updateHash) history.replaceState(null, '', `#${current + 1}`);
@@ -500,9 +565,10 @@
       const frame = it.box.closest('.slide-frame');
       const active = !overview && (!frame || frame.classList.contains('is-active'));
       if (!active) { if (it.playing) { it.playing = false; still(it); } return; }
-      if (!it.playing) { it.playing = true; it.t = 0; it.fitStage(); it.scene.measure(); }
+      if (!it.playing) { it.playing = true; const calm = deck && (deck.classList.contains('is-rushing') || deck.dataset.transition === 'none'); it.t = calm ? 0 : -900; it.fitStage(); it.scene.measure(); }   // 等換頁和進場跑完（約 0.9 秒）才開始播
       const { TOTAL, HOLD } = it.scene;
       it.t = it.t + dt >= TOTAL + HOLD ? 0 : it.t + dt;
+      if (it.t < 0) { if (it.scene.renderAll) it.scene.renderAll(0); else it.scene.render(0); it.stage.style.opacity = 1; return; }
       const out = Math.min(1, Math.max(0, (it.t - (TOTAL + HOLD - FADE)) / FADE));
       it.stage.style.opacity = 1 - out;
       if (it.scene.renderAll) it.scene.renderAll(it.t); else it.scene.render(Math.min(it.t, TOTAL));
