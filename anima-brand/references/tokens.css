@@ -181,7 +181,7 @@
   --deck-height: 1080px;
   --deck-font: "Nunito Sans", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 
-  /* 字級表（8 階；投影最小 24px） */
+  /* 字級建議值（11 階）。規範管的是範圍：投影最小 20、附錄 16、只發 PDF 14；同頁相鄰兩級至少差 4px（body 26 配 caption 24 例外）；一頁最多 4 級。範圍內可以自己挑大小，一樣乘 --deck-canvas-scale */
   --deck-fs-display:    calc(96px  * var(--deck-canvas-scale)); /* 封面主標、主張頁大字 */
   --deck-fs-number:     calc(112px * var(--deck-canvas-scale)); /* KPI 大數字（數字是資料頁的主角，比標題大） */
   --deck-fs-title:      calc(64px  * var(--deck-canvas-scale)); /* 每頁標題 */
@@ -199,11 +199,12 @@
   --deck-lh-body:  1.6;  /* 內文、caption（中文需要較寬行高） */
 
   /* 字重（4 階，以看起來的粗細為準） */
-  --deck-fw-regular:  400; /* 內文、頁標題、display、大數字 */
+  --deck-fw-regular:  400; /* 內文 */
   --deck-fw-medium:   500; /* 卡片標題、表頭、數字下的標籤 */
   --deck-fw-semibold: 600; /* 表格第一欄、清單粗體詞、小標籤 */
-  --deck-fw-bold:     700; /* 只用在小地方的強調（我方欄、圖表數值、說明條標題） */
-  /* 標題、大字、數字用 regular：主次靠大小和顏色分，不靠粗體 */
+  --deck-fw-bold:     700; /* 大數字；小地方的強調（我方欄、圖表數值、說明條標題） */
+  --deck-fw-title:  var(--deck-fw-medium);   /* 頁標題、display、主張頁大字、摘要大字：比內文粗一點 */
+  --deck-fw-number: var(--deck-fw-bold);     /* 大數字：KPI、價格、比例、章節編號、流程大編號 */
 
   /* 底色（一頁一種；深底只用在章節頁、主張頁、深色面板） */
   --deck-ground-page:      #FFFFFF;

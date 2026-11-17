@@ -299,8 +299,8 @@
   addEventListener('beforeprint', drawLinks);
 
   // 內容上限檢查（README「一頁的內容上限」）：超過的頁在總覽縮圖左上角標紅，有 data-dense 的標黃；console 也列出來。只在總覽出現，不進 PDF。
-  const LIMIT = { chars: 250, rows: 8, cols: 5, nodes: 10, blocks: 4, items: 8, callouts: 2 };
-  const SKIP = '.slide-head .title, .slide-foot, .slide-brand, .slide-note, svg, .legend, .columns-axis, .timeline-week, .cover-meta';
+  const LIMIT = { chars: 250, rows: 8, cols: 5, nodes: 10, blocks: 4, items: 8, callouts: 2, ledeChars: 60, ledeLines: 2 };
+  const SKIP = '.slide-head .title, .lede, .slide-foot, .slide-brand, .slide-note, svg, .legend, .columns-axis, .timeline-week, .cover-meta';
   const overList = [];
   slides.forEach((slide, i) => {
     if ('appendix' in slide.dataset) return;   // 附錄頁（data-appendix）不套上限
@@ -354,7 +354,31 @@
     });
     if (sparse.length) console.info('拆頁後太空的頁（README「拆頁後太空」）：\n' + sparse.join('\n'));
   };
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => overview() && markSparse(), 300));
+  // 副標（.lede）不算進 250 字，另外管：60 字；標題列（.slide-head）的副標另外管最多 2 行，窄欄版型只看字數。行數要等字型載入、排版完才量得準，所以跟太空一起量。
+  const countChars = el => { const t = (el.textContent || '').replace(/\s+/g, ''); const c = (t.match(/[\u3400-\u9fff\u3000-\u303f\uff00-\uffef]/g) || []).length; return Math.round(c + (t.length - c) / 2); };
+  const markLede = () => {
+    const list = [];
+    slides.forEach((slide, i) => {
+      if ('appendix' in slide.dataset) return;
+      const over = [];
+      slide.querySelectorAll('.lede').forEach(el => {
+        const n = countChars(el);
+        const r = document.createRange(); r.selectNodeContents(el);
+        const rects = [...r.getClientRects()].filter(b => b.width > 1 && b.height > 0);
+        const tol = Math.min(...rects.map(b => b.height), Infinity) / 2;
+        const lines = rects.map(b => b.bottom).sort((a, b) => a - b).filter((y, j, a) => j === 0 || y - a[j - 1] > tol).length;
+        if (n > LIMIT.ledeChars) over.push(`副標 ${n} 字＞${LIMIT.ledeChars}`);
+        if (lines > LIMIT.ledeLines && el.closest('.slide-head:not(.split)')) over.push(`副標 ${lines} 行＞${LIMIT.ledeLines}`);
+      });
+      if (!over.length) return;
+      const frame = frames[i];
+      frame.dataset.over = [frame.dataset.over, ...over].filter(Boolean).join('、');
+      if (slide.dataset.dense) frame.dataset.denseOk = slide.dataset.dense;
+      list.push(`第 ${i + 1} 頁：${over.join('、')}`);
+    });
+    if (list.length) console.warn('副標超過 2 行或 60 字的頁（README「一頁的內容上限」）：\n' + list.join('\n'));
+  };
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { markLede(); overview() && markSparse(); }, 300));
 
   document.body.style.overflow = 'hidden';
   syncToggle();
