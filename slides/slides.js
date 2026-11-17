@@ -19,6 +19,19 @@
     return frame;
   });
 
+  // 頁底品牌列：每一頁自動加（左 slogan、右 ANIWEAVE logo）。<section> 或 <main class="deck"> 加 data-brand="off" 就不放。
+  if (deck.dataset.brand !== 'off') {
+    const css = document.querySelector('link[href*="slides.css"]');
+    const logo = (css ? css.href.replace(/slides\/slides\.css.*$/, '') : '../') + 'anima-brand/assets/logo/ANIWEAVE_textlogo_primary.svg';
+    slides.forEach(slide => {
+      if (slide.dataset.brand === 'off' || slide.querySelector(':scope > .slide-brand')) return;
+      const bar = document.createElement('div');
+      bar.className = 'slide-brand';
+      bar.innerHTML = `<span>Bringing intelligence into every workspace</span><img src="${logo}" alt="ANIWEAVE">`;
+      slide.append(bar);
+    });
+  }
+
   // 字的上下緣：CSS 預設裁到中文字墨跡（text）。純英文、數字的元素改裁到大寫頂和基線（cap alphabetic），
   // 數字類（大數字、價格、章節號）一律用 cap，即使後面接 <small> 中文單位。
   const NUM = '.kpi-value, .stat-value, .option-price, .ratio-value, .fact-value, .ask-value, .section-num, .section-band-num, .col-bar';
@@ -40,21 +53,35 @@
   progress.after(toggle);
   const syncToggle = () => { toggle.textContent = deck.classList.contains('is-overview') ? '回到投影片' : '所有版型'; };
 
-  // 深色頁開關：<main class="deck" data-dark="all | sections | off">
-  //   all（預設）照每頁設定；sections 只留章節頁、logo 結尾頁是深底；off 全部白底。
+  // 深色頁開關：<main class="deck" data-dark="all | sections | off | ambient">
+  //   all 照每頁設定；sections 只留章節頁、logo 結尾頁是深底；
+  //   off（預設）真的全白：深底、淡漸層、Sky、Sand、灰底都換白底（流動玻璃圖片頁不動）；
+  //   ambient 全部淡漸層：白底、深底、淺色底都換 .ground-ambient（流動玻璃圖片頁不動）。
   //   網址加 ?dark=sections 可以臨時預覽；右下角按鈕可以循環切換。
   const DARK = ['ground-dark', 'ground-dark-warm'];
-  const darkSlides = slides.filter(s => DARK.some(c => s.classList.contains(c)));
+  const LIGHT = ['ground-ambient', 'ground-sky', 'ground-brand', 'ground-neutral'];
+  const themed = slides.filter(s => !s.classList.contains('is-divider'));   // 範本分類頁固定藍底，不跟底色模式切換
+  const darkSlides = themed.filter(s => DARK.some(c => s.classList.contains(c)));
   darkSlides.forEach(s => { s.dataset.darkClass = DARK.find(c => s.classList.contains(c)); });
+  const lightSlides = themed.filter(s => LIGHT.some(c => s.classList.contains(c)));
+  lightSlides.forEach(s => { s.dataset.lightClass = LIGHT.find(c => s.classList.contains(c)); });
+  const plainSlides = themed.filter(s => ![...s.classList].some(c => c.startsWith('ground-')));
   const keepDark = s => s.matches('.section, .closing.center');
-  const MODES = { all: '深色頁：照設定', sections: '深色頁：只留章節頁', off: '深色頁：全部白底' };
+  const MODES = { all: '深色頁：照設定', sections: '深色頁：只留章節頁', off: '底色：全部白底', ambient: '底色：全部淡漸層' };
   function applyDark(mode) {
     if (!MODES[mode]) mode = 'all';
     deck.dataset.dark = mode;
+    const amb = mode === 'ambient';
     darkSlides.forEach(s => {
-      const on = mode === 'all' || (mode === 'sections' && keepDark(s));
-      s.classList.toggle(s.dataset.darkClass, on);
+      s.classList.toggle(s.dataset.darkClass, mode === 'all' || (mode === 'sections' && keepDark(s)));
+      s.classList.toggle('ground-ambient', amb);
     });
+    lightSlides.forEach(s => {
+      s.classList.remove(...LIGHT);
+      if (amb) s.classList.add('ground-ambient');
+      else if (mode !== 'off') s.classList.add(s.dataset.lightClass);
+    });
+    plainSlides.forEach(s => s.classList.toggle('ground-ambient', amb));
     darkToggle.textContent = MODES[mode];
   }
   const darkToggle = document.createElement('button');
@@ -67,7 +94,6 @@
     applyDark(order[(order.indexOf(deck.dataset.dark) + 1) % order.length]);
   });
   applyDark(new URLSearchParams(location.search).get('dark') || deck.dataset.dark || 'off');
-  if (!darkSlides.length) darkToggle.hidden = true;
 
   // 頁內進場順序（照官網 MOTION.md 7.1）：標題 0 → 標題區其他 90 → 主內容 180（裡面的卡片、清單每個再錯開 110）→ 備註 320
   const MEDIA = '.art, figure, .glass, .stage, .panel-flow, img, video';
@@ -87,8 +113,10 @@
       if (container) items.forEach((c, i) => { last = 180 + 110 * Math.min(i, 5); enter(c, last); });
       else { last = 180; enter(body, last); }
     }
+    // 頁首列、頁底品牌列每頁都一樣，不做進場
+    const STATIC = '.slide-foot, .slide-brand, .slide-frame-skip';
     [...slide.children].forEach(c => {
-      if (c === head || c === body || c.matches('.slide-foot, .slide-frame-skip')) return;
+      if (c === head || c === body || c.matches(STATIC)) return;
       if (c.matches('.slide-note')) enter(c, Math.max(320, last + 110));
       else if (!head && !body) enter(c, 0);
       else if (head && c.contains(head)) {   // 標題包在別的版型裡（例：4A 的 .showcase）：標題以外的東西依序進場
@@ -101,7 +129,7 @@
       }
       else if (!c.contains(body) && !c.dataset.enter) enter(c, 180);
     });
-    if (!head && !body) [...slide.children].filter(c => !c.matches('.slide-foot')).forEach((c, i) => enter(c, Math.min(i, 4) * 90));
+    if (!head && !body) [...slide.children].filter(c => !c.matches(STATIC)).forEach((c, i) => enter(c, Math.min(i, 4) * 90));
   });
 
   let current = 0;
@@ -284,10 +312,11 @@
   addEventListener('beforeprint', drawLinks);
 
   // 內容上限檢查（README「一頁的內容上限」）：超過的頁在總覽縮圖左上角標紅，有 data-dense 的標黃；console 也列出來。只在總覽出現，不進 PDF。
-  const LIMIT = { chars: 200, rows: 8, cols: 5, nodes: 10, blocks: 4, items: 8, callouts: 2 };
-  const SKIP = '.slide-head, .slide-foot, .slide-note, svg, .legend, .columns-axis, .timeline-week, .cover-meta';
+  const LIMIT = { chars: 250, rows: 8, cols: 5, nodes: 10, blocks: 4, items: 8, callouts: 2, ledeChars: 60, ledeLines: 2 };
+  const SKIP = '.slide-head .title, .lede, .slide-foot, .slide-brand, .slide-note, svg, .legend, .columns-axis, .timeline-week, .cover-meta';
   const overList = [];
   slides.forEach((slide, i) => {
+    if ('appendix' in slide.dataset) return;   // 附錄頁（data-appendix）不套上限
     const copy = slide.cloneNode(true);
     copy.querySelectorAll(SKIP).forEach(el => el.remove());
     const text = (copy.textContent || '').replace(/\s+/g, '');
@@ -314,18 +343,18 @@
     const frame = frames[i];
     frame.dataset.over = over.join('、');
     if (slide.dataset.dense) frame.dataset.denseOk = slide.dataset.dense;
-    overList.push(`第 ${i + 1} 頁：${over.join('、')}${slide.dataset.dense ? `（已同意：${slide.dataset.dense}）` : ''}`);
+    overList.push(`第 ${i + 1} 頁：${over.join('、')}${slide.dataset.dense ? `（data-dense：${slide.dataset.dense}）` : ''}`);
   });
   if (overList.length) console.warn('超過內容上限的頁（README「一頁的內容上限」）：\n' + overList.join('\n'));
 
-  // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（192–984）四成就在總覽標藍色。
+  // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（144–936，高 792）四成就在總覽標藍色。
   var markSparse = () => {
     const sparse = [];
     slides.forEach((slide, i) => {
       const head = slide.querySelector(':scope > .slide-head'), body = slide.querySelector(':scope > .slide-body');
       const frame = frames[i];
       delete frame.dataset.sparse;
-      if (!head || !body || slide.dataset.sparseOk) return;
+      if (!head || !body || slide.dataset.sparseOk || 'appendix' in slide.dataset) return;
       const k = slide.getBoundingClientRect().width / 1920;
       if (!k) return;
       const tops = [...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0).map(r => r.top);
@@ -338,7 +367,31 @@
     });
     if (sparse.length) console.info('拆頁後太空的頁（README「拆頁後太空」）：\n' + sparse.join('\n'));
   };
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => overview() && markSparse(), 300));
+  // 副標（.lede）不算進 250 字，另外管：60 字；標題列（.slide-head）的副標另外管最多 2 行，窄欄版型只看字數。行數要等字型載入、排版完才量得準，所以跟太空一起量。
+  const countChars = el => { const t = (el.textContent || '').replace(/\s+/g, ''); const c = (t.match(/[\u3400-\u9fff\u3000-\u303f\uff00-\uffef]/g) || []).length; return Math.round(c + (t.length - c) / 2); };
+  const markLede = () => {
+    const list = [];
+    slides.forEach((slide, i) => {
+      if ('appendix' in slide.dataset) return;
+      const over = [];
+      slide.querySelectorAll('.lede').forEach(el => {
+        const n = countChars(el);
+        const r = document.createRange(); r.selectNodeContents(el);
+        const rects = [...r.getClientRects()].filter(b => b.width > 1 && b.height > 0);
+        const tol = Math.min(...rects.map(b => b.height), Infinity) / 2;
+        const lines = rects.map(b => b.bottom).sort((a, b) => a - b).filter((y, j, a) => j === 0 || y - a[j - 1] > tol).length;
+        if (n > LIMIT.ledeChars) over.push(`副標 ${n} 字＞${LIMIT.ledeChars}`);
+        if (lines > LIMIT.ledeLines && el.closest('.slide-head:not(.split)')) over.push(`副標 ${lines} 行＞${LIMIT.ledeLines}`);
+      });
+      if (!over.length) return;
+      const frame = frames[i];
+      frame.dataset.over = [frame.dataset.over, ...over].filter(Boolean).join('、');
+      if (slide.dataset.dense) frame.dataset.denseOk = slide.dataset.dense;
+      list.push(`第 ${i + 1} 頁：${over.join('、')}`);
+    });
+    if (list.length) console.warn('副標超過 2 行或 60 字的頁（README「一頁的內容上限」）：\n' + list.join('\n'));
+  };
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { markLede(); overview() && markSparse(); }, 300));
 
   document.body.style.overflow = 'hidden';
   syncToggle();
@@ -582,7 +635,7 @@
    logo 檔案各自留白不同（Web DS 的工具 logo 有 18% 邊、舊稿的 png 有的貼邊），
    直接給同一個高度，看起來會一大一小。這裡把每個 logo 裁到實際圖案的範圍，
    再用同一個基準算大小：接近正方形的圖示，圖案高度一樣；橫式文字 logo，圖案面積一樣。
-   高度 h＝S × 寬高比^-0.4（最多 1.15S），基準 S＝原本 CSS 給的高度 × 0.8；logo 牆（.logo-cell）用格高的 0.5，寬度不超過格寬 85%。 */
+   高度 h＝S × 寬高比^-0.4（最多 1.15S；img.logo.is-wordmark 取代名字時固定 1.15S），基準 S＝原本 CSS 給的高度 × 0.8；logo 牆（.logo-cell）用格高的 0.5，寬度不超過格寬 85%。 */
 (function () {
   const SEL = '.deck .slide :is(.chip > img, img.logo, .logo-row img, .logo-cell img, .partner img, .partners-head img)';
   const inkBox = (img) => {
@@ -628,6 +681,7 @@
     if (!S) { delete img.dataset.logoFit; return; }
     const a = box.a;
     let h = Math.min(S * 1.15, S * Math.pow(a, -0.4)), w = h * a;   // 介於「等高」和「等面積」之間：橫式不會縮太小、直式不會太瘦
+    if (img.matches('img.logo.is-wordmark')) { h = S * 1.15; w = h * a; }   // logo 取代名字（例：比較表 ANIMA 欄頭）：照字高，不因為橫式縮小
     if (w > maxW) { w = maxW; h = w / a; }
     const p = (v) => (v * 100).toFixed(2) + '%';
     img.style.objectViewBox = `inset(${p(box.t)} ${p(box.r)} ${p(box.b)} ${p(box.l)})`;
