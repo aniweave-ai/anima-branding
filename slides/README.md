@@ -33,7 +33,7 @@
 
 1. **最小字級**：投影的頁最小 **20**；附錄頁（`data-appendix`）最小 **16**；只發 PDF、不投影的簡報最小 **14**。
 2. **級距**：同一頁用到的字級，相鄰兩級至少差 **4px**（1920 畫布；1440 畫布是 3px）。唯一例外是內文 26 配標籤／chip／軸的 caption 24，這兩個靠底色、顏色、位置分，不靠大小。
-3. **一頁最多 4 級**（頁首列、頁底品牌列不算）。
+3. **一頁最多 4 級**（頁首列、頁底品牌列不算）。內文 26 和 caption 24 算**同一級**：例如三欄卡片頁用 64／36／30／26／24，算 4 級。
 
 自己挑的大小一樣寫成 `calc(Npx * var(--deck-canvas-scale))`，不要寫死 px。沒有特別理由，就用下面的建議值（token）：
 
@@ -127,6 +127,7 @@
 - **預設封面**是 `.cover-phone` 配品牌流動玻璃背景（`.cover-bg.flow-06`，示範第 1 頁）；其他封面是備選：滿版流動玻璃（`.cover.ground-flow`）、畫面塊＋標題、自己的底圖＋手機、深色玻璃＋手機。
 - **封面＋手機** `.cover-phone`：背景鋪滿、手機在右邊往下超出頁面、文字在左。背景三選一：`.cover-bg` 放自己的底圖（圖案太滿加 `.is-faded`）、`.cover-bg.flow-NN` 品牌流動玻璃、整頁 `.ground-dark` 深色玻璃。手機圖用 JPG，圓角由 CSS 裁。
 - **預設全部白底（Victor 決定，2026-11-16）**：做簡報一律用白底，Victor 明講要深色才開深底。`data-dark` 沒寫就是 `off`。
+- **sales deck 預設漸層底（Wayne 決定，2026-11-17）**：業務簡報（sales deck、客戶提案）在 `<main class="deck">` 寫 `data-dark="ambient"`，內容頁全部用淡漸層底（`.ground-ambient`）。漸層底上的淺色塊（ANIMA 步驟、人員處理、完成、缺口、圖例色塊、chip、灰標籤、說明條 `.callout`）會自動換深一階（Sky／Warning／Success／Error／Depth 100），灰底的流程節點、卡片改白底，不用自己調。
 - **深底頁**（Victor 要求時才用）：深底（Depth 900）大約三分之一，放在想讓人停下來的頁（目錄、重點數字、做法、見證）。深底上的卡片用 `--deck-card-bg-dark`（Depth 800）。
 - **深色頁開關**：寫在 `<main class="deck" data-dark="…">`，整份一起切換，印 PDF 也照這個設定：
   - `all`：照每頁設的底色（深底頁變深）。
@@ -308,7 +309,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 - **重做舊簡報時不改內容**：只換成這套版型與視覺，文字、數字、圖的構圖都照原本那頁。原本有一張圖，就照那張圖做動畫（例如 `tools` 就是舊 sales deck 第 2 頁的圖）；不要換成官網另一段內容不同的動畫。放動畫前先對照：動畫裡出現的東西，原本那頁都要有。
 - **原稿的 logo 和圖一張都不能少（2026-11-16，Victor 明令）**：舊稿裡出現的工具 logo（LINE、Slack、Sheets…）、AI 產品 logo（比較表表頭）、客戶與合作夥伴 logo、截圖、示意圖，重做後都要在對應的頁上。字留下來、logo 拿掉也算漏。
   - 素材順序：Web DS 有的用 Web DS（`anima-brand/assets/logos/tools`、`partners`）；Web DS 沒有的，用舊稿自己的素材檔（舊 sales deck 的在 `~/Downloads/from-wc/assets`，複製到 `redo/assets/old/`）；兩邊都找不到才問 Victor。
-  - 放法：字前面 `<img class="logo">`（表頭、清單標題、資料來源、流程節點都可用）；chip 裡直接放 `<img>`；一排 logo 用 `.logo-row`（卡片底部的小 logo 加 `.is-sm`）；logo 牆數量多用 `.logos.is-sm`（一排 5 格）；原稿一張圖的內容比 DS 元件多、拆不出來時，整張放回去用 `.figure-full`，不要自己重畫成少了東西的圖。
+  - 放法：字前面 `<img class="logo">`（表頭、清單標題、資料來源、流程節點都可用）；logo 本身就是名字時（例：比較表的 ANIMA 欄頭用 `ANIMA_horizontal_primary.svg`）只放 logo、不重複寫字，加 `.is-wordmark` 讓它照字高；chip 裡直接放 `<img>` 就是 logo＋文字的標籤（`<span class="chip"><img src="…/tools-plain/line.svg" alt="">LINE</span>`，工具卡片、流程頁列工具用這個）；一排 logo 用 `.logo-row`（卡片底部的小 logo 加 `.is-sm`）；logo 牆數量多用 `.logos.is-sm`（一排 5 格）；原稿一張圖的內容比 DS 元件多、拆不出來時，整張放回去用 `.figure-full`，不要自己重畫成少了東西的圖。
   - 交付前跑 `tools-audit-redo.py`，最後一段「圖片」要顯示「圖片全部對上」；有缺要寫進交付說明並問 Victor。
 - **logo 不加白底（2026-11-16，Victor 明令）**：除非 Victor 說要，logo 一律直接放在底色上，不墊白色方塊。Web DS 的工具與合作夥伴 logo 檔案內建白底，簡報一律用去白底版 `anima-brand/assets/logos/tools-plain/`、`partners-plain/`（由 `tools/`、`partners/` 拿掉白色 rect 產生，Web DS 更新後要重產）；舊稿的 png 有白底要先去背。
 - **同一頁的 logo 大小視覺要一致**：`slides.js` 會自動把 chip、`img.logo`、`.logo-row`、`.logo-cell` 裡的 logo 裁到實際圖案範圍，再依寬高比換算大小（圖示等高、橫式文字 logo 接近等面積），所以檔案留白不同也會一樣大。一排都是公司或計畫的文字 logo 時用 `.logo-row.is-wordmark`（基準較大）。流程節點的 logo 放在編號旁 `<span class="node-top">編號＋logo</span>`，不要塞進標題擠到換行。交付前逐頁截圖看：同一頁的 logo 有沒有一顆特別大、特別小、特別淡。
@@ -466,6 +467,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.lanes` + `.lane` | 泳道流程 | As-is／To-be；節點用 `--lane`、`--step`、`--span` 定位 |
 | `.arch` | 架構矩陣 | 層別 × 方案，格子用 `grid-column`／`grid-row` 定位 |
 | `.hub.wide-core` + `.hub-core.rect` | 調度中心 | 中間是長方形面板，放分工步驟 |
+| `.hub.wide-core.orch` | 調度中心完整版（範本第 83 頁） | 中間面板加四格功能 `.orch-grid`、排先後清單 `.orch-queue`；右邊分組交辦 `.hub-item.is-group`。sales deck「接下來」頁用這個，不用 `orchestrator-sales.png` |
 | `.stats` + `.stat` | 數字卡 | 儀表板小 KPI，`.stat-delta.is-up／is-down` 標和上次比 |
 | `.timeline.has-end` | 甘特：預定 vs 實際 | `.bar.is-plan`＋`.bar.is-actual` 同一 `--row`；`.timeline-today` 今天線；`.timeline-end` 差幾天 |
 | `.columns` + `.col` | 直條圖 | `--v` 是高度 0–100，`data-v` 是顯示的數字 |

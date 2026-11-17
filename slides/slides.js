@@ -634,7 +634,7 @@
    logo 檔案各自留白不同（Web DS 的工具 logo 有 18% 邊、舊稿的 png 有的貼邊），
    直接給同一個高度，看起來會一大一小。這裡把每個 logo 裁到實際圖案的範圍，
    再用同一個基準算大小：接近正方形的圖示，圖案高度一樣；橫式文字 logo，圖案面積一樣。
-   高度 h＝S × 寬高比^-0.4（最多 1.15S），基準 S＝原本 CSS 給的高度 × 0.8；logo 牆（.logo-cell）用格高的 0.5，寬度不超過格寬 85%。 */
+   高度 h＝S × 寬高比^-0.4（最多 1.15S；img.logo.is-wordmark 取代名字時固定 1.15S），基準 S＝原本 CSS 給的高度 × 0.8；logo 牆（.logo-cell）用格高的 0.5，寬度不超過格寬 85%。 */
 (function () {
   const SEL = '.deck .slide :is(.chip > img, img.logo, .logo-row img, .logo-cell img, .partner img, .partners-head img)';
   const inkBox = (img) => {
@@ -680,6 +680,7 @@
     if (!S) { delete img.dataset.logoFit; return; }
     const a = box.a;
     let h = Math.min(S * 1.15, S * Math.pow(a, -0.4)), w = h * a;   // 介於「等高」和「等面積」之間：橫式不會縮太小、直式不會太瘦
+    if (img.matches('img.logo.is-wordmark')) { h = S * 1.15; w = h * a; }   // logo 取代名字（例：比較表 ANIMA 欄頭）：照字高，不因為橫式縮小
     if (w > maxW) { w = maxW; h = w / a; }
     const p = (v) => (v * 100).toFixed(2) + '%';
     img.style.objectViewBox = `inset(${p(box.t)} ${p(box.r)} ${p(box.b)} ${p(box.l)})`;
