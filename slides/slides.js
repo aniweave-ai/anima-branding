@@ -53,21 +53,34 @@
   progress.after(toggle);
   const syncToggle = () => { toggle.textContent = deck.classList.contains('is-overview') ? '回到投影片' : '所有版型'; };
 
-  // 深色頁開關：<main class="deck" data-dark="all | sections | off">
-  //   all（預設）照每頁設定；sections 只留章節頁、logo 結尾頁是深底；off 全部白底。
+  // 深色頁開關：<main class="deck" data-dark="all | sections | off | ambient">
+  //   all 照每頁設定；sections 只留章節頁、logo 結尾頁是深底；
+  //   off（預設）真的全白：深底、淡漸層、Sky、Sand、灰底都換白底（流動玻璃圖片頁不動）；
+  //   ambient 全部淡漸層：白底、深底、淺色底都換 .ground-ambient（流動玻璃圖片頁不動）。
   //   網址加 ?dark=sections 可以臨時預覽；右下角按鈕可以循環切換。
   const DARK = ['ground-dark', 'ground-dark-warm'];
+  const LIGHT = ['ground-ambient', 'ground-sky', 'ground-brand', 'ground-neutral'];
   const darkSlides = slides.filter(s => DARK.some(c => s.classList.contains(c)));
   darkSlides.forEach(s => { s.dataset.darkClass = DARK.find(c => s.classList.contains(c)); });
+  const lightSlides = slides.filter(s => LIGHT.some(c => s.classList.contains(c)));
+  lightSlides.forEach(s => { s.dataset.lightClass = LIGHT.find(c => s.classList.contains(c)); });
+  const plainSlides = slides.filter(s => ![...s.classList].some(c => c.startsWith('ground-')));
   const keepDark = s => s.matches('.section, .closing.center');
-  const MODES = { all: '深色頁：照設定', sections: '深色頁：只留章節頁', off: '深色頁：全部白底' };
+  const MODES = { all: '深色頁：照設定', sections: '深色頁：只留章節頁', off: '底色：全部白底', ambient: '底色：全部淡漸層' };
   function applyDark(mode) {
     if (!MODES[mode]) mode = 'all';
     deck.dataset.dark = mode;
+    const amb = mode === 'ambient';
     darkSlides.forEach(s => {
-      const on = mode === 'all' || (mode === 'sections' && keepDark(s));
-      s.classList.toggle(s.dataset.darkClass, on);
+      s.classList.toggle(s.dataset.darkClass, mode === 'all' || (mode === 'sections' && keepDark(s)));
+      s.classList.toggle('ground-ambient', amb);
     });
+    lightSlides.forEach(s => {
+      s.classList.remove(...LIGHT);
+      if (amb) s.classList.add('ground-ambient');
+      else if (mode !== 'off') s.classList.add(s.dataset.lightClass);
+    });
+    plainSlides.forEach(s => s.classList.toggle('ground-ambient', amb));
     darkToggle.textContent = MODES[mode];
   }
   const darkToggle = document.createElement('button');
@@ -80,7 +93,6 @@
     applyDark(order[(order.indexOf(deck.dataset.dark) + 1) % order.length]);
   });
   applyDark(new URLSearchParams(location.search).get('dark') || deck.dataset.dark || 'off');
-  if (!darkSlides.length) darkToggle.hidden = true;
 
   // 頁內進場順序（照官網 MOTION.md 7.1）：標題 0 → 標題區其他 90 → 主內容 180（裡面的卡片、清單每個再錯開 110）→ 備註 320
   const MEDIA = '.art, figure, .glass, .stage, .panel-flow, img, video';
