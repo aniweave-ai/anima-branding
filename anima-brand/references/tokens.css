@@ -189,17 +189,20 @@
   --deck-fs-subheading: calc(36px  * var(--deck-canvas-scale)); /* 副標、卡片標題 */
   --deck-fs-body-lg:    calc(30px  * var(--deck-canvas-scale)); /* 重點內文、引言 */
   --deck-fs-body:       calc(26px  * var(--deck-canvas-scale)); /* 一般內文 */
-  --deck-fs-caption:    calc(24px  * var(--deck-canvas-scale)); /* 註解、標籤、chip、圖表軸、資料來源；最小字級 */
+  --deck-fs-caption:    calc(24px  * var(--deck-canvas-scale)); /* 標籤、chip、圖表軸、一般註解 */
+  --deck-fs-small:      calc(20px  * var(--deck-canvas-scale)); /* footnote、資料來源、小註解、頁底品牌列；投影可用 */
+  --deck-fs-micro:      calc(16px  * var(--deck-canvas-scale)); /* 只用在附錄：細表、條款小字；投影能看清楚的下限 */
+  --deck-fs-print:      calc(14px  * var(--deck-canvas-scale)); /* 只用在不投影、只發 PDF 的簡報：備註、條款、聲明 */
 
   --deck-lh-tight: 1.15; /* display、number */
   --deck-lh-title: 1.3;  /* title、heading、subheading */
   --deck-lh-body:  1.6;  /* 內文、caption（中文需要較寬行高） */
 
   /* 字重（4 階，以看起來的粗細為準） */
-  --deck-fw-regular:  400; /* 內文 */
-  --deck-fw-medium:   500; /* 標籤、chip、表頭 */
-  --deck-fw-semibold: 600; /* 卡片標題、標語 */
-  --deck-fw-bold:     700; /* 頁標題、display、數字 */
+  --deck-fw-regular:  400; /* 內文、頁標題、display、大數字 */
+  --deck-fw-medium:   500; /* 卡片標題、表頭、數字下的標籤 */
+  --deck-fw-semibold: 600; /* 表格第一欄、清單粗體詞、小標籤 */
+  --deck-fw-bold:     700; /* 只用在小地方的強調（我方欄、圖表數值、說明條標題） */
   /* 標題、大字、數字用 regular：主次靠大小和顏色分，不靠粗體 */
 
   /* 底色（一頁一種；深底只用在章節頁、主張頁、深色面板） */
@@ -234,9 +237,9 @@
   --deck-radius-pill: 999px;                          /* chip */
 
   /* 間距 */
-  --deck-pad-x:      calc(96px  * var(--deck-canvas-scale)); /* 外圈邊距：左右、底、頁首到頂端都用這一個值 */
-  --deck-pad-top:    calc(192px * var(--deck-canvas-scale)); /* 標題頂線＝外圈邊距 96 ＋頁首列 ＋間距 */
-  --deck-pad-bottom: calc(96px  * var(--deck-canvas-scale));
+  --deck-pad-x:      calc(80px  * var(--deck-canvas-scale)); /* 外框：左右、頁首列到頂、頁底品牌列到底都用這一個值 */
+  --deck-pad-top:    calc(144px * var(--deck-canvas-scale)); /* 標題頂線＝外框 80＋64；內容底線跟它對稱（1080−144＝936） */
+  --deck-pad-bottom: calc(80px  * var(--deck-canvas-scale)); /* 頁底品牌列到底；關掉品牌列（data-brand="off"）的頁，內容底線改用這個值 */
   --deck-space-1: calc(8px  * var(--deck-canvas-scale));
   --deck-space-2: calc(16px * var(--deck-canvas-scale));
   --deck-space-3: calc(24px * var(--deck-canvas-scale));

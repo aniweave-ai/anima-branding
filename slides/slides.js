@@ -19,6 +19,19 @@
     return frame;
   });
 
+  // 頁底品牌列：每一頁自動加（左 slogan、右 ANIWEAVE logo）。<section> 或 <main class="deck"> 加 data-brand="off" 就不放。
+  if (deck.dataset.brand !== 'off') {
+    const css = document.querySelector('link[href*="slides.css"]');
+    const logo = (css ? css.href.replace(/slides\/slides\.css.*$/, '') : '../') + 'anima-brand/assets/logo/ANIWEAVE_textlogo_primary.svg';
+    slides.forEach(slide => {
+      if (slide.dataset.brand === 'off' || slide.querySelector(':scope > .slide-brand')) return;
+      const bar = document.createElement('div');
+      bar.className = 'slide-brand';
+      bar.innerHTML = `<span>Bringing intelligence into every workspace</span><img src="${logo}" alt="ANIWEAVE">`;
+      slide.append(bar);
+    });
+  }
+
   // 字的上下緣：CSS 預設裁到中文字墨跡（text）。純英文、數字的元素改裁到大寫頂和基線（cap alphabetic），
   // 數字類（大數字、價格、章節號）一律用 cap，即使後面接 <small> 中文單位。
   const NUM = '.kpi-value, .stat-value, .option-price, .ratio-value, .fact-value, .ask-value, .section-num, .section-band-num, .col-bar';
@@ -87,8 +100,10 @@
       if (container) items.forEach((c, i) => { last = 180 + 110 * Math.min(i, 5); enter(c, last); });
       else { last = 180; enter(body, last); }
     }
+    // 頁首列、頁底品牌列每頁都一樣，不做進場
+    const STATIC = '.slide-foot, .slide-brand, .slide-frame-skip';
     [...slide.children].forEach(c => {
-      if (c === head || c === body || c.matches('.slide-foot, .slide-frame-skip')) return;
+      if (c === head || c === body || c.matches(STATIC)) return;
       if (c.matches('.slide-note')) enter(c, Math.max(320, last + 110));
       else if (!head && !body) enter(c, 0);
       else if (head && c.contains(head)) {   // 標題包在別的版型裡（例：4A 的 .showcase）：標題以外的東西依序進場
@@ -101,7 +116,7 @@
       }
       else if (!c.contains(body) && !c.dataset.enter) enter(c, 180);
     });
-    if (!head && !body) [...slide.children].filter(c => !c.matches('.slide-foot')).forEach((c, i) => enter(c, Math.min(i, 4) * 90));
+    if (!head && !body) [...slide.children].filter(c => !c.matches(STATIC)).forEach((c, i) => enter(c, Math.min(i, 4) * 90));
   });
 
   let current = 0;
@@ -284,10 +299,11 @@
   addEventListener('beforeprint', drawLinks);
 
   // 內容上限檢查（README「一頁的內容上限」）：超過的頁在總覽縮圖左上角標紅，有 data-dense 的標黃；console 也列出來。只在總覽出現，不進 PDF。
-  const LIMIT = { chars: 200, rows: 8, cols: 5, nodes: 10, blocks: 4, items: 8, callouts: 2 };
-  const SKIP = '.slide-head, .slide-foot, .slide-note, svg, .legend, .columns-axis, .timeline-week, .cover-meta';
+  const LIMIT = { chars: 250, rows: 8, cols: 5, nodes: 10, blocks: 4, items: 8, callouts: 2 };
+  const SKIP = '.slide-head .title, .slide-foot, .slide-brand, .slide-note, svg, .legend, .columns-axis, .timeline-week, .cover-meta';
   const overList = [];
   slides.forEach((slide, i) => {
+    if ('appendix' in slide.dataset) return;   // 附錄頁（data-appendix）不套上限
     const copy = slide.cloneNode(true);
     copy.querySelectorAll(SKIP).forEach(el => el.remove());
     const text = (copy.textContent || '').replace(/\s+/g, '');
@@ -314,18 +330,18 @@
     const frame = frames[i];
     frame.dataset.over = over.join('、');
     if (slide.dataset.dense) frame.dataset.denseOk = slide.dataset.dense;
-    overList.push(`第 ${i + 1} 頁：${over.join('、')}${slide.dataset.dense ? `（已同意：${slide.dataset.dense}）` : ''}`);
+    overList.push(`第 ${i + 1} 頁：${over.join('、')}${slide.dataset.dense ? `（data-dense：${slide.dataset.dense}）` : ''}`);
   });
   if (overList.length) console.warn('超過內容上限的頁（README「一頁的內容上限」）：\n' + overList.join('\n'));
 
-  // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（192–984）四成就在總覽標藍色。
+  // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（144–936，高 792）四成就在總覽標藍色。
   var markSparse = () => {
     const sparse = [];
     slides.forEach((slide, i) => {
       const head = slide.querySelector(':scope > .slide-head'), body = slide.querySelector(':scope > .slide-body');
       const frame = frames[i];
       delete frame.dataset.sparse;
-      if (!head || !body || slide.dataset.sparseOk) return;
+      if (!head || !body || slide.dataset.sparseOk || 'appendix' in slide.dataset) return;
       const k = slide.getBoundingClientRect().width / 1920;
       if (!k) return;
       const tops = [...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0).map(r => r.top);

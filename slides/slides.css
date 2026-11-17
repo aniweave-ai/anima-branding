@@ -70,10 +70,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 @media (prefers-reduced-motion: reduce) { .deck-progress { transition: none; } }
 .deck.is-overview ~ .deck-progress { display: none; }
 
-/* 「所有版型」按鈕：右下角，投影時半透明，滑過才清楚；總覽時顯示「回到投影片」 */
+/* 「所有版型」按鈕：右下角，投影時隱藏，滑過才出現；總覽時顯示「回到投影片」 */
 .deck-toggle { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 20;
   font: 500 14px/1 var(--deck-font); color: var(--deck-button-text); background: var(--deck-button-bg); border: 0; border-radius: var(--deck-radius-pill);
-  padding: 12px 18px; min-height: 44px; cursor: pointer; opacity: .35; transition: opacity .2s ease; }
+  padding: 12px 18px; min-height: 44px; cursor: pointer; opacity: 0; transition: opacity .2s ease; }   /* 投影時看不到（會壓到頁底 logo），滑過或 Tab 才出現 */
 .deck-toggle:hover, .deck-toggle:focus-visible, .deck.is-overview ~ .deck-toggle { opacity: 1; }
 .deck-toggle:focus-visible { outline: 3px solid var(--deck-text-accent); outline-offset: 3px; }
 .deck-toggle:active { transform: translateY(1px); }
@@ -82,7 +82,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 總覽裡超過內容上限的頁：左上角標紅（寫哪一項超過）；有 data-dense（Victor 同意過）的標黃 */
 .deck.is-overview .slide-frame[data-over]::before { content: "超過上限：" attr(data-over); position: absolute; left: 8px; top: 8px; right: 8px; z-index: 5;
   padding: 6px 10px; border-radius: 6px; font: 600 14px/1.35 var(--deck-font); background: var(--deck-error-mark); color: #fff; }
-.deck.is-overview .slide-frame[data-over][data-dense-ok]::before { content: "已同意塞同一頁：" attr(data-over); background: var(--deck-warning-bg); color: var(--deck-warning-text); }
+.deck.is-overview .slide-frame[data-over][data-dense-ok]::before { content: "刻意放同一頁：" attr(data-over); background: var(--deck-warning-bg); color: var(--deck-warning-text); }
 .deck.is-overview .slide-frame[data-over] { outline: 3px solid var(--deck-error-mark); }
 .deck.is-overview .slide-frame[data-over][data-dense-ok] { outline-color: var(--warning-300); }
 /* 拆頁後太空（README「拆頁後太空」）：標題下空白超過內容區四成，標藍色 */
@@ -107,7 +107,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   --s-card: var(--deck-card-bg);
 
   box-sizing: border-box; width: var(--slide-w); height: var(--slide-h); overflow: hidden;
-  padding: var(--deck-pad-top) var(--deck-pad-x) var(--deck-pad-bottom);
+  padding: var(--deck-pad-top) var(--deck-pad-x) var(--slide-pad-end, var(--deck-pad-top));   /* 有頁底品牌列：內容底線跟標題頂線對稱 */
   display: flex; flex-direction: column; gap: var(--deck-space-6);
   background: var(--s-bg); color: var(--s-text);
   font-size: var(--deck-fs-body); line-height: var(--deck-lh-body); font-weight: var(--deck-fw-regular);
@@ -153,8 +153,32 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .slide-foot [data-page] { display: none; }
 .slide-section { order: 0; }   /* 頁名：導覽標籤，不是標題上方的小標 */
 .slide-foot img { order: 1; margin-left: auto; height: calc(30px * var(--u)); width: auto; display: block; }
+/* 頁底品牌列：左邊公司 slogan、右邊 ANIWEAVE logo，跟頁首列上下對稱（離底＝外框，左右對齊內容）。
+   slides.js 自動加到每一頁；那一頁 <section> 或整份 <main class="deck"> 加 data-brand="off" 就不放，內容底線退回外框。
+   logo 字高＝頁首 ANIMA logo 的字高（頁首 logo 高 30，字母佔 viewBox 382 裡的 200）。 */
+.slide-brand { position: absolute; left: var(--deck-pad-x); right: var(--deck-pad-x); bottom: var(--deck-pad-bottom);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: var(--deck-space-3);
+  font-size: var(--deck-fs-small); line-height: 1; color: var(--s-muted); pointer-events: none; }
+/* slogan 裁到大寫頂和基線，基線才會跟 logo 底切齊（要蓋過內容區的 trim-start 規則） */
+.deck .slide > .slide-brand span { text-box: trim-both cap alphabetic !important; }
+.slide-brand img { height: calc(30px * 200 / 382 * var(--u)); width: auto; display: block; }
+/* 封面、滿版圖這類把子元素改成 relative 的版型也要維持貼底，並疊在背景圖、手機之上 */
+.deck .slide > .slide-brand { position: absolute !important; z-index: 4; }
+/* 手機封面：手機延伸到底會壓到右下 logo，ANIWEAVE logo 改放在 slogan 左邊（大小不變），中間隔 24 */
+.deck .slide.cover-phone > .slide-brand { justify-content: flex-start; }
+.deck .slide.cover-phone > .slide-brand img { order: -1; }
+/* 品牌列壓在深色、彩色或照片上：字和 logo 換白 */
+.deck .slide:is(.section-band, .fullbleed) > .slide-brand { color: color-mix(in srgb, var(--deck-highlight-text) 72%, transparent); }
+.deck .slide:is(.section-band, .fullbleed) > .slide-brand img { filter: brightness(0) invert(1); }
+.deck .slide[data-brand="off"] { --slide-pad-end: var(--deck-pad-bottom); }
+.deck[data-brand="off"] .slide { --slide-pad-end: var(--deck-pad-bottom); }
+/* ANIWEAVE 只有深字版 logo：深底頁先轉成白色（待補官方白字版） */
+:is(.ground-dark, .ground-dark-warm) .slide-brand img { filter: brightness(0) invert(1); }
 /* 深底頁自動換成白字版 logo */
 :is(.ground-dark, .ground-dark-warm) .slide-foot img { content: url("../anima-brand/assets/logo/ANIMA_horizontal_primary_dark.svg"); }
+/* 封面 logo：照底色自動換版本。白底用深字版、深底用白字版（深色頁開關切換時才不會白字在白底上） */
+.slide.cover:not(.ground-dark, .ground-dark-warm) .cover-logo { content: url("../anima-brand/assets/logo/ANIMA_horizontal_primary.svg"); }
+.slide.cover:is(.ground-dark, .ground-dark-warm) .cover-logo { content: url("../anima-brand/assets/logo/ANIMA_horizontal_primary_dark.svg"); }
 /* 結尾頁 logo：深底頁關掉（白底）時換回深字版，不然字會白在白底上 */
 .slide.closing:not(.ground-dark, .ground-dark-warm) .closing-logo { content: url("../anima-brand/assets/logo/ANIMA_horizontal_primary.svg"); }
 .logo-on-dark { display: none; }
@@ -1002,7 +1026,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .layer > .layer-items { margin-top: 0 !important; }
 /* 卡片上方 chip 列到標題：跟標題到內文一樣 28 */
 .deck .slide :is(.card, .stages > li) > :is(.chips, .tags):first-child + .card-title { margin-top: calc(28px * var(--u) - var(--deck-space-2)); }
-/* 封面：logo 貼齊左上外框，上、左都是 96（跟內頁 header 同一條線） */
+/* 封面：logo 貼齊左上外框，上、左都是外框 80（跟內頁 header 同一條線） */
 .deck .slide.cover { padding-top: var(--deck-pad-x); }
 /* 階段卡：編號圓到標題的距離 = 標題到副標（28） */
 .deck .slide .stages > li > .card-title:first-child { margin-top: calc(28px * var(--u) - var(--deck-space-2)); }
@@ -1039,6 +1063,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .section-band-bar { position: relative; height: calc(460px * var(--u)); background: var(--deck-highlight-bg); color: var(--deck-highlight-text);
   display: flex; align-items: flex-end; justify-content: space-between; padding: var(--deck-pad-x); overflow: hidden; }
 .section-band-bar .display { color: inherit; }
+/* 色帶底部留給頁底品牌列：章節名底線跟內頁內容底線一樣（關掉品牌列時回到外框） */
+.section-band-bar { padding-bottom: var(--slide-pad-end, var(--deck-pad-top)); }
 .section-band-num { font-size: calc(var(--deck-fs-number) * 3.2); line-height: 1; font-weight: var(--deck-fw-semibold); color: color-mix(in srgb, var(--deck-highlight-text) 22%, transparent); text-box: trim-both text; }
 .section-band-bar .display { text-box: trim-both text; }
 
@@ -1106,7 +1132,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* ============================================================
    內容框：每一頁的內容都落在同一個框裡
-   上緣＝標題頂線（--deck-pad-top）、下緣＝底線（--deck-pad-bottom）、左右＝--deck-pad-x。
+   上緣＝標題頂線（--deck-pad-top 144）、下緣＝底線 936（跟頂線對稱；關掉頁底品牌列的頁是 --deck-pad-bottom）、左右＝--deck-pad-x。
    1. 標題永遠在頂線，不垂直置中。
    2. 內容撐到底線：卡片、表格、圖往下延伸；內容少的頁整組靠底線放（ref 的做法），不放在中間。
    3. 卡片裡：內容從上往下排（靠上）。只有方案欄例外，最後的清單、說明壓在卡底，同一排的底部才對齊。
@@ -1190,7 +1216,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 :is(.ground-dark, .ground-dark-warm) .cover-bg { filter: invert(1) hue-rotate(180deg) brightness(.9) saturate(1.25); }
 .cover-phone { --deck-glass-backdrop: blur(8px) saturate(140%); --deck-glass-pad: calc(20px * var(--u)); --deck-glass-bg: color-mix(in srgb, var(--deck-highlight-text) 14%, transparent); --deck-glass-ring: color-mix(in srgb, var(--deck-highlight-text) 55%, transparent); --dev-w: calc(700px * var(--u)); --dev-r: calc(124px * var(--u)); --dev-x: calc(var(--deck-pad-x) + var(--deck-glass-pad)); --dev-y: calc(242px * var(--u)); }
 /* 手機本體：單獨一張 <img>（包在 div 裡 Chrome 列印時圖會消失） */
-.cover-device { position: absolute; z-index: 2; right: var(--dev-x); top: var(--dev-y); width: var(--dev-w); aspect-ratio: 964 / 1928; border-radius: var(--dev-r); }
+.cover-device { position: absolute; z-index: 2; right: var(--dev-x); top: var(--dev-y); width: var(--dev-w); aspect-ratio: 1 / 2; border-radius: var(--dev-r); }
 /* 毛玻璃外框：獨立一塊墊在手機後面，Web DS 玻璃框數值；外圓角＝手機圓角＋框寬 */
 .cover-glass { position: absolute; z-index: 1; right: calc(var(--dev-x) - var(--deck-glass-pad)); top: calc(var(--dev-y) - var(--deck-glass-pad));
   width: calc(var(--dev-w) + 2 * var(--deck-glass-pad)); height: calc(var(--dev-w) * 2 + 2 * var(--deck-glass-pad));
@@ -1336,11 +1362,11 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 }
 @media screen and (prefers-reduced-motion: no-preference) {
   .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-leaving { visibility: visible; z-index: 1; pointer-events: none; }
-  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-leaving .slide > :not(.cover-bg, .cover-glass, .slide-foot),
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-leaving .slide > :not(.cover-bg, .cover-glass, .slide-foot, .slide-brand),
   .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-leaving .slide > .slide-foot > * { animation: deck-swap-out var(--deck-swap-out) var(--deck-ease-swap) both; }
   .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering { z-index: 2; }
   .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering > .slide { animation: deck-dissolve var(--deck-dissolve) var(--deck-ease-dissolve) both; }
-  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering .slide > :not(.cover-bg, .cover-glass, .slide-foot),
+  .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering .slide > :not(.cover-bg, .cover-glass, .slide-foot, .slide-brand),
   .deck:not(.is-overview, .is-rushing, [data-transition="none"]) .slide-frame.is-active.is-entering .slide > .slide-foot > * { animation: deck-swap-in var(--deck-swap-in) var(--deck-ease-swap) var(--deck-swap-out) both; }
   /* 頁首列兩頁一樣的部分（右上 logo、左上頁名）：舊頁的 logo 不淡出、新頁的 logo 不從模糊進來；新頁整頁溶接時疊在一模一樣的 logo 上，看起來就是不動 */
   .deck.keep-logo .slide-frame:is(.is-leaving, .is-entering) .slide > .slide-foot > img { animation: none !important; }
