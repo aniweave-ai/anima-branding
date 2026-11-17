@@ -298,7 +298,9 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | 素材 | 放在哪 | 怎麼用 | 來源（Web DS 改了要同步） |
 |---|---|---|---|
 | Icon | `anima-brand/assets/icons/ui`、`domain` | `.ico ico-名稱`，見「Icon」 | `anima-web/design-system/assets/icons/` |
-| 工具 logo（LINE、Slack、Gmail…，233 個） | `anima-brand/assets/logos/tools` | `<img src="…/logos/tools/名稱.svg">`；深底用 `名稱-dark.svg` | `anima-web/design-system/assets/logos/tools/` |
+| 工具 logo（LINE、Slack、Gmail…，233 個；去白底版 `tools-plain` 另含 copilot） | `anima-brand/assets/logos/tools` | `<img src="…/logos/tools/名稱.svg">`；深底用 `名稱-dark.svg` | `anima-web/design-system/assets/logos/tools/` |
+| AI 助理 logo（Claude、OpenAI、Grok 文字標） | `anima-brand/assets/logos/assistants` | 同工具 logo；深底用 `名稱-dark.svg` | `anima-web/design-system/assets/logos/assistants/` |
+| AI 標誌 icon（Claude、ChatGPT、Grok） | `anima-brand/assets/icons/ai` | `<img class="logo" src="…/icons/ai/名稱.svg">` | `anima-web/design-system/assets/icons/ai/` |
 | 流動玻璃圖 | `anima-brand/assets/backgrounds/flow` | `.flow-01`～`.flow-13` | `anima-web/design-system/assets/images/flow/` |
 | ANIMA logo | `anima-brand/assets/logo` | 頁首、封面、結尾自動處理 | 品牌 repo 本身 |
 | 動畫 | `slides.js` 的「官網動畫」 | `<div class="art flow-NN story" data-story="名稱">` | `anima-web/index.html` 的 Story 區程式動畫 |
