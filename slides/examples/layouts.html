@@ -6,6 +6,13 @@
 <title>ANIMA 簡報版型示範</title>
 <link rel="stylesheet" href="../../anima-brand/references/tokens.css?v=5">
 <link rel="stylesheet" href="../slides.css?v=182">
+<style>
+/* 範本專用：分類頁（不是版型，不放進 slides.css，不要複製進 deck）。整頁藍底，不跟底色模式切換。 */
+.deck .slide.is-divider { background: var(--deck-highlight-bg); color: var(--deck-highlight-text); justify-content: center; gap: var(--deck-space-3); }
+.deck .slide.is-divider .divider-num { font-size: var(--deck-fs-number); line-height: 1; font-weight: var(--deck-fw-number); opacity: .6; }
+.deck .slide.is-divider .divider-title { font-size: var(--deck-fs-display); line-height: var(--deck-lh-tight); font-weight: var(--deck-fw-title); }
+.deck .slide.is-divider .divider-text { font-size: var(--deck-fs-subheading); opacity: .85; }
+</style>
 </head>
 <body>
 <!-- 版型示範：每一頁是一種版型，內容是示意文字與示意數字。
@@ -13,11 +20,11 @@
 <main class="deck">
 
 
-  <!-- 1 【分類 01】開頭 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">01</div>
-    <h2 class="display">開頭</h2>
-    <p class="lede">封面、目錄、議程</p>
+  <!-- 1 【分類 01】開頭（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">01</div>
+    <h2 class="divider-title">開頭</h2>
+    <p class="divider-text">封面、目錄、議程</p>
   </section>
 
   <!-- 2 封面（預設）：手機＋品牌流動玻璃背景 -->
@@ -124,11 +131,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">目錄</span></footer>
   </section>
 
-  <!-- 10 【分類 02】穿插 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">02</div>
-    <h2 class="display">穿插</h2>
-    <p class="lede">章節、主張、引言、見證、全版圖片</p>
+  <!-- 10 【分類 02】穿插（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">02</div>
+    <h2 class="divider-title">穿插</h2>
+    <p class="divider-text">章節、主張、引言、見證、全版圖片</p>
   </section>
 
   <!-- 11 章節頁（深色底只用在章節頁、主張頁） -->
@@ -210,11 +217,11 @@
 
   <!-- ===================== 第四批：舊簡報裡還沒有的頁型 ===================== -->
 
-  <!-- 19 【分類 03】數字 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">03</div>
-    <h2 class="display">數字</h2>
-    <p class="lede">大數字、KPI、點陣、儀表板</p>
+  <!-- 19 【分類 03】數字（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">03</div>
+    <h2 class="divider-title">數字</h2>
+    <p class="divider-text">大數字、KPI、點陣、儀表板</p>
   </section>
 
   <!-- 20 KPI 大數字 -->
@@ -384,11 +391,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">週會 KPI 首頁，示意</span><span data-page></span></footer>
   </section>
 
-  <!-- 30 【分類 04】圖表 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">04</div>
-    <h2 class="display">圖表</h2>
-    <p class="lede">長條、直條、比例、曲線、甜甜圈</p>
+  <!-- 30 【分類 04】圖表（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">04</div>
+    <h2 class="divider-title">圖表</h2>
+    <p class="divider-text">長條、直條、比例、曲線、甜甜圈</p>
   </section>
 
   <!-- 31 長條圖 -->
@@ -549,11 +556,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">本輪募資</span><span data-page></span></footer>
   </section>
 
-  <!-- 40 【分類 05】卡片與清單 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">05</div>
-    <h2 class="display">卡片與清單</h2>
-    <p class="lede">卡片、功能格、編號清單、摘錄</p>
+  <!-- 40 【分類 05】卡片與清單（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">05</div>
+    <h2 class="divider-title">卡片與清單</h2>
+    <p class="divider-text">卡片、功能格、編號清單、摘錄</p>
   </section>
 
   <!-- 41 三欄卡片 -->
@@ -756,11 +763,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">W0 前，前置作業</span><span data-page></span></footer>
   </section>
 
-  <!-- 50 【分類 06】圖文素材 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">06</div>
-    <h2 class="display">圖文素材</h2>
-    <p class="lede">圖文、截圖、對話、團隊、logo</p>
+  <!-- 50 【分類 06】圖文素材（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">06</div>
+    <h2 class="divider-title">圖文素材</h2>
+    <p class="divider-text">圖文、截圖、對話、團隊、logo</p>
   </section>
 
   <!-- 51 左文右圖 -->
@@ -921,11 +928,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">合作分工</span><span data-page></span></footer>
   </section>
 
-  <!-- 59 【分類 07】流程與架構 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">07</div>
-    <h2 class="display">流程與架構</h2>
-    <p class="lede">流程、泳道、前後對照、架構、調度中心</p>
+  <!-- 59 【分類 07】流程與架構（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">07</div>
+    <h2 class="divider-title">流程與架構</h2>
+    <p class="divider-text">流程、泳道、前後對照、架構、調度中心</p>
   </section>
 
   <!-- 60 流程 -->
@@ -1226,11 +1233,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">資料盤點</span><span data-page></span></footer>
   </section>
 
-  <!-- 72 【分類 08】比較與表格 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">08</div>
-    <h2 class="display">比較與表格</h2>
-    <p class="lede">對照表、打勾比較、矩陣、定位</p>
+  <!-- 72 【分類 08】比較與表格（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">08</div>
+    <h2 class="divider-title">比較與表格</h2>
+    <p class="divider-text">對照表、打勾比較、矩陣、定位</p>
   </section>
 
   <!-- 73 對照表 -->
@@ -1353,11 +1360,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">市場定位</span><span data-page></span></footer>
   </section>
 
-  <!-- 79 【分類 09】時程 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">09</div>
-    <h2 class="display">時程</h2>
-    <p class="lede">甘特、里程碑、路線圖、時間軸</p>
+  <!-- 79 【分類 09】時程（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">09</div>
+    <h2 class="divider-title">時程</h2>
+    <p class="divider-text">甘特、里程碑、路線圖、時間軸</p>
   </section>
 
   <!-- 80 時程（甘特） -->
@@ -1529,11 +1536,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">下一步</span><span data-page></span></footer>
   </section>
 
-  <!-- 88 【分類 10】方案 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">10</div>
-    <h2 class="display">方案</h2>
-    <p class="lede">方案、價格、部署選項</p>
+  <!-- 88 【分類 10】方案（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">10</div>
+    <h2 class="divider-title">方案</h2>
+    <p class="divider-text">方案、價格、部署選項</p>
   </section>
 
   <!-- 89 方案 -->
@@ -1614,11 +1621,11 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">資安與部署</span><span data-page></span></footer>
   </section>
 
-  <!-- 92 【分類 11】結尾 -->
-  <section class="slide section ground-dark is-divider" data-appendix>
-    <div class="section-num">11</div>
-    <h2 class="display">結尾</h2>
-    <p class="lede">結尾頁、聯絡資訊</p>
+  <!-- 92 【分類 11】結尾（範本目錄，不是版型，不要複製） -->
+  <section class="slide is-divider" data-appendix data-brand="off">
+    <div class="divider-num">11</div>
+    <h2 class="divider-title">結尾</h2>
+    <p class="divider-text">結尾頁、聯絡資訊</p>
   </section>
 
   <!-- 93 logo 結尾頁（置中，深色底） -->
@@ -1640,6 +1647,6 @@
   </section>
 
 </main>
-<script src="../slides.js?v=39"></script>
+<script src="../slides.js?v=40"></script>
 </body>
 </html>

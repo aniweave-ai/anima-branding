@@ -60,11 +60,12 @@
   //   網址加 ?dark=sections 可以臨時預覽；右下角按鈕可以循環切換。
   const DARK = ['ground-dark', 'ground-dark-warm'];
   const LIGHT = ['ground-ambient', 'ground-sky', 'ground-brand', 'ground-neutral'];
-  const darkSlides = slides.filter(s => DARK.some(c => s.classList.contains(c)));
+  const themed = slides.filter(s => !s.classList.contains('is-divider'));   // 範本分類頁固定藍底，不跟底色模式切換
+  const darkSlides = themed.filter(s => DARK.some(c => s.classList.contains(c)));
   darkSlides.forEach(s => { s.dataset.darkClass = DARK.find(c => s.classList.contains(c)); });
-  const lightSlides = slides.filter(s => LIGHT.some(c => s.classList.contains(c)));
+  const lightSlides = themed.filter(s => LIGHT.some(c => s.classList.contains(c)));
   lightSlides.forEach(s => { s.dataset.lightClass = LIGHT.find(c => s.classList.contains(c)); });
-  const plainSlides = slides.filter(s => ![...s.classList].some(c => c.startsWith('ground-')));
+  const plainSlides = themed.filter(s => ![...s.classList].some(c => c.startsWith('ground-')));
   const keepDark = s => s.matches('.section, .closing.center');
   const MODES = { all: '深色頁：照設定', sections: '深色頁：只留章節頁', off: '底色：全部白底', ambient: '底色：全部淡漸層' };
   function applyDark(mode) {
