@@ -357,12 +357,13 @@
       if (!head || !body || slide.dataset.sparseOk || 'appendix' in slide.dataset) return;
       const k = slide.getBoundingClientRect().width / 1920;
       if (!k) return;
-      const tops = [...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0).map(r => r.top);
-      if (!tops.length) return;
-      const gap = (Math.min(...tops) - head.getBoundingClientRect().bottom) / k;
+      const rects = [...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0);
+      if (!rects.length) return;
+      // 內容靠上或靠底線（.is-bottom）都一樣：量標題下、內容上下沒用到的高度
+      const gap = (Math.min(...rects.map(r => r.top)) - head.getBoundingClientRect().bottom + body.getBoundingClientRect().bottom - Math.max(...rects.map(r => r.bottom))) / k;
       if (gap > 792 * 0.4) {
-        frame.dataset.sparse = `標題下空 ${Math.round(gap)}px，換版型或合併`;
-        sparse.push(`第 ${i + 1} 頁：標題下空 ${Math.round(gap)}px`);
+        frame.dataset.sparse = `內容區空 ${Math.round(gap)}px，換版型或合併`;
+        sparse.push(`第 ${i + 1} 頁：內容區空 ${Math.round(gap)}px`);
       }
     });
     if (sparse.length) console.info('拆頁後太空的頁（README「拆頁後太空」）：\n' + sparse.join('\n'));
@@ -383,13 +384,20 @@
         if (n > LIMIT.ledeChars) over.push(`副標 ${n} 字＞${LIMIT.ledeChars}`);
         if (lines > LIMIT.ledeLines && el.closest('.slide-head:not(.split)')) over.push(`副標 ${lines} 行＞${LIMIT.ledeLines}`);
       });
+      const body = slide.querySelector(':scope > .slide-body');
+      if (body) {
+        const k = slide.getBoundingClientRect().width / slide.offsetWidth || 1;
+        const end = Math.max(0, ...[...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0).map(r => r.bottom));
+        const past = (end - body.getBoundingClientRect().bottom) / k;
+        if (past > 1) over.push(`內容超出底線 ${Math.round(past)}px`);
+      }
       if (!over.length) return;
       const frame = frames[i];
       frame.dataset.over = [frame.dataset.over, ...over].filter(Boolean).join('、');
       if (slide.dataset.dense) frame.dataset.denseOk = slide.dataset.dense;
       list.push(`第 ${i + 1} 頁：${over.join('、')}`);
     });
-    if (list.length) console.warn('副標超過 2 行或 60 字的頁（README「一頁的內容上限」）：\n' + list.join('\n'));
+    if (list.length) console.warn('副標過長、內容超出底線的頁（README「一頁的內容上限」）：\n' + list.join('\n'));
   };
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { markLede(); overview() && markSparse(); }, 300));
 

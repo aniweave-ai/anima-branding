@@ -1147,23 +1147,22 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
    內容框：每一頁的內容都落在同一個框裡
    上緣＝標題頂線（--deck-pad-top 144）、下緣＝底線 936（跟頂線對稱；關掉頁底品牌列的頁是 --deck-pad-bottom）、左右＝--deck-pad-x。
    1. 標題永遠在頂線，不垂直置中。
-   2. 內容撐到底線：卡片、表格、圖往下延伸；內容少的頁整組靠底線放（ref 的做法），不放在中間。
+   2. 內容接在標題下方（slide 本身的 gap）往下排；放不下時往下超出、總覽標紅，不會往上壓到標題。
+      內容少、刻意留白的頁在 <section> 加 .is-bottom，整組改靠底線放。
    3. 卡片裡：內容從上往下排（靠上）。只有方案欄例外，最後的清單、說明壓在卡底，同一排的底部才對齊。
    例外：封面、章節頁、主張頁、引言、結尾（沒有頁首列的頁）可以置中。
    ============================================================ */
-.slide-body { justify-content: flex-end; }
-/* grid 型的內容區：內容少時整組靠底線 */
-.slide-body { align-content: end; }
-.slide-body:is(.split, .showcase) { align-items: end; }
+/* safe：放不下時退回靠上，多的往下長，不往上壓到標題 */
+.slide.is-bottom .slide-body { justify-content: safe flex-end; align-content: safe end; }
+.slide.is-bottom .slide-body:is(.split, .showcase) { align-items: safe end; }
+.slide.is-bottom :is(.ratio, .transform, .grid, .flow, .options, .split-3, .features, .facts, .people, .logos, .kpis, .stats, .numcols, .shares) { align-content: safe end; }
 /* 內容區裡自己帶標題的版型：欄撐滿，標題留在頂線 */
-.slide-body:has(.title) { align-content: stretch; align-items: stretch; }
+.slide-body:has(.title), .slide.is-bottom .slide-body:has(.title) { align-content: stretch; align-items: stretch; }
 /* 階梯版型的高度用百分比，要撐滿才有參照 */
-.slide-body:is(.stages, .roadmap) { align-content: stretch; }
-.ratio { align-items: stretch; flex-wrap: wrap; align-content: flex-end; }
-.transform { align-items: stretch; align-content: end; }
+.slide-body:is(.stages, .roadmap), .slide.is-bottom .slide-body:is(.stages, .roadmap) { align-content: stretch; }
+.ratio { align-items: stretch; flex-wrap: wrap; }
+.transform { align-items: stretch; }
 .transform-arrow { align-self: center; }
-:is(.grid, .flow, .options, .split-3, .features, .facts, .people, .logos, .kpis, .stats, .numcols, .shares) { align-content: end; }
-:is(.grid, .flow, .options, .split-3).slide-body { align-content: end; }
 .card { justify-content: flex-start; }
 /* 卡片照內容高度，四邊同一個內距；一列裡的卡片等高 */
 /* 框裡最後一列不再加底部內距，避免底邊比其他三邊寬 */
