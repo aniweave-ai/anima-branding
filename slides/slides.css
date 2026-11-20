@@ -1941,3 +1941,34 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .hub.orch .hub-item.is-group { padding: calc(14px * var(--u)) var(--deck-space-3); }
 .deck .slide .orch-row { margin-top: calc(10px * var(--u)); }
 .deck .slide .orch-row > .label { width: auto; white-space: nowrap; }
+
+
+/* ============================================================
+   v1.6（2026-11-20）：sales deck 收進來的元件。sales 原本寫在自己的 @sd 覆寫，現在範本直接有
+   ============================================================ */
+/* 大標題：一頁一個主角、內容少的頁才用（96，跟 .display 同一級）；一般頁標題維持 64 */
+.slide .title.is-xl { font-size: var(--deck-fs-display); line-height: var(--deck-lh-tight); }
+/* 卡片拿掉底色：上方一條深一階的線，內容從線下 24 開始；最後的 chip 列照樣壓卡底 */
+.deck .slide .card.is-ruled { background: none; box-shadow: none; border-radius: 0; padding: var(--deck-space-3) 0 0; border-top: 2px solid var(--s-line-strong); }
+/* 卡片拿掉底色和內距：只用來分組 */
+.deck .slide .card.is-bare { background: none; box-shadow: none; border-radius: 0; padding: 0; }
+/* chip 去膠囊：logo（或 icon）＋字，不墊底色 */
+.chips.is-plain { gap: var(--deck-space-1) var(--deck-space-3); }
+.deck .slide .chips.is-plain > .chip.chip { background: none; padding: 0; border-radius: 0; color: var(--s-text); }
+/* 來源清單：logo｜名稱｜一句，三欄對齊，列間一條線 */
+.sources { display: grid; grid-template-columns: auto max-content minmax(0, 1fr); column-gap: var(--deck-space-3); align-content: start; }
+.source { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: center; padding: var(--deck-space-3) 0; border-top: 2px solid var(--s-line-strong); }
+.source:last-child { border-bottom: 2px solid var(--s-line-strong); }
+.source > b { font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.source > span { color: var(--s-muted); }
+.deck .slide .source > img.logo { margin: 0; vertical-align: 0; }
+.deck .slide .source > .ico { --ico-size: 1.15em; color: var(--s-accent); }
+.deck .slide :is(.source, .chips.is-plain > .chip) > * { text-box: normal; }
+/* 亮點卡裡的編號圓、直向步驟：白底藍字（README「亮點卡裡 chip、編號圓一律白底藍字」） */
+.deck .slide .is-highlight .node-num { background: var(--deck-highlight-text); color: var(--deck-highlight-bg); }
+.deck .slide .is-highlight .steps { gap: 0; }
+.deck .slide .is-highlight .steps > li { background: none; border-radius: 0; padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line); }
+.deck .slide .is-highlight .steps > li:last-child { padding-bottom: 0; }
+.deck .slide .is-highlight .steps > li::before { background: var(--deck-highlight-text); color: var(--deck-highlight-bg); }
+/* 並排的功能格：一行和兩行的說明從同一個高度開始 */
+.features.is-stacked .feature { align-content: start; }
