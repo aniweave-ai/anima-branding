@@ -1553,7 +1553,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 大數字卡拉高（ref「Traction」）：卡片內容少時不撐滿，跟標題之間留呼吸空間；卡高約內容區六成，數字在上、標籤和說明壓在卡底 */
 .stats.is-big.is-tall .stat { min-height: calc(440px * var(--u)); justify-content: flex-start; }
 .stats.is-big.is-tall .stat-label { margin-top: auto !important; }
-/* 流程卡拉高（第 63 頁）：內容少時不撐滿，卡高約內容區六成，跟標題留呼吸空間；最後的標籤壓在卡底 */
+/* 流程卡拉高（第 64 頁）：內容少時不撐滿，卡高約內容區六成，跟標題留呼吸空間；最後的標籤壓在卡底 */
 .flow.is-tall .card { min-height: calc(440px * var(--u)); }
 .flow.is-tall .card > .tags:last-child { margin-top: auto !important; }
 .flow.is-tall .card::before { font-size: var(--deck-fs-number); font-weight: var(--deck-fw-number); line-height: 1.05; text-box: trim-both cap alphabetic; }
@@ -1580,7 +1580,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 燈號格下面的數字：欄寬照各燈號的格數（例：3:2:3），數字對齊上面那一組格子 */
 .status-tiles + .shares { grid-template-columns: var(--cols-tpl); gap: var(--deck-space-1); }
 .status-tiles b { text-wrap: wrap; }
-/* 資料轉換前後拉高（第 68 頁）：卡高約內容區六成，跟標題留呼吸空間；上方大編號＋小標，下方是原文／代號，中間那張多一張對照表 */
+/* 資料轉換前後拉高（第 69 頁）：卡高約內容區六成，跟標題留呼吸空間；上方大編號＋小標，下方是原文／代號，中間那張多一張對照表 */
 .transform.is-tall { flex: none; }
 .transform.is-tall .card { min-height: calc(440px * var(--u)); }
 .transform.is-tall .step-num { font-size: var(--deck-fs-number); line-height: 1.05; color: var(--s-accent); text-box: trim-both cap alphabetic; margin-bottom: var(--deck-space-4); }
@@ -2089,3 +2089,24 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .callout.is-row > .callout-title { flex: none; margin: 0; }
 .callout.is-row > .tags { margin-left: auto; min-width: 0; justify-content: flex-end; }
 .deck .slide .callout.is-row > * { text-box: normal; }
+
+/* 團隊頁：左邊人物＋經歷 logo＋團隊組成＋亮點＋成員 logo，右邊一張卡放歷程和入選計畫（sales deck 團隊與公司現況） */
+.team-sheet { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: var(--deck-space-5); }
+.team-sheet > .card.is-bare { justify-content: space-between; gap: var(--deck-space-3); }
+.team-sheet .card > .label + * { margin-top: calc(-1 * var(--deck-space-2)); }
+.team-sheet .card-title { font-size: var(--deck-fs-body-lg); }
+.team-line { border-top: 2px solid var(--s-line); padding-top: var(--deck-space-2); color: var(--s-muted); font-size: var(--deck-fs-caption); }
+.team-line > b { display: block; margin-bottom: var(--deck-space-1); color: var(--s-strong); font-size: var(--deck-fs-body); font-weight: var(--deck-fw-semibold); }
+.person-name.is-lg { font-size: var(--deck-fs-heading); }
+/* logo 一排：.is-spread 撐滿整排、.is-grid 排成格子（欄數 --cols，預設 5） */
+.logo-row.is-spread { justify-content: space-between; flex-wrap: nowrap; }
+.logo-row.is-grid { display: grid; grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr)); justify-items: center; gap: var(--deck-space-3) var(--deck-space-2); }
+/* 直向時間軸精簡版：實線、空心點，日期小字在上、說明在下 */
+.milestones.vertical.is-compact { gap: var(--deck-space-2); flex: 1; align-content: space-between; }
+.milestones.vertical.is-compact::before { border-left-style: solid; border-left-width: 3px; }
+.milestones.vertical.is-compact > li { grid-template-columns: minmax(0, 1fr); row-gap: calc(4px * var(--u)); }
+.milestones.vertical.is-compact > li::after { top: 0; }
+.milestones.vertical.is-compact .milestone-when { font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-accent); }
+.milestones.vertical.is-compact .milestone-text { grid-column: 1; color: var(--s-muted); }
+.list.checks.is-circle > li { padding-left: calc(28px * var(--u) + var(--deck-space-2)); }
+.deck .slide .list.checks.is-circle > li > .li-ico { --ico-size: calc(28px * var(--u)); }
