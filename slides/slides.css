@@ -1960,7 +1960,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .source { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: center; padding: var(--deck-space-3) 0; border-top: 2px solid var(--s-line-strong); }
 .source:last-child { border-bottom: 2px solid var(--s-line-strong); }
 .source > b { font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
-.source > span { color: var(--s-muted); }
+.source > span { color: var(--s-muted); text-wrap: pretty; }
 .deck .slide .source > img.logo { margin: 0; vertical-align: 0; }
 .deck .slide .source > .ico { --ico-size: 1.15em; color: var(--s-accent); }
 .deck .slide :is(.source, .chips.is-plain > .chip) > * { text-box: normal; }
@@ -2032,3 +2032,19 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .rank-next { justify-self: end; font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
 .rank-row > p { grid-column: 1 / -1; padding-left: calc(36px * var(--u) + var(--deck-space-2)); font-size: var(--deck-fs-caption); color: var(--s-muted); }   /* 36＝.node-num 的寬，說明對齊名稱 */
 .deck .slide :is(.rank-head, .rank-row, .rank-todo) > *, .deck .slide .rank-top h3 { text-box: normal; }
+
+/* 接力步驟：人做的步驟（橘色編號、字小一級）夾著 ANIMA 做的那幾步（一張亮點卡，右邊直式 logo）（sales deck 案例 B） */
+.relay { display: flex; flex-direction: column; justify-content: center; gap: var(--deck-space-2); min-width: 0; }
+.relay-step { display: grid; grid-template-columns: calc(250px * var(--u)) minmax(0, 1fr); column-gap: var(--deck-space-3); align-items: baseline; padding: var(--deck-space-2) var(--deck-space-5); }
+.relay-step > h3 { display: flex; align-items: center; gap: var(--deck-space-2); font-size: var(--deck-fs-body); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.relay-step > div { display: flex; flex-direction: column; gap: var(--deck-space-2); }
+.relay-step p { font-size: var(--deck-fs-caption); color: var(--s-muted); }
+.deck .slide .relay-ai { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--deck-space-5); padding: var(--deck-space-3) var(--deck-space-5); }
+.relay-ai .relay-step { grid-template-columns: minmax(0, 1fr); row-gap: var(--deck-space-1); padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line); }
+.relay-ai .relay-step:first-child { border-top: 0; padding-top: 0; }
+.relay-ai .relay-step:last-child { padding-bottom: 0; }
+.relay-ai .relay-step > h3 { font-size: var(--deck-fs-body-lg); }
+.relay-ai .relay-step p { font-size: var(--deck-fs-body); }
+.relay-ai > img { width: calc(120px * var(--u)); height: auto; display: block; }
+.relay-step .chips.is-plain { row-gap: var(--deck-space-1); }
+.deck .slide :is(.relay-step, .relay-step > div, .relay-step > h3) > * { text-box: normal; }

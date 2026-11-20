@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ANIMA 簡報版型示範</title>
 <link rel="stylesheet" href="../../anima-brand/references/tokens.css?v=6">
-<link rel="stylesheet" href="../slides.css?v=190">
+<link rel="stylesheet" href="../slides.css?v=192">
 <style>
 /* 範本專用：分類頁（不是版型，不放進 slides.css，不要複製進 deck）。整頁藍底，不跟底色模式切換。 */
 .deck .slide.is-divider { background: var(--deck-highlight-bg); color: var(--deck-highlight-text); justify-content: center; gap: var(--deck-space-3); }
@@ -1323,14 +1323,44 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">品類</span></footer>
   </section>
 
-  <!-- 75 【分類 08】比較與表格（範本目錄，不是版型，不要複製） -->
+  <!-- 75 來源清單＋接力步驟（.relay ＋ .relay-ai，sales deck 案例 B） -->
+  <section class="slide ground-ambient">
+    <div class="split slide-body">
+      <div class="split-text">
+        <div class="slide-head">
+          <h2 class="title is-xl">客戶問了，答案在哪？</h2>
+          <p class="lede">先找可信來源，再產生可傳送的短草稿。</p>
+        </div>
+        <div class="sources">
+          <div class="source"><img class="logo" src="../../anima-brand/assets/logos/tools-plain/line.svg" alt=""><b>LINE 客戶歷史</b><span>主管尚看不到報表</span></div>
+          <div class="source"><img class="logo" src="../../anima-brand/assets/logos/tools-plain/slack.svg" alt=""><b>Slack 工程討論</b><span>修補後快取尚未更新</span></div>
+          <div class="source"><img class="logo" src="../../anima-brand/assets/logos/tools-plain/google-drive.svg" alt=""><b>Google Drive 最新 SOP</b><span>同步約 10-15 分鐘</span></div>
+          <div class="source"><img class="logo" src="../../anima-brand/assets/logos/tools-plain/synology-nas.svg" alt=""><b>NAS 專案紀錄</b><span>客戶環境設定與歷史處理紀錄</span></div>
+        </div>
+      </div>
+      <div class="relay">
+        <div class="relay-step"><h3><span class="node-num is-human">1</span><span>客戶提問</span></h3><div><p>權限已開，但主管仍看不到報表。<br>今天展示會受影響嗎？</p><div class="chips is-plain"><span class="chip"><img src="../../anima-brand/assets/logos/tools-plain/line.svg" alt="">LINE</span></div></div></div>
+        <div class="relay-ai card is-highlight">
+          <div>
+            <div class="relay-step"><h3><span class="node-num">2</span><span>來源查證</span></h3><div><p>比對 LINE、Slack、Drive 與 NAS 的相關紀錄。</p><div class="chips is-plain"><span class="chip"><img src="../../anima-brand/assets/logos/tools-plain/line-dark.svg" alt="">客戶歷史</span><span class="chip"><img src="../../anima-brand/assets/logos/tools-plain/slack-dark.svg" alt="">工程討論</span><span class="chip"><img src="../../anima-brand/assets/logos/tools-plain/google-drive-dark.svg" alt="">SOP v3</span><span class="chip"><img src="../../anima-brand/assets/logos/tools-plain/synology-nas-dark.svg" alt="">專案紀錄</span></div></div></div>
+            <div class="relay-step"><h3><span class="node-num">3</span><span>附來源答案</span></h3><div><p>最可能是權限同步延遲：<br>先重整權限，<br>15 分鐘未更新再請工程檢查。</p></div></div>
+          </div>
+          <img src="../../anima-brand/assets/logo/ANIMA_vertical_mono_light.svg" alt="ANIMA">
+        </div>
+        <div class="relay-step"><h3><span class="node-num is-human">4</span><span>負責人確認後<br>送出的草稿</span></h3><div><p>多為權限同步延遲，通常 10-15 分鐘完成。<br>已請工程確認，未更新會直接重跑。</p></div></div>
+      </div>
+    </div>
+    <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">常見場景 B｜客戶問了，答案散在四個地方</span></footer>
+  </section>
+
+  <!-- 76 【分類 08】比較與表格（範本目錄，不是版型，不要複製） -->
   <section class="slide is-divider" data-appendix data-brand="off">
     <div class="divider-num">08</div>
     <h2 class="divider-title">比較與表格</h2>
     <p class="divider-text">對照表、打勾比較、矩陣、定位</p>
   </section>
 
-  <!-- 76 對照表 -->
+  <!-- 77 對照表 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">基本能力大家都有，差在協作介面與部署方式</h2>
@@ -1350,7 +1380,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">比較</span><span data-page></span></footer>
   </section>
 
-  <!-- 77 打勾比較表（ref A「Our advantages」）深底 -->
+  <!-- 78 打勾比較表（ref A「Our advantages」）深底 -->
   <section class="slide ground-dark">
     <header class="slide-head"><h2 class="title">四項能力，只有 ANIMA <span class="accent">全部做得到</span></h2></header>
     <div class="slide-body">
@@ -1368,7 +1398,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">比較</span><span data-page></span></footer>
   </section>
 
-  <!-- 78 權限矩陣 -->
+  <!-- 79 權限矩陣 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">每個群組綁一個角色，看得到的範圍照角色分</h2>
@@ -1387,7 +1417,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">權限與角色</span><span data-page></span></footer>
   </section>
 
-  <!-- 79 表格＋表格內長條＋狀態說明條 -->
+  <!-- 80 表格＋表格內長條＋狀態說明條 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">用去年 12 月的資料推算，再拿實際回頭對</h2>
@@ -1411,7 +1441,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">推算準不準，示意</span><span data-page></span></footer>
   </section>
 
-  <!-- 80 競爭定位 -->
+  <!-- 81 競爭定位 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">唯一同時懂公司脈絡、又在群組裡做事的</h2>
@@ -1430,7 +1460,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">競爭定位</span><span data-page></span></footer>
   </section>
 
-  <!-- 81 說明＋畫面塊＋定位四象限（ref B「Marketing positioning」） -->
+  <!-- 82 說明＋畫面塊＋定位四象限（ref B「Marketing positioning」） -->
   <section class="slide">
     <div class="slide-body media-split is-flip" style="grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);">
       <div class="media-text">
@@ -1450,14 +1480,14 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">市場定位</span><span data-page></span></footer>
   </section>
 
-  <!-- 82 【分類 09】時程（範本目錄，不是版型，不要複製） -->
+  <!-- 83 【分類 09】時程（範本目錄，不是版型，不要複製） -->
   <section class="slide is-divider" data-appendix data-brand="off">
     <div class="divider-num">09</div>
     <h2 class="divider-title">時程</h2>
     <p class="divider-text">甘特、里程碑、路線圖、時間軸</p>
   </section>
 
-  <!-- 83 時程（甘特） -->
+  <!-- 84 時程（甘特） -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">八週完成 PoC</h2>
@@ -1484,7 +1514,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">導入時程</span><span data-page></span></footer>
   </section>
 
-  <!-- 84 甘特：預定 vs 實際、今天線、差幾天 -->
+  <!-- 85 甘特：預定 vs 實際、今天線、差幾天 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">六個節點收成一張甘特圖，延誤幾天一眼看到</h2>
@@ -1518,7 +1548,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">工期，示意</span><span data-page></span></footer>
   </section>
 
-  <!-- 85 階段路徑 -->
+  <!-- 86 階段路徑 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">兩週試用，第三週再決定</h2>
@@ -1531,7 +1561,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">從這裡開始</span><span data-page></span></footer>
   </section>
 
-  <!-- 86 里程碑 -->
+  <!-- 87 里程碑 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">13 個月推出三個產品</h2>
@@ -1549,7 +1579,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">歷程與接下來</span><span data-page></span></footer>
   </section>
 
-  <!-- 87 路線圖（階梯） -->
+  <!-- 88 路線圖（階梯） -->
   <section class="slide ground-dark">
     <header class="slide-head split"><h2 class="title">從清單到停做 PPT</h2><p class="lede">每一步都在上一步完成後才開始。</p></header>
     <ol class="roadmap slide-body">
@@ -1561,7 +1591,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">下一步</span></footer>
   </section>
 
-  <!-- 88 直向時間軸＋人物 -->
+  <!-- 89 直向時間軸＋人物 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">有出場經驗的創辦人，加上磨合過的團隊</h2>
@@ -1585,7 +1615,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">團隊與公司現況</span><span data-page></span></footer>
   </section>
 
-  <!-- 89 上下交錯時間軸（ref A「Our path to success」）深底 -->
+  <!-- 90 上下交錯時間軸（ref A「Our path to success」）深底 -->
   <section class="slide ground-dark">
     <header class="slide-head"><h2 class="title">13 個月推出<span class="accent">三個產品</span></h2></header>
     <div class="slide-body">
@@ -1600,7 +1630,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">里程碑</span><span data-page></span></footer>
   </section>
 
-  <!-- 90 下一步：直向步驟＋狀態表 -->
+  <!-- 91 下一步：直向步驟＋狀態表 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">清單定好，做 PPT 這件事就能消失</h2>
@@ -1626,14 +1656,14 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">下一步</span><span data-page></span></footer>
   </section>
 
-  <!-- 91 【分類 10】方案（範本目錄，不是版型，不要複製） -->
+  <!-- 92 【分類 10】方案（範本目錄，不是版型，不要複製） -->
   <section class="slide is-divider" data-appendix data-brand="off">
     <div class="divider-num">10</div>
     <h2 class="divider-title">方案</h2>
     <p class="divider-text">方案、價格、部署選項</p>
   </section>
 
-  <!-- 92 方案 -->
+  <!-- 93 方案 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">PoC 先跑兩條 workflow，再決定怎麼導入</h2>
@@ -1661,7 +1691,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">方案</span><span data-page></span></footer>
   </section>
 
-  <!-- 93 方案 5 欄（compact） -->
+  <!-- 94 方案 5 欄（compact） -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">訂閱制，買的是用量等級</h2>
@@ -1677,7 +1707,7 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">商業模式</span><span data-page></span></footer>
   </section>
 
-  <!-- 94 部署選項 -->
+  <!-- 95 部署選項 -->
   <section class="slide">
     <header class="slide-head">
       <h2 class="title">資料放在哪裡，由企業決定</h2>
@@ -1711,20 +1741,20 @@
     <footer class="slide-foot"><img src="../../anima-brand/assets/logo/ANIMA_horizontal_primary.svg" alt="ANIMA"><span class="slide-section">資安與部署</span><span data-page></span></footer>
   </section>
 
-  <!-- 95 【分類 11】結尾（範本目錄，不是版型，不要複製） -->
+  <!-- 96 【分類 11】結尾（範本目錄，不是版型，不要複製） -->
   <section class="slide is-divider" data-appendix data-brand="off">
     <div class="divider-num">11</div>
     <h2 class="divider-title">結尾</h2>
     <p class="divider-text">結尾頁、聯絡資訊</p>
   </section>
 
-  <!-- 96 logo 結尾頁（置中，深色底） -->
+  <!-- 97 logo 結尾頁（置中，深色底） -->
   <section class="slide closing center ground-dark">
     <img class="closing-logo" src="../../anima-brand/assets/logo/ANIMA_horizontal_primary_dark.svg" alt="ANIMA">
     <p class="lede">aniweave.ai</p>
   </section>
 
-  <!-- 97 結尾＋聯絡資訊 -->
+  <!-- 98 結尾＋聯絡資訊 -->
   <section class="slide closing closing-band ground-ambient">
     <h2 class="display">先跑一條流程，再擴到整間公司</h2>
     <p class="lede">兩週內完成流程訪談，第三週開始串接。</p>
