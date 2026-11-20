@@ -902,6 +902,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   --s-accent: var(--deck-text-accent); --s-line: var(--deck-line); --s-line-strong: var(--deck-line-strong);
   --s-card: var(--deck-card-bg-alt); color: var(--s-text); }
 .panel-flow .chip { background: var(--deck-card-bg-alt); }   /* Sky 底上 Sky 50 的 chip 看不出來，改白底 */
+/* 玻璃上的清單、內文壓在流動玻璃的亮紋上讀不清楚：墊一塊白色內層，玻璃上只留標題、數字、短標籤 */
+:is(.panel-flow, .glass) > :is(.list, p, .card-text, .kpi-text) { background: var(--deck-card-bg-alt); border-radius: var(--deck-radius-md); padding: var(--deck-space-3); }
 
 .glass { box-sizing: border-box; padding: var(--deck-glass-pad); border-radius: calc(var(--deck-radius-lg) + var(--deck-glass-pad));
   background: var(--deck-glass-bg); -webkit-backdrop-filter: var(--deck-glass-backdrop); backdrop-filter: var(--deck-glass-backdrop);

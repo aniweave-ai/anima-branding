@@ -378,6 +378,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 - 底圖 13 張在 `anima-brand/assets/backgrounds/flow/`，已轉成 JPG（PDF 不會拆圖）。每張都有一塊留白給文字，挑玻璃跟文字錯開的那張；`slides.css` 裡每張都註明玻璃在哪一側。
 - token：`--deck-glass-bg`（白 32%）、`--deck-glass-ring`（白 70%）、`--deck-glass-backdrop`（blur 20px＋saturate 140%）、`--deck-glass-pad` 10px、`--deck-glass-shadow`、`--deck-stage-blur` 10px。
 - 字多的頁要壓淡底圖，加 `.is-faint`。
+- 玻璃是放圖和短標籤（標題、數字、chip）用的；清單、內文直接壓在玻璃上讀不清楚，要放在白色內層上。玻璃面板（`.panel-flow`）、玻璃框（`.glass`）裡直接放的 `.list`、`p` 會自動墊白色內層（`--deck-card-bg-alt`）。
 - 列印時展示台上的陰影會自動拿掉（Chrome 會把它印成灰色方塊）。
 
 ## sales deck 現有顏色對照（v1.3 色階外的 26 色）
