@@ -1193,7 +1193,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .slide :is(p, li, h1, h2, h3, h4, span, small, b, cite, div, a):not(:has(> :is(div, ul, ol, p, table, img, svg))):first-child { text-box-trim: trim-start; text-box-edge: text; }
 .slide :is(p, li, h1, h2, h3, h4, span, small, b, cite, div, a):not(:has(> :is(div, ul, ol, p, table, img, svg))):last-child { text-box-trim: trim-end; text-box-edge: text; }
 .slide :is(p, li, h1, h2, h3, h4, span, small, b, cite, div, a):not(:has(> :is(div, ul, ol, p, table, img, svg))):only-child { text-box-trim: trim-both; }
-.slide :is(td, th, td *, th *, svg *, .chip, .tag, .button, .node-num, .pin, .mark, .check, .avatar) { text-box: normal; }
+/* 要蓋過上面 :first-child／:last-child 的裁切（那兩條比較具體），前面多一層 .deck */
+.deck .slide :is(td, th, td *, th *, svg *, .chip, .tag, .button, .node-num, .pin, .mark, .check, .avatar) { text-box: normal; }
 /* 頁尾註解、內容區最後一個元素：一律裁到底線（後面跟著頁首列標記，不是 last-child） */
 .slide :is(.slide-note, .slide-body > :nth-last-child(1 of :not(footer)) :is(.kpi-text, .stat-text, .stat-label):last-of-type) { text-box: trim-both text; }
 .partners-head { text-box: trim-both text; }

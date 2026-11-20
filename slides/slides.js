@@ -44,6 +44,23 @@
     el.classList.add('has-svg');
   });
 
+  // 橫排的字：CSS 的 :first-child／:last-child 只裁一組的頭尾，用在並排的格子時只有第一格裁上、最後一格裁下，
+  // 同一列的字就上下錯開。同一列（同一個父層、頂端同高、同一種元素）一律照整列的裁法（有人裁上就全部裁上，裁下也一樣）。
+  const TRIMMED = ':is(p, li, h1, h2, h3, h4, span, small, b, cite, div, a):not(:has(> :is(div, ul, ol, p, table, img, svg)))';
+  slides.forEach(slide => slide.querySelectorAll('*').forEach(box => {
+    const kids = [...box.children].filter(c => c.matches(TRIMMED));
+    if (kids.length < 2) return;
+    const rows = new Map();
+    kids.forEach(c => { const key = Math.round(c.getBoundingClientRect().top) + ' ' + c.tagName + '.' + c.className; rows.set(key, [...(rows.get(key) || []), c]); });
+    rows.forEach(row => {
+      if (row.length < 2 || row.every(c => getComputedStyle(c).textBoxTrim === 'none')) return;
+      const trims = row.map(c => getComputedStyle(c).textBoxTrim);
+      const start = trims.some(t => t === 'trim-start' || t === 'trim-both'), end = trims.some(t => t === 'trim-end' || t === 'trim-both');
+      const want = start && end ? 'trim-both' : start ? 'trim-start' : 'trim-end';
+      row.forEach((c, i) => { if (trims[i] !== want) c.style.textBoxTrim = want; });
+    });
+  }));
+
   // 字的上下緣：CSS 預設裁到中文字墨跡（text）。純英文、數字的元素改裁到大寫頂和基線（cap alphabetic），
   // 數字類（大數字、價格、章節號）一律用 cap，即使後面接 <small> 中文單位。
   const NUM = '.kpi-value, .stat-value, .option-price, .ratio-value, .fact-value, .ask-value, .section-num, .section-band-num, .col-bar';
