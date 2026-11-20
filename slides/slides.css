@@ -2051,3 +2051,24 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* 三欄裡有不放底色的欄（.card.is-ruled）時，欄距放寬到 48，線才分得開（sales deck 案例 C） */
 .split-3.is-ruled { gap: var(--deck-space-5); }
+
+/* 選項軸：幾個選項排成一條軸（圓點＋線），下面一列一個面向，列名只寫一次（sales deck 資安與部署） */
+.option-axis { display: grid; grid-template-columns: calc(170px * var(--u)) repeat(var(--cols, 3), minmax(0, 1fr)); }
+.option-axis > * { padding: var(--deck-space-1) var(--deck-space-4) var(--deck-space-1) 0; border-top: 2px solid var(--s-line); font-size: var(--deck-fs-caption); color: var(--s-text); text-wrap: pretty; }
+.option-axis > b { font-weight: var(--deck-fw-semibold); color: var(--s-accent); }
+.option-axis > :is(.option-axis-head, .option-axis-corner) { position: relative; border-top: 0; padding-top: calc(38px * var(--u)); padding-bottom: var(--deck-space-2); }
+.option-axis-head { display: flex; flex-direction: column; gap: var(--deck-space-1); }
+.option-axis-head::before { content: ""; position: absolute; left: 0; right: 0; top: calc(11px * var(--u)); border-top: 2px solid var(--s-line-strong); }
+.option-axis-head::after { content: ""; position: absolute; left: 0; top: 0; width: calc(22px * var(--u)); height: calc(22px * var(--u)); border-radius: 50%; background: var(--s-accent); }
+.option-axis-head h3 { display: flex; align-items: center; gap: var(--deck-space-2); font-size: var(--deck-fs-heading); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
+.option-axis-head h3 .ico { color: var(--s-accent); }
+.option-axis-tag { font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-medium); color: var(--s-accent); }
+.option-axis-sub { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--deck-space-1) var(--deck-space-2); }
+.option-axis-tag { white-space: nowrap; }
+.option-axis-sub > .label { white-space: nowrap; }
+.deck .slide .option-axis-sub img.logo { height: calc(36px * var(--u)); margin: 0 0 0 var(--deck-space-1); }
+.deck .slide :is(.option-axis, .option-axis-head, .option-axis-sub, .option-axis-sub > .label) > * { text-box: normal; }
+/* 功能格小一級：標題 30、說明 24（放在別的版型下面當補充） */
+.features.is-sm .feature-title { font-size: var(--deck-fs-body-lg); }
+.features.is-sm .feature-text { font-size: var(--deck-fs-caption); }
+.features .feature-title > .ico { color: var(--s-accent); margin-right: var(--deck-space-1); }
