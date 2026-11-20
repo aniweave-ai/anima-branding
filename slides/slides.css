@@ -1553,7 +1553,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 大數字卡拉高（ref「Traction」）：卡片內容少時不撐滿，跟標題之間留呼吸空間；卡高約內容區六成，數字在上、標籤和說明壓在卡底 */
 .stats.is-big.is-tall .stat { min-height: calc(440px * var(--u)); justify-content: flex-start; }
 .stats.is-big.is-tall .stat-label { margin-top: auto !important; }
-/* 流程卡拉高（第 60 頁）：內容少時不撐滿，卡高約內容區六成，跟標題留呼吸空間；最後的標籤壓在卡底 */
+/* 流程卡拉高（第 61 頁）：內容少時不撐滿，卡高約內容區六成，跟標題留呼吸空間；最後的標籤壓在卡底 */
 .flow.is-tall .card { min-height: calc(440px * var(--u)); }
 .flow.is-tall .card > .tags:last-child { margin-top: auto !important; }
 .flow.is-tall .card::before { font-size: var(--deck-fs-number); font-weight: var(--deck-fw-number); line-height: 1.05; text-box: trim-both cap alphabetic; }
@@ -1580,7 +1580,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 燈號格下面的數字：欄寬照各燈號的格數（例：3:2:3），數字對齊上面那一組格子 */
 .status-tiles + .shares { grid-template-columns: var(--cols-tpl); gap: var(--deck-space-1); }
 .status-tiles b { text-wrap: wrap; }
-/* 資料轉換前後拉高（第 65 頁）：卡高約內容區六成，跟標題留呼吸空間；上方大編號＋小標，下方是原文／代號，中間那張多一張對照表 */
+/* 資料轉換前後拉高（第 66 頁）：卡高約內容區六成，跟標題留呼吸空間；上方大編號＋小標，下方是原文／代號，中間那張多一張對照表 */
 .transform.is-tall { flex: none; }
 .transform.is-tall .card { min-height: calc(440px * var(--u)); }
 .transform.is-tall .step-num { font-size: var(--deck-fs-number); line-height: 1.05; color: var(--s-accent); text-box: trim-both cap alphabetic; margin-bottom: var(--deck-space-4); }
@@ -1591,7 +1591,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .transform.is-tall { margin-top: auto; }
 .transform.is-tall .card > .sample:first-of-type { margin-top: 0; }
 .map > span { justify-self: start; }
-/* 客戶牆＋大數字（第 57 頁，ref「Traction」）：左邊總數，右邊每個產業一格；沒有 logo 的格子也用卡片底，跟有 logo 的一樣大 */
+/* 客戶牆＋大數字（第 58 頁，ref「Traction」）：左邊總數，右邊每個產業一格；沒有 logo 的格子也用卡片底，跟有 logo 的一樣大 */
 .logo-wall { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--deck-space-7); align-items: end; }
 .logo-wall .logos { gap: var(--deck-space-1); }
 .logo-wall .logo-cell:not(:has(img)) { height: calc(150px * var(--u)); background: var(--s-card); border-radius: var(--deck-radius-lg); border-top: 0; place-items: center start; padding: 0 var(--deck-space-4);
@@ -1599,7 +1599,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .logo-wall > .kpi .kpi-value { font-size: calc(200px * var(--u)); line-height: .9; }
 /* 同一排混著英數和中文的字（時間軸日期、標題）：統一裁到中文字墨跡，整排才會切齊（JS 預設把純英數改成 cap） */
 .deck .slide .milestones:not(.vertical) :is(.milestone-when, .milestone-title) { text-box-edge: text !important; }
-/* 分工三欄拉高（第 58 頁）：卡高約內容區六成，跟標題留呼吸空間；欄標題放大在上，清單壓在卡底，三欄清單間距一致 */
+/* 分工三欄拉高（第 59 頁）：卡高約內容區六成，跟標題留呼吸空間；欄標題放大在上，清單壓在卡底，三欄清單間距一致 */
 .split-3.is-tall > * { min-height: calc(440px * var(--u)); display: flex; flex-direction: column; }
 .split-3.is-tall > * > .label { font-size: var(--deck-fs-heading); font-weight: var(--deck-fw-regular); color: var(--s-strong); line-height: var(--deck-lh-title); opacity: 1; }
 .split-3.is-tall > * > .list { margin-top: auto !important; gap: var(--deck-space-3); }
@@ -1995,3 +1995,19 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-accent); }
 .fanout > .slide-note { text-align: center; margin-top: var(--deck-space-3); }
 .deck .slide :is(.fanout-bar > div, .fanout-groups, .fanout-item) > * { text-box-trim: trim-both; text-box-edge: text; }
+/* chip 列裡的 icon（沒有 logo 的項目，例如 FAQ／SOP）跟 logo 同樣大、同樣間距 */
+.deck .slide .chip > .ico { --ico-size: 1.15em; margin-right: calc(10px * var(--u)); color: var(--s-accent); }
+
+/* 名稱欄：幾項就幾欄、不放卡片，每欄上方一條線；名稱是主角（44），工具列壓欄底（sales deck workflow 總覽） */
+.titlecols { flex: 1; min-height: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--deck-space-6); }
+.titlecols > * { display: flex; flex-direction: column; gap: var(--deck-space-2); padding-top: var(--deck-space-3); border-top: 2px solid var(--s-line-strong); min-width: 0; }
+.titlecols-name { font-size: var(--deck-fs-heading); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
+.titlecols p { font-size: var(--deck-fs-body-lg); color: var(--s-muted); text-wrap: balance; }
+.titlecols > * > .chips:last-child { margin-top: auto; padding-top: var(--deck-space-2); }
+.titlecols:has(> :nth-child(4)) { gap: var(--deck-space-5); }
+.titlecols:has(> :nth-child(4)) .titlecols-name { font-size: var(--deck-fs-subheading); }
+/* 一排小計：卡片底色的一條，左邊幾個數字、右邊註解 */
+.tally { display: flex; align-items: center; justify-content: space-between; gap: var(--deck-space-5); background: var(--s-card); border-radius: var(--deck-radius-lg); padding: var(--deck-space-2) var(--deck-space-4); }
+.tally > p { display: flex; align-items: baseline; gap: var(--deck-space-5); font-size: var(--deck-fs-body-lg); color: var(--s-strong); }
+.tally b { font-size: var(--deck-fs-heading); font-weight: var(--deck-fw-number); color: var(--s-accent); margin-right: var(--deck-space-1); }
+.deck .slide :is(.tally, .tally > p, .titlecols > * > .label) > * { text-box: normal; }
