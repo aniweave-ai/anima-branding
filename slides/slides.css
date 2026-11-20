@@ -1972,3 +1972,26 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .is-highlight .steps > li::before { background: var(--deck-highlight-text); color: var(--deck-highlight-bg); }
 /* 並排的功能格：一行和兩行的說明從同一個高度開始 */
 .features.is-stacked .feature { align-content: start; }
+
+/* 主張大字：文字欄裡一兩段大字（36），.is-accent 是藍字結論、上方一條線 */
+.lead-text { font-size: var(--deck-fs-subheading); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
+.lead-text.is-accent { font-size: var(--deck-fs-body-lg); line-height: var(--deck-lh-body); color: var(--s-accent); border-top: 2px solid var(--s-line-strong); padding-top: var(--deck-space-4); }
+/* 一對多：上面一條亮點卡（ANIMA），往下連到一排工具，底下標分組（sales deck 品類頁） */
+.fanout { display: flex; flex-direction: column; min-width: 0; }
+.split > .fanout { align-self: center; }
+.deck .slide .fanout-bar { flex-direction: row; align-items: center; gap: var(--deck-space-4); padding: var(--deck-space-4); }
+.deck .slide .fanout-bar > img.logo { height: calc(44px * var(--u)); margin: 0; flex: none; }
+.fanout-bar > div { flex: 1; display: flex; flex-direction: column; gap: var(--deck-space-1); border-left: 2px solid var(--s-line-strong); padding-left: var(--deck-space-4); }
+.fanout-bar b { font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-semibold); white-space: nowrap; }
+.fanout-bar span { font-size: var(--deck-fs-caption); }
+.fanout-bar > .chip { flex: none; }
+.fanout-items { display: grid; grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr)); gap: var(--deck-space-2); }
+.fanout-item { position: relative; padding-top: calc(var(--deck-space-5) + var(--deck-space-3)); display: grid; grid-template-rows: calc(88px * var(--u)) auto; justify-items: center; align-items: center; gap: var(--deck-space-2);
+  padding-bottom: var(--deck-space-3); font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-strong); text-align: center; white-space: nowrap; }
+.fanout-item::before { content: ""; position: absolute; top: 0; left: 50%; width: calc(3px * var(--u)); height: var(--deck-space-5); background: var(--s-accent); transform: translateX(-50%); }
+.deck .slide .fanout-item > img.logo { display: block; height: calc(88px * var(--u)); margin: 0; }
+.fanout-groups { display: grid; grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr)); gap: var(--deck-space-2); }
+.fanout-groups > * { grid-column: span var(--span, 1); border-top: 2px solid var(--s-line-strong); padding-top: var(--deck-space-2); text-align: center;
+  font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-accent); }
+.fanout > .slide-note { text-align: center; margin-top: var(--deck-space-3); }
+.deck .slide :is(.fanout-bar > div, .fanout-groups, .fanout-item) > * { text-box-trim: trim-both; text-box-edge: text; }
