@@ -2049,8 +2049,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .relay-step .chips.is-plain { row-gap: var(--deck-space-1); }
 .deck .slide :is(.relay-step, .relay-step > div, .relay-step > h3) > * { text-box: normal; }
 
-/* 三欄裡有不放底色的欄（.card.is-ruled）時，欄距放寬到 48，線才分得開（sales deck 案例 C） */
-.split-3.is-ruled { gap: var(--deck-space-5); }
+/* 並排的欄裡有不放底色的欄（.card.is-ruled）時，欄距放寬到 48，線才分得開 */
+:is(.grid, .split-3):has(> .card.is-ruled) { column-gap: var(--deck-space-5); }
 
 /* 選項軸：幾個選項排成一條軸（圓點＋線），下面一列一個面向，列名只寫一次（sales deck 資安與部署） */
 .option-axis { display: grid; grid-template-columns: calc(170px * var(--u)) repeat(var(--cols, 3), minmax(0, 1fr)); }
@@ -2072,3 +2072,20 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .features.is-sm .feature-title { font-size: var(--deck-fs-body-lg); }
 .features.is-sm .feature-text { font-size: var(--deck-fs-caption); }
 .features .feature-title > .ico { color: var(--s-accent); margin-right: var(--deck-space-1); }
+
+/* 一條橫列：上下兩條線，中間橫排一組東西（logo、標籤、一句說明），最後一個靠右（sales deck 競爭定位） */
+.strip { display: flex; align-items: center; gap: var(--deck-space-5); padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line-strong); border-bottom: 2px solid var(--s-line-strong); }
+.strip > :last-child:not(:first-child) { margin-left: auto; }
+.strip > .logo-row { flex-wrap: nowrap; gap: var(--deck-space-3); }
+.deck .slide .strip > * { text-box: normal; margin-top: 0; margin-bottom: 0; }
+/* 標籤裡的勾：用 icon，不打「✓」字元 */
+.tag > .ico { --ico-size: 1em; margin-right: calc(6px * var(--u)); }
+/* 卡片標題前的編號（01、02…） */
+.card-title > .num { font-weight: var(--deck-fw-number); color: var(--s-accent); margin-right: var(--deck-space-2); }
+/* 小標接下面一組欄 */
+.slide .label + :is(.grid, .split-3) { margin-top: var(--deck-space-2); }
+/* 說明條橫排：標題和標籤同一列 */
+.callout.is-row { display: flex; align-items: center; gap: var(--deck-space-3); }
+.deck .slide .callout.is-row > .callout-title { flex: none; margin: 0; }
+.callout.is-row > .tags { margin-left: auto; min-width: 0; justify-content: flex-end; }
+.deck .slide .callout.is-row > * { text-box: normal; }
