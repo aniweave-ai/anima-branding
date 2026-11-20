@@ -129,7 +129,7 @@
 - **預設封面**是 `.cover-phone` 配品牌流動玻璃背景（`.cover-bg.flow-06`，示範第 2 頁）；其他封面是備選：滿版流動玻璃（`.cover.ground-flow`）、畫面塊＋標題、自己的底圖＋手機、深色玻璃＋手機。
 - **封面＋手機** `.cover-phone`：背景鋪滿、手機在右邊往下超出頁面、文字在左。背景三選一：`.cover-bg` 放自己的底圖（圖案太滿加 `.is-faded`）、`.cover-bg.flow-NN` 品牌流動玻璃、整頁 `.ground-dark` 深色玻璃。手機圖用 JPG，圓角由 CSS 裁。
 - **預設全部白底（Victor 決定，2026-11-16）**：做簡報一律用白底，Victor 明講要深色才開深底。`data-dark` 沒寫就是 `off`。
-- **sales deck 預設漸層底（Wayne 決定，2026-11-17）**：業務簡報（sales deck、客戶提案）在 `<main class="deck">` 寫 `data-dark="ambient"`，內容頁全部用淡漸層底（`.ground-ambient`）。漸層底上的淺色塊（ANIMA 步驟、人員處理、完成、缺口、圖例色塊、chip、灰標籤、說明條 `.callout`）會自動換深一階（Sky／Warning／Success／Error／Depth 100），灰底的流程節點、卡片改白底，不用自己調。
+- **sales deck 的底色（照 sales deck v2.0.2 實際做法，2026-11-20 定案）**：在 `<main class="deck">` 寫 `data-dark="all"`，每一頁自己標底色：內容頁用淡漸層 `.ground-ambient`；性質不同的頁才用別的底：公司介紹那幾頁（公司概要、導入成果、團隊）`.ground-dark`，定價 `.ground-brand`（沙色），附錄 `.ground-neutral`（灰）；流動玻璃只留封面和 4A 那頁。漸層底上的淺色塊（ANIMA 步驟、人員處理、完成、缺口、圖例色塊、chip、灰標籤、說明條 `.callout`）會自動換深一階（Sky／Warning／Success／Error／Depth 100），灰底的流程節點、卡片改白底，不用自己調。整份都要淡漸層、不想逐頁標時，才用 `data-dark="ambient"`。
 - **深底頁**（Victor 要求時才用）：深底（Depth 900）大約三分之一，放在想讓人停下來的頁（目錄、重點數字、做法、見證）。深底上的卡片用 `--deck-card-bg-dark`（Depth 800）。
 - **深色頁開關**：寫在 `<main class="deck" data-dark="…">`，整份一起切換，印 PDF 也照這個設定：
   - `all`：照每頁設的底色（深底頁變深）。
