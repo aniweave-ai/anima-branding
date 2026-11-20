@@ -683,10 +683,13 @@
     const c = document.createElement('canvas'); c.width = cw; c.height = ch;
     const g = c.getContext('2d'); g.drawImage(img, 0, 0, cw, ch);
     let d; try { d = g.getImageData(0, 0, cw, ch).data; } catch (e) { return null; }   // file:// 讀不到像素就照原樣
+    // 有透明的圖（去白底版、深底用的白色 -dark 版）只看不透明的像素；整張不透明的圖才把白色當底跳過
+    let clear = false;
+    for (let i = 3; i < d.length; i += 4) if (d[i] < 16) { clear = true; break; }
     let t = ch, l = cw, b = -1, r = -1;
     for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) {
       const i = (y * cw + x) * 4, a = d[i + 3];
-      if (a < 16 || (d[i] > 242 && d[i + 1] > 242 && d[i + 2] > 242)) continue;   // 透明或白底不算圖案
+      if (a < 16 || (!clear && d[i] > 242 && d[i + 1] > 242 && d[i + 2] > 242)) continue;
       if (y < t) t = y; if (y > b) b = y; if (x < l) l = x; if (x > r) r = x;
     }
     if (b < 0) return null;
