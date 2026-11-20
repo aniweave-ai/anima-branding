@@ -24,7 +24,7 @@
 :root { --deck-canvas-scale: 0.75; } /* 1440×810 的 deck 只要加這行，放在 tokens.css 之後 */
 ```
 
-- 外框：左右、頁首列到頂、頁底品牌列到底都是 80（`--deck-pad-x`、`--deck-pad-bottom`）；標題頂線 `--deck-pad-top` 144，內容底線 936（跟標題頂線上下對稱）。2026-11-17 從 96／192／984 改過來。
+- 外框：左右、頁首列到頂都是 80（`--deck-pad-x`）；頁底品牌列到底 64（`--deck-brand-bottom`）。標題頂線 `--deck-pad-top` 144，內容底線 968（`--deck-pad-end` 離底 112）；關掉品牌列的頁內容底線 1000（`--deck-pad-bottom` 80）。頁首（標題、引言）到內容 40（`--deck-head-gap`）。2026-11-17 從 96／192／984 改成 80／144／936，2026-11-20 為了多一點內容空間改成現在的數字（內容區高 792 → 824）。
 - 間距只用 `--deck-space-1`～`7`：8／16／24／32／48／64／96。
 
 ## 字級
@@ -109,15 +109,15 @@
 
 - **頁首列**：左上頁名、右上 logo。封面、章節頁、結尾不放。不放頁碼。標記仍寫 `<footer class="slide-foot">`，CSS 會把它放到上方；深底頁自動換白字 logo。
 - **頁底品牌列**（2026-11-17，Wayne 要求、Victor 定版）：左下公司 slogan「Bringing intelligence into every workspace」、右下 ANIWEAVE logo，**每一頁都有**，`slides.js` 自動加，不用寫標記。
-  - 位置跟頁首列上下對稱：離底 80、左右 80；slogan 基線和 logo 底切齊。slogan 用 `--deck-fs-small` 20、`--s-muted`；logo 字高＝頁首 ANIMA logo 的字高（15.7）。
-  - **不放的頁**：那一頁 `<section>` 加 `data-brand="off"`；整份都不放就加在 `<main class="deck">`。只有 Victor 或使用者說不用放才關。關掉的頁內容底線退到 1000（離底 80）。
+  - 位置：離底 64（`--deck-brand-bottom`，品牌列約 1000–1016）、左右 80；slogan 基線和 logo 底切齊。slogan 用 `--deck-fs-small` 20、`--s-muted`；logo 字高＝頁首 ANIMA logo 的字高（15.7）。
+  - **不放的頁**：那一頁 `<section>` 加 `data-brand="off"`；整份都不放就加在 `<main class="deck">`。只有 Victor 或使用者說不用放才關。關掉的頁內容底線改到 1000（離底 80，`--deck-pad-bottom`）。
   - **手機封面（`.cover-phone`）例外**：手機延伸到底會壓到右下 logo，所以 ANIWEAVE logo 改放在 slogan 左邊（大小不變），中間隔 `--deck-space-3` 24，整組在左下。其他頁 ANIWEAVE 都在右下。
   - 換頁時不動（每頁都一樣）。深底、章節色帶、滿版圖頁自動換官方白字版（`ANIWEAVE_textlogo_primary_dark.svg`），白底用深字版（`ANIWEAVE_textlogo_primary.svg`）。
   - slogan 照品牌規範逐字照用、句尾不加句號，不跟 ANIMA logo 組成 lockup。
 - **字重**：標題、大字用 `--deck-fw-title`（比內文粗一點），大數字用 `--deck-fw-number`（bold），其他照「字重」表。
 - **數字的中文單位**：中文字面比數字大，大數字裡的單位（個月、萬、家、天）用 `<small>` 包起來，縮成 0.5 倍（最小不低於 caption）：`<span class="kpi-value">1<small>個月</small></span>`。
 - **數字**：大數字用 `--deck-fs-number` 112，顏色 `--s-accent`（白底 Current 500、深底 Sky 300）。說明一行小字。
-- **內容框**：整頁外框只有一個邊距 `--deck-pad-x` 80：左、右、頁首列到頂、頁底品牌列到底都一樣。標題頂線固定在 `--deck-pad-top` 144，內容底線在 936（內容區高 792）。每一頁的內容都落在這個框裡：
+- **內容框**：整頁外框只有一個邊距 `--deck-pad-x` 80：左、右、頁首列到頂、頁底品牌列到底都一樣。標題頂線固定在 `--deck-pad-top` 144，內容底線在 968（`--deck-pad-end`，內容區高 824）。每一頁的內容都落在這個框裡：
   - 標題永遠在頂線，不垂直置中（封面、章節頁、主張頁、引言、結尾例外）。
   - 內容接在標題下方往下排（2026-11-20 改，Wayne 提、Victor 同意：原本整組靠底線，中等份量的頁標題下會空一大塊，內容太多時還會往上壓到標題）。放不下時往下超出底線，總覽標紅「內容超出底線」，不會壓到標題。
   - 內容少、刻意留白的頁（只有一排數字卡、一個大數字＋小圖）在 `<section class="slide is-bottom">` 加 `.is-bottom`，整組靠底線放，跟標題之間留一段呼吸空間。範本第 21、31、57 頁是這種。
@@ -163,8 +163,8 @@
 - 分隔線一律 2px。
 
 **外框**
-- 外框 80：左、右，頁首列和封面 logo 到頂、頁底品牌列到底都是 80。封面 logo 貼左上角（80／80）。
-- 頁首列頂到標題頂線、內容底線到頁底品牌列底都是 64：標題頂線 144，內容底線 936。內容接在標題下方；刻意留白的頁加 `.is-bottom` 靠底線。
+- 外框 80：左、右，頁首列和封面 logo 到頂都是 80；頁底品牌列到底 64。封面 logo 貼左上角（80／80）。
+- 頁首列頂到標題頂線 64：標題頂線 144。內容底線 968，到頁底品牌列頂 32。內容接在標題下方；刻意留白的頁加 `.is-bottom` 靠底線。
 
 **標題＋副標（全 deck 同一套）**
 - 小標題（26 以下）接副標或清單：**16**。
@@ -175,7 +175,8 @@
 - label 接大數字（儀表板）不算標題＋副標，維持原本間距。
 
 **其他固定間距**
-- 頁標題接引言（lede）：**24**。
+- 頁標題接引言（lede）：**16**（`.slide-head` 的 gap）。
+- 頁首（標題、引言）接內容：**40**（`--deck-head-gap`）。
 - 大數字、價格接下面的說明：**16**。
 - 一組數字接下一組（直排的 KPI、案例結果）：**32**。
 
@@ -551,5 +552,6 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## 版本
 
+- v1.6（2026-11-20）：內容多一點空間：頁首到內容 64 → 40、標題接引言 40 → 16、內容底線 936 → 968、頁底品牌列離底 80 → 64（新 token `--deck-pad-end`、`--deck-brand-bottom`、`--deck-head-gap`；`data-brand="off"` 的頁底線維持 1000）。
 - v1.5（2026-11-17，回應 sales 的 v1.4 回饋）：外框 96 → 80、標題頂線 192 → 144、內容底線 984 → 936（內容區高度不變）；每頁加頁底品牌列（slogan＋ANIWEAVE logo，`data-brand="off"` 可關）；字級改成管範圍（投影最小 20、附錄 16、只發 PDF 14；同頁相鄰兩級差 4px；一頁最多 4 級），token 當建議值，caption 下補 `small` 20／`micro` 16／`print` 14；標題字重 `--deck-fw-title`、大數字 `--deck-fw-number`（bold）；一頁的內容上限從硬性改成目標，由做 deck 的人決定怎麼縮、拆、用 `data-dense`，新增 `data-appendix`（附錄不檢查）；內文字數上限 200 → 250（副標不算），副標另訂 2 行、60 字；ANIWEAVE logo 換官方深字／白字版。
 - v1.4（草稿）：新增狀態色階（success／warning／error）、`--deck-*` 簡報 token、這份文件、`slides.css`／`slides.js`／版型示範、Nunito Sans 靜態 TTF。

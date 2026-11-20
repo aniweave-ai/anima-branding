@@ -239,8 +239,11 @@
 
   /* 間距 */
   --deck-pad-x:      calc(80px  * var(--deck-canvas-scale)); /* 外框：左右、頁首列到頂、頁底品牌列到底都用這一個值 */
-  --deck-pad-top:    calc(144px * var(--deck-canvas-scale)); /* 標題頂線＝外框 80＋64；內容底線跟它對稱（1080−144＝936） */
-  --deck-pad-bottom: calc(80px  * var(--deck-canvas-scale)); /* 頁底品牌列到底；關掉品牌列（data-brand="off"）的頁，內容底線改用這個值 */
+  --deck-pad-top:    calc(144px * var(--deck-canvas-scale)); /* 標題頂線＝外框 80＋64 */
+  --deck-pad-end:    calc(112px * var(--deck-canvas-scale)); /* 有頁底品牌列的頁，內容底線離底 112（1080−112＝968），品牌列在底線下方 32 */
+  --deck-brand-bottom: calc(64px * var(--deck-canvas-scale)); /* 頁底品牌列到底（品牌列約 1000–1016） */
+  --deck-pad-bottom: calc(80px  * var(--deck-canvas-scale)); /* 關掉品牌列（data-brand="off"）的頁，內容底線離底 80（1000） */
+  --deck-head-gap:   calc(40px  * var(--deck-canvas-scale)); /* 頁首（標題、引言）到內容 */
   --deck-space-1: calc(8px  * var(--deck-canvas-scale));
   --deck-space-2: calc(16px * var(--deck-canvas-scale));
   --deck-space-3: calc(24px * var(--deck-canvas-scale));

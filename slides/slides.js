@@ -376,7 +376,7 @@
   });
   if (overList.length) console.warn('超過內容上限的頁（README「一頁的內容上限」）：\n' + overList.join('\n'));
 
-  // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（144–936，高 792）四成就在總覽標藍色。
+  // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（標題頂線到內容底線，有品牌列 144–968，高 824）四成就在總覽標藍色。
   var markSparse = () => {
     const sparse = [];
     slides.forEach((slide, i) => {
@@ -390,7 +390,8 @@
       if (!rects.length) return;
       // 內容靠上或靠底線（.is-bottom）都一樣：量標題下、內容上下沒用到的高度
       const gap = (Math.min(...rects.map(r => r.top)) - head.getBoundingClientRect().bottom + body.getBoundingClientRect().bottom - Math.max(...rects.map(r => r.bottom))) / k;
-      if (gap > 792 * 0.4) {
+      const area = (body.getBoundingClientRect().bottom - head.getBoundingClientRect().top) / k;
+      if (gap > area * 0.4) {
         frame.dataset.sparse = `內容區空 ${Math.round(gap)}px，換版型或合併`;
         sparse.push(`第 ${i + 1} 頁：內容區空 ${Math.round(gap)}px`);
       }
