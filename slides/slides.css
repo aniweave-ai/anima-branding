@@ -485,8 +485,12 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .ratio-value small { font-size: var(--deck-fs-heading); }
 
 /* 長條圖（橫向）：類別、長條、數值。一組資料用 chart-1；要強調其中一根，其餘加 .is-other */
-.bars { display: flex; flex-direction: column; gap: var(--deck-space-3); }
-.bars-row { display: grid; grid-template-columns: calc(280px * var(--u)) minmax(0, 1fr) calc(110px * var(--u)); align-items: center; gap: var(--deck-space-3); }
+/* 欄寬放在 .bars，每一列用 subgrid：同一張圖的長條從同一個 x 開始。
+   名稱、數字欄有空間就撐到 280／110，窄卡片裡縮到字的寬度；長條至少佔 47%（範本的半頁寬長條圖剛好維持 280／110）。 */
+.bars { --bars-name: calc(280px * var(--u)); --bars-num: calc(110px * var(--u));
+  display: grid; grid-template-columns: minmax(auto, var(--bars-name)) minmax(47%, 1fr) minmax(auto, var(--bars-num)); gap: var(--deck-space-3); align-content: start; }
+.bars > * { grid-column: 1 / -1; }
+.bars-row { display: grid; grid-template-columns: subgrid; align-items: center; }
 .bars-label { font-weight: var(--deck-fw-semibold); color: var(--s-strong); line-height: var(--deck-lh-title); }
 .bars-track { height: calc(28px * var(--u)); border-radius: var(--deck-radius-sm); background: var(--deck-chart-grid); overflow: hidden; }
 .bars-fill { display: block; height: 100%; width: calc(var(--v) * 1%); border-radius: inherit; background: var(--deck-chart-1); }
@@ -1554,9 +1558,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 橫條＋左邊大數字（第 31 頁，ref「The problem in numbers」）：最大那一項拉成大數字，右邊橫條加粗、拉開間距 */
 .bars-split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--deck-space-7); align-items: end; }
 .bars-split > .kpi .kpi-value { font-size: calc(200px * var(--u)); line-height: .9; }
-.bars-split > .bars { gap: var(--deck-space-5); }
+.bars-split > .bars { row-gap: var(--deck-space-5); --bars-name: calc(190px * var(--u)); --bars-num: calc(90px * var(--u)); }
 .bars-split .bars-track { height: calc(44px * var(--u)); }
-.bars-split .bars-row { grid-template-columns: calc(190px * var(--u)) minmax(0, 1fr) calc(90px * var(--u)); }
 /* 燈號格（第 33 頁）：一個工項一格，底色是燈號，取代單條比例條，讓每一項都看得到 */
 .status-tiles { display: grid; grid-template-columns: repeat(var(--cols, 8), minmax(0, 1fr)); gap: var(--deck-space-1); }
 .status-tiles > div { min-height: calc(220px * var(--u)); border-radius: var(--deck-radius-sm); padding: var(--deck-space-3); display: flex; flex-direction: column; justify-content: space-between; gap: var(--deck-space-2);
