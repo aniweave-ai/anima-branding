@@ -108,7 +108,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   --s-card: var(--deck-card-bg);
 
   box-sizing: border-box; width: var(--slide-w); height: var(--slide-h); overflow: hidden;
-  padding: var(--deck-pad-top) var(--deck-pad-x) var(--slide-pad-end, var(--deck-pad-top));   /* 有頁底品牌列：內容底線跟標題頂線對稱 */
+  padding: var(--deck-pad-top) var(--deck-pad-x) var(--slide-pad-end, var(--deck-pad-end));   /* 有頁底品牌列：內容底線 968，品牌列在下方 */
   display: flex; flex-direction: column; gap: var(--deck-space-6);
   background: var(--s-bg); color: var(--s-text);
   font-size: var(--deck-fs-body); line-height: var(--deck-lh-body); font-weight: var(--deck-fw-regular);
@@ -134,11 +134,15 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   --s-line-strong: var(--deck-line-on-dark);
   --s-card: var(--deck-card-bg-dark);
   --s-inner: var(--deck-card-bg-dark);
+  /* 一般說明條換深色卡底，不留一條亮的；狀態色說明條照舊 */
+  --deck-callout-bg: var(--deck-card-bg-dark);
+  --deck-callout-text: var(--deck-text-on-dark);
 }
 .ground-dark-warm { --s-bg: var(--deck-ground-dark-warm); }
 
 
 /* ---------- 頁首：小標、標題、引言 ---------- */
+.slide:has(> .slide-head) { gap: var(--deck-head-gap); }   /* 頁首到內容 40；封面、章節、主張頁這類沒有頁首的版型維持 64 */
 .slide-head { display: flex; flex-direction: column; gap: var(--deck-space-2); }   /* 標題可以用滿整個寬度；lede 自己有 40em 上限 */
 .title { font-size: var(--deck-fs-title); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-title); letter-spacing: -.01em;
          color: var(--s-strong); text-wrap: balance; }
@@ -156,10 +160,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .slide-foot [data-page] { display: none; }
 .slide-section { order: 0; }   /* 頁名：導覽標籤，不是標題上方的小標 */
 .slide-foot img { order: 1; margin-left: auto; height: calc(30px * var(--u)); width: auto; display: block; }
-/* 頁底品牌列：左邊公司 slogan、右邊 ANIWEAVE logo，跟頁首列上下對稱（離底＝外框，左右對齊內容）。
-   slides.js 自動加到每一頁；那一頁 <section> 或整份 <main class="deck"> 加 data-brand="off" 就不放，內容底線退回外框。
+/* 頁底品牌列：左邊公司 slogan、右邊 ANIWEAVE logo（離底 --deck-brand-bottom 64，左右對齊內容）。
+   slides.js 自動加到每一頁；那一頁 <section> 或整份 <main class="deck"> 加 data-brand="off" 就不放，內容底線改到離底 80（1000）。
    logo 字高＝頁首 ANIMA logo 的字高（頁首 logo 高 30，字母佔 viewBox 382 裡的 200）。 */
-.slide-brand { position: absolute; left: var(--deck-pad-x); right: var(--deck-pad-x); bottom: var(--deck-pad-bottom);
+.slide-brand { position: absolute; left: var(--deck-pad-x); right: var(--deck-pad-x); bottom: var(--deck-brand-bottom);
   display: flex; align-items: flex-end; justify-content: space-between; gap: var(--deck-space-3);
   font-size: var(--deck-fs-small); line-height: 1; color: var(--s-muted); pointer-events: none; }
 /* slogan 裁到大寫頂和基線，基線才會跟 logo 底切齊（要蓋過內容區的 trim-start 規則） */
@@ -233,8 +237,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .list > li { position: relative; padding-left: calc(32px * var(--u)); }
 .list > li::before { content: ""; position: absolute; left: calc(4px * var(--u)); top: calc(.8em - 5px * var(--u));
   width: calc(10px * var(--u)); height: calc(10px * var(--u)); border-radius: 50%; background: var(--s-line-strong); }
-.list.checks > li::before { top: calc(.8em - 9px * var(--u)); left: 0; width: calc(18px * var(--u)); height: calc(10px * var(--u)); border-radius: 0;
-  background: none; border: solid var(--s-accent); border-width: 0 0 calc(4px * var(--u)) calc(4px * var(--u)); transform: rotate(-45deg); }
 
 
 /* 文字空位：還沒有的真實資料（客戶名、引言、數字）留在這裡，不要編 */
@@ -248,7 +250,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   --s-accent: var(--deck-highlight-text); --s-line: color-mix(in srgb, var(--deck-highlight-text) 28%, transparent); --s-line-strong: color-mix(in srgb, var(--deck-highlight-text) 45%, transparent);
   --s-card: color-mix(in srgb, var(--deck-highlight-text) 14%, transparent); }
 :is(.is-highlight, .option.is-featured, .compare-col.after) .chip { background: color-mix(in srgb, var(--deck-highlight-text) 18%, transparent); color: var(--deck-highlight-text); }
-:is(.is-highlight, .option.is-featured, .compare-col.after) .list.checks > li::before { border-color: var(--deck-highlight-text); }
 
 /* 頁首的標題＋說明：標題在左，兩三行說明靠右上（ref 的做法） */
 .slide-head.split { flex: none; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, calc(620px * var(--u))); column-gap: var(--deck-space-6); align-items: start; }
@@ -332,10 +333,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 流程：步驟卡片＋箭頭；最後一步常是「人工確認」 */
 .flow { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--deck-space-5); counter-reset: step; align-content: start; }
 .flow > li { list-style: none; counter-increment: step; position: relative; }
-.flow > li::after { content: ""; position: absolute; top: 50%; right: calc(-1 * var(--deck-space-5) / 2 - 10px * var(--u));
-  width: calc(20px * var(--u)); height: calc(20px * var(--u)); border: solid var(--s-line-strong);
-  border-width: calc(4px * var(--u)) calc(4px * var(--u)) 0 0; transform: translate(calc(-7px * var(--u)), -50%) rotate(45deg); }
-.flow > li:last-child::after { display: none; }
 .flow { padding: 0; }
 .flow .card { height: 100%; }
 .flow .card::before { content: counter(step, decimal-leading-zero); font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-bold);
@@ -350,9 +347,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .compare-col.after { grid-column: 3; }
 .compare-arrows { grid-column: 2; display: grid; grid-template-rows: subgrid; grid-row: span var(--rows, 4); }
 .compare-arrows > i { display: flex; align-items: center; justify-content: center; }
-.compare-arrows > i::before { content: ""; width: calc(22px * var(--u)); height: calc(22px * var(--u)); border: solid var(--s-line-strong);
-  border-width: calc(4px * var(--u)) calc(4px * var(--u)) 0 0; transform: translateX(calc(-8px * var(--u))) rotate(45deg); }
-.compare-arrows > i:first-child::before { display: none; }
 .compare-head { display: flex; align-items: center; gap: var(--deck-space-2); padding: var(--deck-space-3) 0 var(--deck-space-2);
                 font-size: var(--deck-fs-subheading); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
 .compare-item { padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line); display: flex; flex-direction: column; justify-content: center; gap: calc(4px * var(--u)); }
@@ -492,8 +486,12 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .ratio-value small { font-size: var(--deck-fs-heading); }
 
 /* 長條圖（橫向）：類別、長條、數值。一組資料用 chart-1；要強調其中一根，其餘加 .is-other */
-.bars { display: flex; flex-direction: column; gap: var(--deck-space-3); }
-.bars-row { display: grid; grid-template-columns: calc(280px * var(--u)) minmax(0, 1fr) calc(110px * var(--u)); align-items: center; gap: var(--deck-space-3); }
+/* 欄寬放在 .bars，每一列用 subgrid：同一張圖的長條從同一個 x 開始。
+   名稱、數字欄有空間就撐到 280／110，窄卡片裡縮到字的寬度；長條至少佔 47%（範本的半頁寬長條圖剛好維持 280／110）。 */
+.bars { --bars-name: calc(280px * var(--u)); --bars-num: calc(110px * var(--u));
+  display: grid; grid-template-columns: minmax(auto, var(--bars-name)) minmax(47%, 1fr) minmax(auto, var(--bars-num)); gap: var(--deck-space-3); align-content: start; }
+.bars > * { grid-column: 1 / -1; }
+.bars-row { display: grid; grid-template-columns: subgrid; align-items: center; }
 .bars-label { font-weight: var(--deck-fw-semibold); color: var(--s-strong); line-height: var(--deck-lh-title); }
 .bars-track { height: calc(28px * var(--u)); border-radius: var(--deck-radius-sm); background: var(--deck-chart-grid); overflow: hidden; }
 .bars-fill { display: block; height: 100%; width: calc(var(--v) * 1%); border-radius: inherit; background: var(--deck-chart-1); }
@@ -540,8 +538,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .transform { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) calc(64px * var(--u)) minmax(0, 1fr) calc(64px * var(--u)) minmax(0, 1fr); align-items: stretch; gap: var(--deck-space-2); }
 .transform .card { justify-content: flex-start; }
 .transform-arrow { display: flex; align-items: center; justify-content: center; }
-.transform-arrow::before { content: ""; width: calc(22px * var(--u)); height: calc(22px * var(--u)); border: solid var(--s-line-strong);
-  border-width: calc(4px * var(--u)) calc(4px * var(--u)) 0 0; transform: translateX(calc(-8px * var(--u))) rotate(45deg); }
 .sample { font-size: var(--deck-fs-body); line-height: 1.9; color: var(--s-text); }
 .pii { background: var(--deck-warning-bg); color: var(--deck-warning-text); border-radius: calc(4px * var(--u)); padding: 0 calc(6px * var(--u)); font-weight: var(--deck-fw-semibold); }
 .token { background: var(--deck-chip-bg); color: var(--deck-chip-text); border-radius: calc(4px * var(--u)); padding: 0 calc(6px * var(--u)); font-weight: var(--deck-fw-semibold);
@@ -620,10 +616,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* 里程碑：橫線串起，.is-done 已完成、.is-now 現在、其餘是未來 */
 .milestones { list-style: none; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); position: relative; }
-.milestones::before { content: ""; position: absolute; left: 0; right: 0; top: calc(var(--deck-fs-subheading) * 1.3 + var(--deck-space-3) + 9px * var(--u)); border-top: 4px dashed var(--s-line-strong); }
+.milestones::before { content: ""; position: absolute; left: 0; right: 0; top: calc(var(--deck-fs-body) * 1.3 + var(--deck-space-3) + 9px * var(--u)); border-top: 4px dashed var(--s-line-strong); }
 .milestones > li { display: flex; flex-direction: column; gap: var(--deck-space-1); padding-right: var(--deck-space-4); position: relative; }
-.milestone-when { font-size: var(--deck-fs-subheading); font-weight: var(--deck-fw-medium); color: var(--s-muted); line-height: var(--deck-lh-title); margin-bottom: var(--deck-space-3); }
-.milestones > li::after { content: ""; position: absolute; left: 0; top: calc(var(--deck-fs-subheading) * 1.3 + var(--deck-space-3)); width: calc(22px * var(--u)); height: calc(22px * var(--u));
+.milestone-when { font-size: var(--deck-fs-body); font-weight: var(--deck-fw-medium); color: var(--s-muted); line-height: var(--deck-lh-title); margin-bottom: var(--deck-space-3); }
+.milestones > li::after { content: ""; position: absolute; left: 0; top: calc(var(--deck-fs-body) * 1.3 + var(--deck-space-3)); width: calc(22px * var(--u)); height: calc(22px * var(--u));
   border-radius: 50%; background: var(--s-bg); border: calc(4px * var(--u)) solid var(--s-line-strong); box-sizing: border-box; }
 .milestone-title { margin-top: var(--deck-space-4); font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-semibold); color: var(--s-strong); line-height: var(--deck-lh-title); }
 .milestone-text { color: var(--s-muted); }
@@ -907,6 +903,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   --s-accent: var(--deck-text-accent); --s-line: var(--deck-line); --s-line-strong: var(--deck-line-strong);
   --s-card: var(--deck-card-bg-alt); color: var(--s-text); }
 .panel-flow .chip { background: var(--deck-card-bg-alt); }   /* Sky 底上 Sky 50 的 chip 看不出來，改白底 */
+/* 玻璃上的清單、內文壓在流動玻璃的亮紋上讀不清楚：墊一塊白色內層，玻璃上只留標題、數字、短標籤 */
+:is(.panel-flow, .glass) > :is(.list, p, .card-text, .kpi-text) { background: var(--deck-card-bg-alt); border-radius: var(--deck-radius-md); padding: var(--deck-space-3); }
 
 .glass { box-sizing: border-box; padding: var(--deck-glass-pad); border-radius: calc(var(--deck-radius-lg) + var(--deck-glass-pad));
   background: var(--deck-glass-bg); -webkit-backdrop-filter: var(--deck-glass-backdrop); backdrop-filter: var(--deck-glass-backdrop);
@@ -990,7 +988,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .list > li { text-box-trim: trim-both; text-box-edge: text; }
 .deck .slide .list { gap: var(--deck-space-4); }
 .deck .slide .list > li::before { top: calc(.36em - 5px * var(--u)); }
-.deck .slide .list.checks > li::before { top: calc(.36em - 6px * var(--u)); }
 .deck .slide .list.boxes > li::before { top: calc(.36em - 13px * var(--u)); transform: none; }
 /* 架構側欄：label 與標題靠在一起，chip 壓到底、間距加大 */
 .deck .slide .layers-side { justify-content: flex-start; gap: 0; }
@@ -1048,8 +1045,9 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 橫向里程碑：日期、點、小標題三者等距（日期 baseline→點、點→小標題 cap 都是 --ms-g） */
 .deck .slide .milestones:not(.vertical) { --ms-g: calc(40px * var(--u)); }
 .deck .slide .milestones:not(.vertical) .milestone-when { text-box-trim: trim-both; text-box-edge: text; margin-bottom: 0; }
-.deck .slide .milestones:not(.vertical) > li::after { font-size: var(--deck-fs-subheading); top: calc(1cap + var(--ms-g)); }
-.deck .slide .milestones:not(.vertical)::before { font-size: var(--deck-fs-subheading); top: calc(1cap + var(--ms-g) + 11px * var(--u) - 2px); }
+/* 日期裁到字身，高＝(ascent 84% ＋ descent 8.3%)＝.923em */
+.deck .slide .milestones:not(.vertical) > li::after { top: calc(var(--deck-fs-body) * .923 + var(--ms-g)); }
+.deck .slide .milestones:not(.vertical)::before { top: calc(var(--deck-fs-body) * .923 + var(--ms-g) + 11px * var(--u) - 2px); }
 .deck .slide .milestones:not(.vertical) .milestone-title { margin-top: calc(var(--ms-g) * 2 + 22px * var(--u) - var(--deck-space-1)); }
 /* 深色底（ground-dark、panel-dark）上的圖表：Current 500 對比不夠，主色換成 Sky，其餘換亮一階 */
 :is(.ground-dark, .ground-dark-warm, .panel-dark:not(.panel-flow)) {
@@ -1077,7 +1075,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   display: flex; align-items: flex-end; justify-content: space-between; padding: var(--deck-pad-x); overflow: hidden; }
 .section-band-bar .display { color: inherit; }
 /* 色帶底部留給頁底品牌列：章節名底線跟內頁內容底線一樣（關掉品牌列時回到外框） */
-.section-band-bar { padding-bottom: var(--slide-pad-end, var(--deck-pad-top)); }
+.section-band-bar { padding-bottom: var(--slide-pad-end, var(--deck-pad-end)); }
 .section-band-num { font-size: calc(var(--deck-fs-number) * 3.2); line-height: 1; font-weight: var(--deck-fw-semibold); color: color-mix(in srgb, var(--deck-highlight-text) 22%, transparent); text-box: trim-both text; }
 .section-band-bar .display { text-box: trim-both text; }
 
@@ -1145,25 +1143,24 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* ============================================================
    內容框：每一頁的內容都落在同一個框裡
-   上緣＝標題頂線（--deck-pad-top 144）、下緣＝底線 936（跟頂線對稱；關掉頁底品牌列的頁是 --deck-pad-bottom）、左右＝--deck-pad-x。
+   上緣＝標題頂線（--deck-pad-top 144）、下緣＝底線 968（--deck-pad-end；關掉頁底品牌列的頁是 --deck-pad-bottom，1000）、左右＝--deck-pad-x。
    1. 標題永遠在頂線，不垂直置中。
-   2. 內容撐到底線：卡片、表格、圖往下延伸；內容少的頁整組靠底線放（ref 的做法），不放在中間。
+   2. 內容接在標題下方（slide 本身的 gap）往下排；放不下時往下超出、總覽標紅，不會往上壓到標題。
+      內容少、刻意留白的頁在 <section> 加 .is-bottom，整組改靠底線放。
    3. 卡片裡：內容從上往下排（靠上）。只有方案欄例外，最後的清單、說明壓在卡底，同一排的底部才對齊。
    例外：封面、章節頁、主張頁、引言、結尾（沒有頁首列的頁）可以置中。
    ============================================================ */
-.slide-body { justify-content: flex-end; }
-/* grid 型的內容區：內容少時整組靠底線 */
-.slide-body { align-content: end; }
-.slide-body:is(.split, .showcase) { align-items: end; }
+/* safe：放不下時退回靠上，多的往下長，不往上壓到標題 */
+.slide.is-bottom .slide-body { justify-content: safe flex-end; align-content: safe end; }
+.slide.is-bottom .slide-body:is(.split, .showcase) { align-items: safe end; }
+.slide.is-bottom :is(.ratio, .transform, .grid, .flow, .options, .split-3, .features, .facts, .people, .logos, .kpis, .stats, .numcols, .shares) { align-content: safe end; }
 /* 內容區裡自己帶標題的版型：欄撐滿，標題留在頂線 */
-.slide-body:has(.title) { align-content: stretch; align-items: stretch; }
+.slide-body:has(.title), .slide.is-bottom .slide-body:has(.title) { align-content: stretch; align-items: stretch; }
 /* 階梯版型的高度用百分比，要撐滿才有參照 */
-.slide-body:is(.stages, .roadmap) { align-content: stretch; }
-.ratio { align-items: stretch; flex-wrap: wrap; align-content: flex-end; }
-.transform { align-items: stretch; align-content: end; }
+.slide-body:is(.stages, .roadmap), .slide.is-bottom .slide-body:is(.stages, .roadmap) { align-content: stretch; }
+.ratio { align-items: stretch; flex-wrap: wrap; }
+.transform { align-items: stretch; }
 .transform-arrow { align-self: center; }
-:is(.grid, .flow, .options, .split-3, .features, .facts, .people, .logos, .kpis, .stats, .numcols, .shares) { align-content: end; }
-:is(.grid, .flow, .options, .split-3).slide-body { align-content: end; }
 .card { justify-content: flex-start; }
 /* 卡片照內容高度，四邊同一個內距；一列裡的卡片等高 */
 /* 框裡最後一列不再加底部內距，避免底邊比其他三邊寬 */
@@ -1199,7 +1196,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .slide :is(p, li, h1, h2, h3, h4, span, small, b, cite, div, a):not(:has(> :is(div, ul, ol, p, table, img, svg))):first-child { text-box-trim: trim-start; text-box-edge: text; }
 .slide :is(p, li, h1, h2, h3, h4, span, small, b, cite, div, a):not(:has(> :is(div, ul, ol, p, table, img, svg))):last-child { text-box-trim: trim-end; text-box-edge: text; }
 .slide :is(p, li, h1, h2, h3, h4, span, small, b, cite, div, a):not(:has(> :is(div, ul, ol, p, table, img, svg))):only-child { text-box-trim: trim-both; }
-.slide :is(td, th, td *, th *, svg *, .chip, .tag, .button, .node-num, .pin, .mark, .check, .avatar) { text-box: normal; }
+/* 要蓋過上面 :first-child／:last-child 的裁切（那兩條比較具體），前面多一層 .deck */
+.deck .slide :is(td, th, td *, th *, svg *, .chip, .tag, .button, .node-num, .pin, .mark, .check, .avatar) { text-box: normal; }
 /* 頁尾註解、內容區最後一個元素：一律裁到底線（後面跟著頁首列標記，不是 last-child） */
 .slide :is(.slide-note, .slide-body > :nth-last-child(1 of :not(footer)) :is(.kpi-text, .stat-text, .stat-label):last-of-type) { text-box: trim-both text; }
 .partners-head { text-box: trim-both text; }
@@ -1253,6 +1251,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .slide :is(p, li, .card-text, .kpi-text, .entry-text, .feature-text, .person-text, .lede):not(.statement-text, .quote-text) { line-height: var(--deck-lh-body); }
 /* 標題和副標之間用間距分開，不靠行高 */
 .slide :is(.title, .display) + :is(.lede, p) { margin-top: var(--deck-space-3); }
+.slide .slide-head > .title + .lede { margin-top: 0; }   /* 頁首：標題接引言就是 .slide-head 的 gap 16 */
 
 
 /* 大數字、價格後面一律留 16；說明條標題、架構標題的小字也要分開 */
@@ -1554,7 +1553,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 大數字卡拉高（ref「Traction」）：卡片內容少時不撐滿，跟標題之間留呼吸空間；卡高約內容區六成，數字在上、標籤和說明壓在卡底 */
 .stats.is-big.is-tall .stat { min-height: calc(440px * var(--u)); justify-content: flex-start; }
 .stats.is-big.is-tall .stat-label { margin-top: auto !important; }
-/* 流程卡拉高（第 60 頁）：內容少時不撐滿，卡高約內容區六成，跟標題留呼吸空間；最後的標籤壓在卡底 */
+/* 流程卡拉高（第 64 頁）：內容少時不撐滿，卡高約內容區六成，跟標題留呼吸空間；最後的標籤壓在卡底 */
 .flow.is-tall .card { min-height: calc(440px * var(--u)); }
 .flow.is-tall .card > .tags:last-child { margin-top: auto !important; }
 .flow.is-tall .card::before { font-size: var(--deck-fs-number); font-weight: var(--deck-fw-number); line-height: 1.05; text-box: trim-both cap alphabetic; }
@@ -1565,9 +1564,8 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 橫條＋左邊大數字（第 31 頁，ref「The problem in numbers」）：最大那一項拉成大數字，右邊橫條加粗、拉開間距 */
 .bars-split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--deck-space-7); align-items: end; }
 .bars-split > .kpi .kpi-value { font-size: calc(200px * var(--u)); line-height: .9; }
-.bars-split > .bars { gap: var(--deck-space-5); }
+.bars-split > .bars { row-gap: var(--deck-space-5); --bars-name: calc(190px * var(--u)); --bars-num: calc(90px * var(--u)); }
 .bars-split .bars-track { height: calc(44px * var(--u)); }
-.bars-split .bars-row { grid-template-columns: calc(190px * var(--u)) minmax(0, 1fr) calc(90px * var(--u)); }
 /* 燈號格（第 33 頁）：一個工項一格，底色是燈號，取代單條比例條，讓每一項都看得到 */
 .status-tiles { display: grid; grid-template-columns: repeat(var(--cols, 8), minmax(0, 1fr)); gap: var(--deck-space-1); }
 .status-tiles > div { min-height: calc(220px * var(--u)); border-radius: var(--deck-radius-sm); padding: var(--deck-space-3); display: flex; flex-direction: column; justify-content: space-between; gap: var(--deck-space-2);
@@ -1582,7 +1580,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 燈號格下面的數字：欄寬照各燈號的格數（例：3:2:3），數字對齊上面那一組格子 */
 .status-tiles + .shares { grid-template-columns: var(--cols-tpl); gap: var(--deck-space-1); }
 .status-tiles b { text-wrap: wrap; }
-/* 資料轉換前後拉高（第 65 頁）：卡高約內容區六成，跟標題留呼吸空間；上方大編號＋小標，下方是原文／代號，中間那張多一張對照表 */
+/* 資料轉換前後拉高（第 69 頁）：卡高約內容區六成，跟標題留呼吸空間；上方大編號＋小標，下方是原文／代號，中間那張多一張對照表 */
 .transform.is-tall { flex: none; }
 .transform.is-tall .card { min-height: calc(440px * var(--u)); }
 .transform.is-tall .step-num { font-size: var(--deck-fs-number); line-height: 1.05; color: var(--s-accent); text-box: trim-both cap alphabetic; margin-bottom: var(--deck-space-4); }
@@ -1593,7 +1591,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .transform.is-tall { margin-top: auto; }
 .transform.is-tall .card > .sample:first-of-type { margin-top: 0; }
 .map > span { justify-self: start; }
-/* 客戶牆＋大數字（第 57 頁，ref「Traction」）：左邊總數，右邊每個產業一格；沒有 logo 的格子也用卡片底，跟有 logo 的一樣大 */
+/* 客戶牆＋大數字（第 60 頁，ref「Traction」）：左邊總數，右邊每個產業一格；沒有 logo 的格子也用卡片底，跟有 logo 的一樣大 */
 .logo-wall { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--deck-space-7); align-items: end; }
 .logo-wall .logos { gap: var(--deck-space-1); }
 .logo-wall .logo-cell:not(:has(img)) { height: calc(150px * var(--u)); background: var(--s-card); border-radius: var(--deck-radius-lg); border-top: 0; place-items: center start; padding: 0 var(--deck-space-4);
@@ -1601,7 +1599,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .logo-wall > .kpi .kpi-value { font-size: calc(200px * var(--u)); line-height: .9; }
 /* 同一排混著英數和中文的字（時間軸日期、標題）：統一裁到中文字墨跡，整排才會切齊（JS 預設把純英數改成 cap） */
 .deck .slide .milestones:not(.vertical) :is(.milestone-when, .milestone-title) { text-box-edge: text !important; }
-/* 分工三欄拉高（第 58 頁）：卡高約內容區六成，跟標題留呼吸空間；欄標題放大在上，清單壓在卡底，三欄清單間距一致 */
+/* 分工三欄拉高（第 61 頁）：卡高約內容區六成，跟標題留呼吸空間；欄標題放大在上，清單壓在卡底，三欄清單間距一致 */
 .split-3.is-tall > * { min-height: calc(440px * var(--u)); display: flex; flex-direction: column; }
 .split-3.is-tall > * > .label { font-size: var(--deck-fs-heading); font-weight: var(--deck-fw-regular); color: var(--s-strong); line-height: var(--deck-lh-title); opacity: 1; }
 .split-3.is-tall > * > .list { margin-top: auto !important; gap: var(--deck-space-3); }
@@ -1643,84 +1641,148 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
    ============================================================ */
 .ico { display: inline-block; flex: none; width: var(--ico-size, 1em); height: var(--ico-size, 1em); vertical-align: -.15em; background: currentColor;
   -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; }
-.ico-arrow-right { --ico: url("../anima-brand/assets/icons/ui/arrow-right.svg"); }
-.ico-arrow-up { --ico: url("../anima-brand/assets/icons/ui/arrow-up.svg"); }
-.ico-bell { --ico: url("../anima-brand/assets/icons/ui/bell.svg"); }
-.ico-building { --ico: url("../anima-brand/assets/icons/ui/building.svg"); }
-.ico-calendar { --ico: url("../anima-brand/assets/icons/ui/calendar.svg"); }
-.ico-chat { --ico: url("../anima-brand/assets/icons/ui/chat.svg"); }
-.ico-check { --ico: url("../anima-brand/assets/icons/ui/check.svg"); }
-.ico-check-circle { --ico: url("../anima-brand/assets/icons/ui/check-circle.svg"); }
-.ico-chevron-down { --ico: url("../anima-brand/assets/icons/ui/chevron-down.svg"); }
-.ico-chevron-left { --ico: url("../anima-brand/assets/icons/ui/chevron-left.svg"); }
-.ico-chevron-right { --ico: url("../anima-brand/assets/icons/ui/chevron-right.svg"); }
-.ico-clock { --ico: url("../anima-brand/assets/icons/ui/clock.svg"); }
-.ico-close { --ico: url("../anima-brand/assets/icons/ui/close.svg"); }
-.ico-document { --ico: url("../anima-brand/assets/icons/ui/document.svg"); }
-.ico-fit-all { --ico: url("../anima-brand/assets/icons/ui/fit-all.svg"); }
-.ico-fullscreen { --ico: url("../anima-brand/assets/icons/ui/fullscreen.svg"); }
-.ico-help { --ico: url("../anima-brand/assets/icons/ui/help.svg"); }
-.ico-hourglass { --ico: url("../anima-brand/assets/icons/ui/hourglass.svg"); }
-.ico-lock { --ico: url("../anima-brand/assets/icons/ui/lock.svg"); }
-.ico-mention { --ico: url("../anima-brand/assets/icons/ui/mention.svg"); }
-.ico-minus { --ico: url("../anima-brand/assets/icons/ui/minus.svg"); }
-.ico-paperclip { --ico: url("../anima-brand/assets/icons/ui/paperclip.svg"); }
-.ico-plus { --ico: url("../anima-brand/assets/icons/ui/plus.svg"); }
-.ico-search { --ico: url("../anima-brand/assets/icons/ui/search.svg"); }
-.ico-shield { --ico: url("../anima-brand/assets/icons/ui/shield.svg"); }
-.ico-shield-check { --ico: url("../anima-brand/assets/icons/ui/shield-check.svg"); }
-.ico-sparkle { --ico: url("../anima-brand/assets/icons/ui/sparkle.svg"); }
-.ico-task { --ico: url("../anima-brand/assets/icons/ui/task.svg"); }
-.ico-warning { --ico: url("../anima-brand/assets/icons/ui/warning.svg"); }
-.ico-admin { --ico: url("../anima-brand/assets/icons/domain/admin.svg"); }
-.ico-anima { --ico: url("../anima-brand/assets/icons/domain/anima.svg"); }
-.ico-approval { --ico: url("../anima-brand/assets/icons/domain/approval.svg"); }
-.ico-audit-log { --ico: url("../anima-brand/assets/icons/domain/audit-log.svg"); }
-.ico-data-in-place { --ico: url("../anima-brand/assets/icons/domain/data-in-place.svg"); }
-.ico-de-identify { --ico: url("../anima-brand/assets/icons/domain/de-identify.svg"); }
-.ico-finance { --ico: url("../anima-brand/assets/icons/domain/finance.svg"); }
-.ico-growth { --ico: url("../anima-brand/assets/icons/domain/growth.svg"); }
-.ico-hosted { --ico: url("../anima-brand/assets/icons/domain/hosted.svg"); }
-.ico-leadership { --ico: url("../anima-brand/assets/icons/domain/leadership.svg"); }
-.ico-learn { --ico: url("../anima-brand/assets/icons/domain/learn.svg"); }
-.ico-legal { --ico: url("../anima-brand/assets/icons/domain/legal.svg"); }
-.ico-marketing { --ico: url("../anima-brand/assets/icons/domain/marketing.svg"); }
-.ico-on-premises { --ico: url("../anima-brand/assets/icons/domain/on-premises.svg"); }
-.ico-operations { --ico: url("../anima-brand/assets/icons/domain/operations.svg"); }
-.ico-private-cloud { --ico: url("../anima-brand/assets/icons/domain/private-cloud.svg"); }
-.ico-procurement { --ico: url("../anima-brand/assets/icons/domain/procurement.svg"); }
-.ico-projects { --ico: url("../anima-brand/assets/icons/domain/projects.svg"); }
-.ico-roles { --ico: url("../anima-brand/assets/icons/domain/roles.svg"); }
-.ico-sales { --ico: url("../anima-brand/assets/icons/domain/sales.svg"); }
-.ico-shared-context { --ico: url("../anima-brand/assets/icons/domain/shared-context.svg"); }
-.ico-support { --ico: url("../anima-brand/assets/icons/domain/support.svg"); }
-.ico-sync { --ico: url("../anima-brand/assets/icons/domain/sync.svg"); }
-.ico-tools { --ico: url("../anima-brand/assets/icons/domain/tools.svg"); }
-.ico-trading { --ico: url("../anima-brand/assets/icons/domain/trading.svg"); }
-.ico-travel { --ico: url("../anima-brand/assets/icons/domain/travel.svg"); }
-.ico-user { --ico: url("../anima-brand/assets/icons/domain/user.svg"); }
+/* icons:start（tools-icons.py 從 anima-brand/assets/icons 產生，不要手改） */
+:root {
+  --icon-arrow-right: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5 12h13.5M13 6.5l5.5 5.5-5.5 5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-arrow-up: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 19V5.5M6.5 11 12 5.5l5.5 5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-bell: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 1.5H5l1.5-1.5ZM10 20.5h4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-building: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5 20.5V5A1.5 1.5 0 0 1 6.5 3.5h7A1.5 1.5 0 0 1 15 5v15.5M15 9.5h3a1.5 1.5 0 0 1 1.5 1.5v9.5M3.5 20.5h17M8.5 7.5h3M8.5 11h3M8.5 14.5h3%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-calendar: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Crect x=%274%27 y=%275%27 width=%2716%27 height=%2715%27 rx=%272%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M4 9.5h16M8.5 3.5v3M15.5 3.5v3%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-chat: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5.5 5h13A1.5 1.5 0 0 1 20 6.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17A1.5 1.5 0 0 1 4 15.5v-9A1.5 1.5 0 0 1 5.5 5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-check-circle: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%278.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M8.5 12.5l2.5 2.5 4.5-5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-check: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5 12.5l4.5 4.5L19 7.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6.5 9.5 12 15l5.5-5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-chevron-left: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M14.5 6.5 9 12l5.5 5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-chevron-right: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9.5 6.5 15 12l-5.5 5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-clock: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%278.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M12 7.5V12l3 2%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-close: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6.5 6.5l11 11M17.5 6.5l-11 11%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-document: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M14 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8L14 3.5ZM14 3.5V8h4.5M9 12.5h6M9 16h4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-fit-all: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Crect x=%278.5%27 y=%278.5%27 width=%277%27 height=%277%27 rx=%271.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-fullscreen: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-help: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5.5 5h13A1.5 1.5 0 0 1 20 6.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17A1.5 1.5 0 0 1 4 15.5v-9A1.5 1.5 0 0 1 5.5 5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M9.75 9.25a2.25 2.25 0 1 1 3 2.1c-.5.2-.75.6-.75 1.15M12 14.75h.01%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-hourglass: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6.5 3.5h11M6.5 20.5h11M7.5 3.5c0 4 2 5.5 4.5 8.5-2.5 3-4.5 4.5-4.5 8.5M16.5 3.5c0 4-2 5.5-4.5 8.5 2.5 3 4.5 4.5 4.5 8.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-lock: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Crect x=%275%27 y=%2710.5%27 width=%2714%27 height=%2710%27 rx=%272%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M8 10.5V8a4 4 0 0 1 8 0v2.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-mention: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%273.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M15.5 12v1.25a2.25 2.25 0 0 0 4.5 0V12a8 8 0 1 0-3.2 6.4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-minus: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5.5 12h13%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-paperclip: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M19 11.5l-7.1 7.1a4.5 4.5 0 0 1-6.4-6.4l7.4-7.4a3 3 0 0 1 4.2 4.2l-7.3 7.3a1.5 1.5 0 0 1-2.1-2.1l6.6-6.6%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-plus: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 5.5v13M5.5 12h13%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-search: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Ccircle cx=%2711%27 cy=%2711%27 r=%276.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M16 16l4 4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-shield-check: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3.5 5 6v5.5c0 4.2 3 7.6 7 9 4-1.4 7-4.8 7-9V6l-7-2.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M9 12l2 2 4-4.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-shield: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3.5 5 6v5.5c0 4.2 3 7.6 7 9 4-1.4 7-4.8 7-9V6l-7-2.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-sparkle: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3c.7 4.8 3.2 7.3 8 8-4.8.7-7.3 3.2-8 8-.7-4.8-3.2-7.3-8-8 4.8-.7 7.3-3.2 8-8Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-task: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Crect x=%275%27 y=%273.5%27 width=%2714%27 height=%2717%27 rx=%272%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M8.5 12l2.5 2.5 4.5-5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-warning: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 4 21 19.5H3L12 4Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M12 10v4M12 16.75h.01%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-admin: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.5 19.5c0-3 2.5-5.5 5.5-5.5 1.3 0 2.5.4 3.4 1.2M17.5 19.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5ZM17.50 15.00L17.50 13.75M19.45 16.12L20.53 15.50M19.45 18.38L20.53 19.00M17.50 19.50L17.50 20.75M15.55 18.38L14.47 19.00M15.55 16.12L14.47 15.50%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-anima: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M18.50 9.00A7.5 7.5 0 1 1 12 5.25M9.75 3.0 12 5.25l-2.25 2.25M8.75 12.75l2.25 2.25 4.25-4.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-approval: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11 4.5H6A1.5 1.5 0 0 0 4.5 6v12A1.5 1.5 0 0 0 6 19.5h12a1.5 1.5 0 0 0 1.5-1.5v-5M14.5 4.5h5v5M19.5 4.5 14 10M7.5 14.5l2 2 3.5-4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-audit-log: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11 21H6.5A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3h9A1.5 1.5 0 0 1 17 4.5V11M8.5 7.5h5M8.5 11h3M17 21a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM17 15.25V17l1.25 1.25%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-auto: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M19.5 12A7.5 7.5 0 0 1 6.2 16.8M4.5 12A7.5 7.5 0 0 1 17.8 7.2M18 3.75V7.5h-3.75M6 20.25V16.5h3.75M10.25 9.5v5l4-2.5-4-2.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-data-in-place: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 6c0-1.4 2.7-2.5 6-2.5s6 1.1 6 2.5-2.7 2.5-6 2.5S4 7.4 4 6ZM4 6v11.5c0 1.4 2.7 2.5 6 2.5.9 0 1.7-.1 2.5-.25M16 6v4.5M4 11.75c0 1.4 2.7 2.5 6 2.5.8 0 1.6-.1 2.25-.2M18 21.5s-3.25-2.9-3.25-5.5a3.25 3.25 0 0 1 6.5 0c0 2.6-3.25 5.5-3.25 5.5ZM18 16.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-de-identify: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5 5h14a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5v-11A1.5 1.5 0 0 1 5 5ZM8.5 11.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM5.75 16c0-1.5 1.25-2.75 2.75-2.75s2.75 1.25 2.75 2.75M13.75 10h.01M15.75 10h.01M17.75 10h.01M13.75 14h4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-finance: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11 4a8.5 8.5 0 1 0 9 9h-9V4ZM14.5 2.75a7 7 0 0 1 6.75 6.75H14.5V2.75Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-growth: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 4v16h16M7.5 15.5l3.75-4.25 3 3L19 8.5M15.5 8.5H19V12%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-hosted: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5.5 4h9A1.5 1.5 0 0 1 16 5.5v1.5A1.5 1.5 0 0 1 14.5 8.5h-9A1.5 1.5 0 0 1 4 7V5.5A1.5 1.5 0 0 1 5.5 4ZM11 16H5.5A1.5 1.5 0 0 1 4 14.5V13a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 16 13M7 6.25h2M7 13.75h2M15 20.5h3.75a2 2 0 0 0 .25-3.98 2.75 2.75 0 0 0-5.3.45A1.77 1.77 0 0 0 15 20.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-leadership: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM15.5 8.5l-2 5-5 2 2-5 5-2Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-learn: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 6.5C10.4 5.3 8.2 4.75 4.5 5v12.25c3.7-.25 5.9.3 7.5 1.5M12 6.5c1.6-1.2 3.8-1.75 7.5-1.5v6.25M12 6.5v12.25M17.5 13.75c.35 1.9 1.35 2.9 3.25 3.25-1.9.35-2.9 1.35-3.25 3.25-.35-1.9-1.35-2.9-3.25-3.25 1.9-.35 2.9-1.35 3.25-3.25Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-legal: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3.5v17M7.5 20.5h9M5 7.5h14M12 5.5V7.5M5 7.5l-2.5 6.25a2.5 2.5 0 0 0 5 0L5 7.5ZM19 7.5l-2.5 6.25a2.5 2.5 0 0 0 5 0L19 7.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-marketing: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 10v4a1 1 0 0 0 1 1h2l7 4V5L7 9H5a1 1 0 0 0-1 1ZM7 15l1 4.5M17.5 9.5a3.5 3.5 0 0 1 0 5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-on-premises: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 20.5V5A1.5 1.5 0 0 1 5.5 3.5h6A1.5 1.5 0 0 1 13 5v6M2.5 20.5h9M7 7.5h2M7 11h2M7 14.5h2M15.5 13.5h3.5a1.5 1.5 0 0 1 1.5 1.5v4a1.5 1.5 0 0 1-1.5 1.5h-3.5A1.5 1.5 0 0 1 14 19v-4a1.5 1.5 0 0 1 1.5-1.5ZM14 17h6.5M16.25 15.25h.01M16.25 18.75h.01%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-operations: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11.5 21H6.5A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3h9A1.5 1.5 0 0 1 17 4.5V11M8.5 7.5h5M8.5 11h5M8.5 14.5h2.5M17.5 19.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5ZM17.50 15.00L17.50 13.75M19.45 16.12L20.53 15.50M19.45 18.38L20.53 19.00M17.50 19.50L17.50 20.75M15.55 18.38L14.47 19.00M15.55 16.12L14.47 15.50%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-private-cloud: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11.5 18H7a4 4 0 0 1-.5-7.97A5.5 5.5 0 0 1 17.2 9.4M15.5 15h4a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V16a1 1 0 0 1 1-1ZM16 15v-1.5a1.5 1.5 0 0 1 3 0V15%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-procurement: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M3 4h2.2l2.3 11h10.5l2-8H6.3M9 20.25a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM17 20.25a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-projects: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M8.5 4.5h-2A1.5 1.5 0 0 0 5 6v13.5A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5h-2M9 3h6v3H9V3ZM9 13.5l2 2 4-4.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-roles: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.5 19.5c0-3 2.5-5.5 5.5-5.5 1.3 0 2.5.4 3.4 1.2M15.5 15h4a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V16a1 1 0 0 1 1-1ZM16 15v-1.5a1.5 1.5 0 0 1 3 0V15%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-sales: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.5 19.5c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5M15.5 5.1a3 3 0 0 1 0 5.8M17 14.2c2.1.6 3.5 2.6 3.5 5.3%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-shared-context: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11 3.5 3.5 7.25 11 11l7.5-3.75L11 3.5ZM3.5 11 11 14.75l1.5-.75M3.5 14.75 11 18.5l1-.5M17.5 16.5a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5ZM14.25 20.75c0-1.8 1.45-3.25 3.25-3.25s3.25 1.45 3.25 3.25%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-support: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4.5 14v-2a7.5 7.5 0 0 1 15 0v2M4.5 13.5h2a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-4.5ZM19.5 13.5h-2a1 1 0 0 0-1 1V18a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-4.5ZM18.5 19v.5a2 2 0 0 1-2 2H13%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-sync: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M19.5 12a7.5 7.5 0 0 0-13.25-4.8M4.5 12a7.5 7.5 0 0 0 13.25 4.8M5.75 3.75V7.5H9.5M18.25 20.25V16.5H14.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-tools: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6 4.5h2.5A1.5 1.5 0 0 1 10 6v2.5A1.5 1.5 0 0 1 8.5 10H6A1.5 1.5 0 0 1 4.5 8.5V6A1.5 1.5 0 0 1 6 4.5ZM15.5 4.5H18A1.5 1.5 0 0 1 19.5 6v2.5A1.5 1.5 0 0 1 18 10h-2.5A1.5 1.5 0 0 1 14 8.5V6a1.5 1.5 0 0 1 1.5-1.5ZM6 14h2.5a1.5 1.5 0 0 1 1.5 1.5V18a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18v-2.5A1.5 1.5 0 0 1 6 14ZM15 14.9v3.7a.55.55 0 0 0 .83.47l3.05-1.85a.55.55 0 0 0 0-.94l-3.05-1.85a.55.55 0 0 0-.83.47Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-trading: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M3.75 7.5 12 3.25l8.25 4.25v9L12 20.75 3.75 16.5v-9ZM3.75 7.5 12 11.75l8.25-4.25M12 11.75v9%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-travel: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11ZM12 12.25a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-trial: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M9.5 3.5h5M10.5 3.5v5.25L5.2 17.9A1.75 1.75 0 0 0 6.7 20.5h10.6a1.75 1.75 0 0 0 1.5-2.6L13.5 8.75V3.5M7.6 14.5h8.8%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-user: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.5 19.5c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5M15.5 3.5h4a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-1.75L16.5 10.5V9h-1a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+}
+.ico-arrow-right { --ico: var(--icon-arrow-right); }
+.ico-arrow-up { --ico: var(--icon-arrow-up); }
+.ico-bell { --ico: var(--icon-bell); }
+.ico-building { --ico: var(--icon-building); }
+.ico-calendar { --ico: var(--icon-calendar); }
+.ico-chat { --ico: var(--icon-chat); }
+.ico-check-circle { --ico: var(--icon-check-circle); }
+.ico-check { --ico: var(--icon-check); }
+.ico-chevron-down { --ico: var(--icon-chevron-down); }
+.ico-chevron-left { --ico: var(--icon-chevron-left); }
+.ico-chevron-right { --ico: var(--icon-chevron-right); }
+.ico-clock { --ico: var(--icon-clock); }
+.ico-close { --ico: var(--icon-close); }
+.ico-document { --ico: var(--icon-document); }
+.ico-fit-all { --ico: var(--icon-fit-all); }
+.ico-fullscreen { --ico: var(--icon-fullscreen); }
+.ico-help { --ico: var(--icon-help); }
+.ico-hourglass { --ico: var(--icon-hourglass); }
+.ico-lock { --ico: var(--icon-lock); }
+.ico-mention { --ico: var(--icon-mention); }
+.ico-minus { --ico: var(--icon-minus); }
+.ico-paperclip { --ico: var(--icon-paperclip); }
+.ico-plus { --ico: var(--icon-plus); }
+.ico-search { --ico: var(--icon-search); }
+.ico-shield-check { --ico: var(--icon-shield-check); }
+.ico-shield { --ico: var(--icon-shield); }
+.ico-sparkle { --ico: var(--icon-sparkle); }
+.ico-task { --ico: var(--icon-task); }
+.ico-warning { --ico: var(--icon-warning); }
+.ico-admin { --ico: var(--icon-admin); }
+.ico-anima { --ico: var(--icon-anima); }
+.ico-approval { --ico: var(--icon-approval); }
+.ico-audit-log { --ico: var(--icon-audit-log); }
+.ico-auto { --ico: var(--icon-auto); }
+.ico-data-in-place { --ico: var(--icon-data-in-place); }
+.ico-de-identify { --ico: var(--icon-de-identify); }
+.ico-finance { --ico: var(--icon-finance); }
+.ico-growth { --ico: var(--icon-growth); }
+.ico-hosted { --ico: var(--icon-hosted); }
+.ico-leadership { --ico: var(--icon-leadership); }
+.ico-learn { --ico: var(--icon-learn); }
+.ico-legal { --ico: var(--icon-legal); }
+.ico-marketing { --ico: var(--icon-marketing); }
+.ico-on-premises { --ico: var(--icon-on-premises); }
+.ico-operations { --ico: var(--icon-operations); }
+.ico-private-cloud { --ico: var(--icon-private-cloud); }
+.ico-procurement { --ico: var(--icon-procurement); }
+.ico-projects { --ico: var(--icon-projects); }
+.ico-roles { --ico: var(--icon-roles); }
+.ico-sales { --ico: var(--icon-sales); }
+.ico-shared-context { --ico: var(--icon-shared-context); }
+.ico-support { --ico: var(--icon-support); }
+.ico-sync { --ico: var(--icon-sync); }
+.ico-tools { --ico: var(--icon-tools); }
+.ico-trading { --ico: var(--icon-trading); }
+.ico-travel { --ico: var(--icon-travel); }
+.ico-trial { --ico: var(--icon-trial); }
+.ico-user { --ico: var(--icon-user); }
+/* icons:end */
 
 /* 比較表、權限矩陣的符號：有＝check（主色）、部分＝minus（主色）、沒有＝close（淡）。圖例寫「✓ 有、– 部分、✕ 沒有」的地方一律用這三個 */
 :is(.check, .mark) { display: inline-block; vertical-align: middle; width: calc(32px * var(--u)); height: calc(32px * var(--u)); border: 0 !important; border-radius: 0 !important; box-shadow: none !important; opacity: 1;
   background: currentColor !important; -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; }
 :is(.check, .mark)::after { content: none !important; }
-:is(.check, .mark).is-yes { --ico: url("../anima-brand/assets/icons/ui/check.svg"); color: var(--s-accent); }
-:is(.check, .mark).is-part { --ico: url("../anima-brand/assets/icons/ui/minus.svg"); color: var(--s-accent); }
-:is(.check, .mark).is-no { --ico: url("../anima-brand/assets/icons/ui/close.svg"); color: var(--s-muted); width: calc(28px * var(--u)); height: calc(28px * var(--u)); }
+:is(.ico, .check, .mark) > svg { display: block; width: 100%; height: 100%; }
+.slide :is(.ico, .check, .mark).has-svg { background: none !important; -webkit-mask: none; mask: none; }
+:is(.check, .mark).is-yes { --ico: var(--icon-check); color: var(--s-accent); }
+:is(.check, .mark).is-part { --ico: var(--icon-minus); color: var(--s-accent); }
+:is(.check, .mark).is-no { --ico: var(--icon-close); color: var(--s-muted); width: calc(28px * var(--u)); height: calc(28px * var(--u)); }
 .table.is-checks.is-dense :is(.check, .mark) { width: calc(28px * var(--u)); height: calc(28px * var(--u)); }
 .marks-legend :is(.check, .mark) { transform: none; width: calc(24px * var(--u)); height: calc(24px * var(--u)); }
 
-/* 打勾清單：check icon */
-.deck .slide .list.checks > li::before { border: 0; transform: none; border-radius: 0; left: 0; top: calc(.36em - 4px * var(--u)); width: calc(24px * var(--u)); height: calc(24px * var(--u));
-  background: var(--s-accent); -webkit-mask: url("../anima-brand/assets/icons/ui/check.svg") center / contain no-repeat; mask: url("../anima-brand/assets/icons/ui/check.svg") center / contain no-repeat; }
-:is(.is-highlight, .option.is-featured, .compare-col.after) .list.checks > li::before { background: var(--deck-highlight-text); }
+/* 打勾清單、流程和對照的箭頭：slides.js 插進真的 .ico 元素（偽元素只能用遮罩，Chrome 印 PDF 會在遮罩框邊留細線） */
+.list.checks > li::before { content: none; }
+.deck .slide .list.checks > li > .li-ico { position: absolute; left: 0; --ico-size: calc(24px * var(--u)); color: var(--s-accent);
+  top: calc(.4615em - var(--ico-size) / 2); }   /* 中文字身裁切：第一行中線＝(ascent 84% ＋ descent 8.3%) ÷ 2 */
+.deck .slide .list.checks > li[style*="cap alphabetic"] > .li-ico { top: calc(.5cap - var(--ico-size) / 2); }   /* 純英文項目裁到大寫頂和基線（slides.js 寫在行內） */
+:is(.is-highlight, .option.is-featured, .compare-col.after) .list.checks > li > .li-ico { color: var(--deck-highlight-text); }
+.deck .slide :is(.transform-arrow, .compare-arrows > i, .flow > li) > .arrow-ico { --ico-size: calc(32px * var(--u)); color: var(--s-line-strong); vertical-align: 0; }
+.deck .slide .flow > li > .arrow-ico { position: absolute; top: 50%; right: calc(-1 * var(--deck-space-5) / 2 - 16px * var(--u)); transform: translateY(-50%); }
 
-/* 流程、對照的箭頭：chevron-right icon */
-.deck .slide :is(.transform-arrow, .compare-arrows > i)::before, .deck .slide .flow > li::after { border: 0 !important; transform: none !important; width: calc(32px * var(--u)); height: calc(32px * var(--u));
-  background: var(--s-line-strong); -webkit-mask: url("../anima-brand/assets/icons/ui/chevron-right.svg") center / contain no-repeat; mask: url("../anima-brand/assets/icons/ui/chevron-right.svg") center / contain no-repeat; }
-.deck .slide .flow > li::after { right: calc(-1 * var(--deck-space-5) / 2 - 16px * var(--u)); transform: translateY(-50%) !important; }
-.ico-trial { --ico: url("../anima-brand/assets/icons/domain/trial.svg"); }
-.ico-auto { --ico: url("../anima-brand/assets/icons/domain/auto.svg"); }
 
 
 /* 官網動畫 .story（slides.js 畫）：底圖照畫面塊原樣，只加模糊；顏色照官網 Story 區（白卡、Depth 200 線、Current 500 強調） */
@@ -1879,3 +1941,174 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .hub.orch .hub-item.is-group { padding: calc(14px * var(--u)) var(--deck-space-3); }
 .deck .slide .orch-row { margin-top: calc(10px * var(--u)); }
 .deck .slide .orch-row > .label { width: auto; white-space: nowrap; }
+
+
+/* ============================================================
+   v1.6（2026-11-20）：sales deck 收進來的元件。sales 原本寫在自己的 @sd 覆寫，現在範本直接有
+   ============================================================ */
+/* 大標題：一頁一個主角、內容少的頁才用（96，跟 .display 同一級）；一般頁標題維持 64 */
+.slide .title.is-xl { font-size: var(--deck-fs-display); line-height: var(--deck-lh-tight); }
+/* 卡片拿掉底色：上方一條深一階的線，內容從線下 24 開始；最後的 chip 列照樣壓卡底 */
+.deck .slide .card.is-ruled { background: none; box-shadow: none; border-radius: 0; padding: var(--deck-space-3) 0 0; border-top: 2px solid var(--s-line-strong); }
+/* 卡片拿掉底色和內距：只用來分組 */
+.deck .slide .card.is-bare { background: none; box-shadow: none; border-radius: 0; padding: 0; }
+/* chip 去膠囊：logo（或 icon）＋字，不墊底色 */
+.chips.is-plain { gap: var(--deck-space-1) var(--deck-space-3); }
+.deck .slide .chips.is-plain > .chip.chip { background: none; padding: 0; border-radius: 0; color: var(--s-text); }
+/* 來源清單：logo｜名稱｜一句，三欄對齊，列間一條線 */
+.sources { display: grid; grid-template-columns: auto max-content minmax(0, 1fr); column-gap: var(--deck-space-3); align-content: start; }
+.source { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: center; padding: var(--deck-space-3) 0; border-top: 2px solid var(--s-line-strong); }
+.source:last-child { border-bottom: 2px solid var(--s-line-strong); }
+.source > b { font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.source > span { color: var(--s-muted); text-wrap: pretty; }
+.deck .slide .source > img.logo { margin: 0; vertical-align: 0; }
+.deck .slide .source > .ico { --ico-size: 1.15em; color: var(--s-accent); }
+.deck .slide :is(.source, .chips.is-plain > .chip) > * { text-box: normal; }
+/* 亮點卡裡的編號圓、直向步驟：白底藍字（README「亮點卡裡 chip、編號圓一律白底藍字」） */
+.deck .slide .is-highlight .node-num { background: var(--deck-highlight-text); color: var(--deck-highlight-bg); }
+.deck .slide .is-highlight .steps { gap: 0; }
+.deck .slide .is-highlight .steps > li { background: none; border-radius: 0; padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line); }
+.deck .slide .is-highlight .steps > li:last-child { padding-bottom: 0; }
+.deck .slide .is-highlight .steps > li::before { background: var(--deck-highlight-text); color: var(--deck-highlight-bg); }
+/* 並排的功能格：一行和兩行的說明從同一個高度開始 */
+.features.is-stacked .feature { align-content: start; }
+
+/* 主張大字：文字欄裡一兩段大字（36），.is-accent 是藍字結論、上方一條線 */
+.lead-text { font-size: var(--deck-fs-subheading); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
+.lead-text.is-accent { font-size: var(--deck-fs-body-lg); line-height: var(--deck-lh-body); color: var(--s-accent); border-top: 2px solid var(--s-line-strong); padding-top: var(--deck-space-4); }
+/* 一對多：上面一條亮點卡（ANIMA），往下連到一排工具，底下標分組（sales deck 品類頁） */
+.fanout { display: flex; flex-direction: column; min-width: 0; }
+.split > .fanout { align-self: center; }
+.deck .slide .fanout-bar { flex-direction: row; align-items: center; gap: var(--deck-space-4); padding: var(--deck-space-4); }
+.deck .slide .fanout-bar > img.logo { height: calc(44px * var(--u)); margin: 0; flex: none; }
+.fanout-bar > div { flex: 1; display: flex; flex-direction: column; gap: var(--deck-space-1); border-left: 2px solid var(--s-line-strong); padding-left: var(--deck-space-4); }
+.fanout-bar b { font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-semibold); white-space: nowrap; }
+.fanout-bar span { font-size: var(--deck-fs-caption); }
+.fanout-bar > .chip { flex: none; }
+.fanout-items { display: grid; grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr)); gap: var(--deck-space-2); }
+.fanout-item { position: relative; padding-top: calc(var(--deck-space-5) + var(--deck-space-3)); display: grid; grid-template-rows: calc(88px * var(--u)) auto; justify-items: center; align-items: center; gap: var(--deck-space-2);
+  padding-bottom: var(--deck-space-3); font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-strong); text-align: center; white-space: nowrap; }
+.fanout-item::before { content: ""; position: absolute; top: 0; left: 50%; width: calc(3px * var(--u)); height: var(--deck-space-5); background: var(--s-accent); transform: translateX(-50%); }
+.deck .slide .fanout-item > img.logo { display: block; height: calc(88px * var(--u)); margin: 0; }
+.fanout-groups { display: grid; grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr)); gap: var(--deck-space-2); }
+.fanout-groups > * { grid-column: span var(--span, 1); border-top: 2px solid var(--s-line-strong); padding-top: var(--deck-space-2); text-align: center;
+  font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-accent); }
+.fanout > .slide-note { text-align: center; margin-top: var(--deck-space-3); }
+.deck .slide :is(.fanout-bar > div, .fanout-groups, .fanout-item) > * { text-box-trim: trim-both; text-box-edge: text; }
+/* chip 列裡的 icon（沒有 logo 的項目，例如 FAQ／SOP）跟 logo 同樣大、同樣間距 */
+.deck .slide .chip > .ico { --ico-size: 1.15em; margin-right: calc(10px * var(--u)); color: var(--s-accent); }
+
+/* 名稱欄：幾項就幾欄、不放卡片，每欄上方一條線；名稱是主角（44），工具列壓欄底（sales deck workflow 總覽） */
+.titlecols { flex: 1; min-height: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--deck-space-6); }
+.titlecols > * { display: flex; flex-direction: column; gap: var(--deck-space-2); padding-top: var(--deck-space-3); border-top: 2px solid var(--s-line-strong); min-width: 0; }
+.titlecols-name { font-size: var(--deck-fs-heading); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
+.titlecols p { font-size: var(--deck-fs-body-lg); color: var(--s-muted); text-wrap: balance; }
+.titlecols > * > .chips:last-child { margin-top: auto; padding-top: var(--deck-space-2); }
+.titlecols:has(> :nth-child(4)) { gap: var(--deck-space-5); }
+.titlecols:has(> :nth-child(4)) .titlecols-name { font-size: var(--deck-fs-subheading); }
+/* 一排小計：卡片底色的一條，左邊幾個數字、右邊註解 */
+.tally { display: flex; align-items: center; justify-content: space-between; gap: var(--deck-space-5); background: var(--s-card); border-radius: var(--deck-radius-lg); padding: var(--deck-space-2) var(--deck-space-4); }
+.tally > p { display: flex; align-items: baseline; gap: var(--deck-space-5); font-size: var(--deck-fs-body-lg); color: var(--s-strong); }
+.tally b { font-size: var(--deck-fs-heading); font-weight: var(--deck-fw-number); color: var(--s-accent); margin-right: var(--deck-space-1); }
+.deck .slide :is(.tally, .tally > p, .titlecols > * > .label) > * { text-box: normal; }
+
+/* 清單橫排：短的幾項排成一行，照樣用圓點 */
+.list.is-inline { flex-direction: row; flex-wrap: wrap; column-gap: var(--deck-space-5); }
+/* 排序清單：標題列、第一名一張亮點卡（右邊「今天要做的事」）、後面幾名一列一個（sales deck 案例 A） */
+.rank-list { display: flex; flex-direction: column; min-width: 0; }
+.rank-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--deck-space-3); border-bottom: 2px solid var(--s-line-strong); padding-bottom: var(--deck-space-2); margin-bottom: var(--deck-space-3); }
+.rank-head > b { font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.deck .slide .rank-top { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--deck-space-4); padding: var(--deck-space-5); }
+.rank-top > div:first-child { align-self: center; display: flex; flex-direction: column; align-items: flex-start; gap: var(--deck-space-2); }
+.rank-top h3 { display: flex; align-items: center; gap: var(--deck-space-2); font-size: var(--deck-fs-title); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
+.rank-top > div > p { font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.rank-todo { display: flex; flex-direction: column; justify-content: center; gap: var(--deck-space-1); border-left: 2px solid var(--s-line-strong); padding-left: var(--deck-space-4); }
+.rank-todo > span { font-size: var(--deck-fs-caption); }
+.rank-todo > b { font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-bold); line-height: var(--deck-lh-title); color: var(--s-strong); }
+.rank-row { display: grid; grid-template-columns: auto auto minmax(0, 1fr); column-gap: var(--deck-space-2); row-gap: var(--deck-space-1); align-items: center;
+  padding: var(--deck-space-3) var(--deck-space-5) 0; margin-top: var(--deck-space-3); border-top: 2px solid var(--s-line-strong); }
+.rank-top + .rank-row { border-top: 0; }
+.rank-row > h3 { display: flex; align-items: center; gap: var(--deck-space-2); font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.rank-next { justify-self: end; font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.rank-row > p { grid-column: 1 / -1; padding-left: calc(36px * var(--u) + var(--deck-space-2)); font-size: var(--deck-fs-caption); color: var(--s-muted); }   /* 36＝.node-num 的寬，說明對齊名稱 */
+.deck .slide :is(.rank-head, .rank-row, .rank-todo) > *, .deck .slide .rank-top h3 { text-box: normal; }
+
+/* 接力步驟：人做的步驟（橘色編號、字小一級）夾著 ANIMA 做的那幾步（一張亮點卡，右邊直式 logo）（sales deck 案例 B） */
+.relay { display: flex; flex-direction: column; justify-content: center; gap: var(--deck-space-2); min-width: 0; }
+.relay-step { display: grid; grid-template-columns: calc(250px * var(--u)) minmax(0, 1fr); column-gap: var(--deck-space-3); align-items: baseline; padding: var(--deck-space-2) var(--deck-space-5); }
+.relay-step > h3 { display: flex; align-items: center; gap: var(--deck-space-2); font-size: var(--deck-fs-body); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-semibold); color: var(--s-strong); }
+.relay-step > div { display: flex; flex-direction: column; gap: var(--deck-space-2); }
+.relay-step p { font-size: var(--deck-fs-caption); color: var(--s-muted); }
+.deck .slide .relay-ai { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--deck-space-5); padding: var(--deck-space-3) var(--deck-space-5); }
+.relay-ai .relay-step { grid-template-columns: minmax(0, 1fr); row-gap: var(--deck-space-1); padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line); }
+.relay-ai .relay-step:first-child { border-top: 0; padding-top: 0; }
+.relay-ai .relay-step:last-child { padding-bottom: 0; }
+.relay-ai .relay-step > h3 { font-size: var(--deck-fs-body-lg); }
+.relay-ai .relay-step p { font-size: var(--deck-fs-body); }
+.relay-ai > img { width: calc(120px * var(--u)); height: auto; display: block; }
+.relay-step .chips.is-plain { row-gap: var(--deck-space-1); }
+.deck .slide :is(.relay-step, .relay-step > div, .relay-step > h3) > * { text-box: normal; }
+
+/* 並排的欄裡有不放底色的欄（.card.is-ruled）時，欄距放寬到 48，線才分得開 */
+:is(.grid, .split-3):has(> .card.is-ruled) { column-gap: var(--deck-space-5); }
+
+/* 選項軸：幾個選項排成一條軸（圓點＋線），下面一列一個面向，列名只寫一次（sales deck 資安與部署） */
+.option-axis { display: grid; grid-template-columns: calc(170px * var(--u)) repeat(var(--cols, 3), minmax(0, 1fr)); }
+.option-axis > * { padding: var(--deck-space-1) var(--deck-space-4) var(--deck-space-1) 0; border-top: 2px solid var(--s-line); font-size: var(--deck-fs-caption); color: var(--s-text); text-wrap: pretty; }
+.option-axis > b { font-weight: var(--deck-fw-semibold); color: var(--s-accent); }
+.option-axis > :is(.option-axis-head, .option-axis-corner) { position: relative; border-top: 0; padding-top: calc(38px * var(--u)); padding-bottom: var(--deck-space-2); }
+.option-axis-head { display: flex; flex-direction: column; gap: var(--deck-space-1); }
+.option-axis-head::before { content: ""; position: absolute; left: 0; right: 0; top: calc(11px * var(--u)); border-top: 2px solid var(--s-line-strong); }
+.option-axis-head::after { content: ""; position: absolute; left: 0; top: 0; width: calc(22px * var(--u)); height: calc(22px * var(--u)); border-radius: 50%; background: var(--s-accent); }
+.option-axis-head h3 { display: flex; align-items: center; gap: var(--deck-space-2); font-size: var(--deck-fs-heading); line-height: var(--deck-lh-title); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
+.option-axis-head h3 .ico { color: var(--s-accent); }
+.option-axis-tag { font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-medium); color: var(--s-accent); }
+.option-axis-sub { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--deck-space-1) var(--deck-space-2); }
+.option-axis-tag { white-space: nowrap; }
+.option-axis-sub > .label { white-space: nowrap; }
+.deck .slide .option-axis-sub img.logo { height: calc(36px * var(--u)); margin: 0 0 0 var(--deck-space-1); }
+.deck .slide :is(.option-axis, .option-axis-head, .option-axis-sub, .option-axis-sub > .label) > * { text-box: normal; }
+/* 功能格小一級：標題 30、說明 24（放在別的版型下面當補充） */
+.features.is-sm .feature-title { font-size: var(--deck-fs-body-lg); }
+.features.is-sm .feature-text { font-size: var(--deck-fs-caption); }
+.features .feature-title > .ico { color: var(--s-accent); margin-right: var(--deck-space-1); }
+
+/* 一條橫列：上下兩條線，中間橫排一組東西（logo、標籤、一句說明），最後一個靠右（sales deck 競爭定位） */
+.strip { display: flex; align-items: center; gap: var(--deck-space-5); padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line-strong); border-bottom: 2px solid var(--s-line-strong); }
+.strip > :last-child:not(:first-child) { margin-left: auto; }
+.strip > .logo-row { flex-wrap: nowrap; gap: var(--deck-space-3); }
+.deck .slide .strip > * { text-box: normal; margin-top: 0; margin-bottom: 0; }
+/* 標籤裡的勾：用 icon，不打「✓」字元 */
+.tag > .ico { --ico-size: 1em; margin-right: calc(6px * var(--u)); }
+/* 卡片標題前的編號（01、02…） */
+.card-title > .num { font-weight: var(--deck-fw-number); color: var(--s-accent); margin-right: var(--deck-space-2); }
+/* 小標接下面一組欄 */
+.slide .label + :is(.grid, .split-3) { margin-top: var(--deck-space-2); }
+/* 說明條橫排：標題和標籤同一列 */
+.callout.is-row { display: flex; align-items: center; gap: var(--deck-space-3); }
+.deck .slide .callout.is-row > .callout-title { flex: none; margin: 0; }
+.callout.is-row > .tags { margin-left: auto; min-width: 0; justify-content: flex-end; }
+.deck .slide .callout.is-row > * { text-box: normal; }
+
+/* 團隊頁：左邊人物＋經歷 logo＋團隊組成＋亮點＋成員 logo，右邊一張卡放歷程和入選計畫（sales deck 團隊與公司現況） */
+.team-sheet { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: var(--deck-space-5); }
+.team-sheet > .card.is-bare { justify-content: space-between; gap: var(--deck-space-3); }
+.team-sheet .card > .label + * { margin-top: calc(-1 * var(--deck-space-2)); }
+.team-sheet .card-title { font-size: var(--deck-fs-body-lg); }
+.team-line { border-top: 2px solid var(--s-line); padding-top: var(--deck-space-2); color: var(--s-muted); font-size: var(--deck-fs-caption); }
+.team-line > b { display: block; margin-bottom: var(--deck-space-1); color: var(--s-strong); font-size: var(--deck-fs-body); font-weight: var(--deck-fw-semibold); }
+.person-name.is-lg { font-size: var(--deck-fs-heading); }
+/* logo 一排：.is-spread 撐滿整排、.is-grid 排成格子（欄數 --cols，預設 5） */
+.logo-row.is-spread { justify-content: space-between; flex-wrap: nowrap; }
+.logo-row.is-grid { display: grid; grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr)); justify-items: center; gap: var(--deck-space-3) var(--deck-space-2); }
+.logo-row:is(.is-spread, .is-grid) img { height: calc(80px * var(--u)); }
+.team-sheet > .card:not(.is-bare) .logo-row.is-spread img { height: calc(48px * var(--u)); }   /* 右側面板比較窄：比原本的 wordmark 列大，但不撐高面板 */
+/* 直向時間軸精簡版：實線、空心點，日期小字在上、說明在下 */
+.milestones.vertical.is-compact { gap: var(--deck-space-2); flex: 1; align-content: space-between; }
+.milestones.vertical.is-compact::before { border-left-style: solid; border-left-width: 3px; }
+.milestones.vertical.is-compact > li { grid-template-columns: minmax(0, 1fr); row-gap: calc(4px * var(--u)); }
+.milestones.vertical.is-compact > li::after { top: 0; }
+.milestones.vertical.is-compact .milestone-when { font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-accent); }
+.milestones.vertical.is-compact .milestone-text { grid-column: 1; color: var(--s-muted); }
+.list.checks.is-circle > li { padding-left: calc(28px * var(--u) + var(--deck-space-2)); }
+.deck .slide .list.checks.is-circle > li > .li-ico { --ico-size: calc(28px * var(--u)); }

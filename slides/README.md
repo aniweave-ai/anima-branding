@@ -24,7 +24,7 @@
 :root { --deck-canvas-scale: 0.75; } /* 1440×810 的 deck 只要加這行，放在 tokens.css 之後 */
 ```
 
-- 外框：左右、頁首列到頂、頁底品牌列到底都是 80（`--deck-pad-x`、`--deck-pad-bottom`）；標題頂線 `--deck-pad-top` 144，內容底線 936（跟標題頂線上下對稱）。2026-11-17 從 96／192／984 改過來。
+- 外框：左右、頁首列到頂都是 80（`--deck-pad-x`）；頁底品牌列到底 64（`--deck-brand-bottom`）。標題頂線 `--deck-pad-top` 144，內容底線 968（`--deck-pad-end` 離底 112）；關掉品牌列的頁內容底線 1000（`--deck-pad-bottom` 80）。頁首（標題、引言）到內容 40（`--deck-head-gap`）。2026-11-17 從 96／192／984 改成 80／144／936，2026-11-20 為了多一點內容空間改成現在的數字（內容區高 792 → 824）。
 - 間距只用 `--deck-space-1`～`7`：8／16／24／32／48／64／96。
 
 ## 字級
@@ -39,7 +39,7 @@
 
 | token | 1920 | 1440 | 用在 | 行高 |
 |---|---|---|---|---|
-| `--deck-fs-display` | 96 | 72 | 封面主標、主張頁大字 | `--deck-lh-tight` 1.15 |
+| `--deck-fs-display` | 96 | 72 | 封面主標、主張頁大字、`.title.is-xl` 大標題 | `--deck-lh-tight` 1.15 |
 | `--deck-fs-number` | 112 | 84 | KPI 大數字（資料頁的主角，比標題大） | `--deck-lh-tight` |
 | `--deck-fs-title` | 64 | 48 | 每頁標題（一頁一個） | `--deck-lh-title` 1.3 |
 | `--deck-fs-heading` | 44 | 33 | 區塊標題、卡片大標 | `--deck-lh-title` |
@@ -53,6 +53,7 @@
 
 - **字放不下，先縮短說法、再拆頁**，縮字是最後的選項。縮字也要守上面三條，不能縮間距、縮版面硬塞。
 - 20 以下只放輔助資訊（footnote、資料來源、條款），不放這頁要講的重點。
+- **大標題 `.title.is-xl`（2026-11-20，Victor 定）**：頁標題放到 display 96（乘 `--u`）。只給「一頁一個主角、內容少」的頁用，例如品類頁、案例頁的問句（範本第 52、76、77 頁）；一般頁標題維持 64。用了 96 的頁，字級還是一頁最多 4 級。
 - 同一份 deck 要投影，就不用 14。
 
 ## 一頁的內容上限（目標）
@@ -90,36 +91,37 @@
 - 只有照上面的數字量過、真的超過才拆頁；「範本沒有剛好的版型」「排版放不下」「想讓每頁比較空」都不是拆頁的理由。
 - 交付前逐頁跟原稿對照（可跑 `python3 slides/tools-audit-redo.py 原稿.html 新稿.html 結果.json`，會列出新頁對應的原稿頁、原稿每頁字數、新稿找不到的句子、新稿對應頁少掉的 logo 和圖；改寫過的句子要人工看）。拆頁和縮短的說法都要在交付時列出來。
 
-**拆頁後太空**（2026-11-13 加）：拆完的頁內容很少，靠底線放之後標題下面空出一大塊（超過內容區高度約四成），不要讓它空著，照順序處理：
+**拆頁後太空**（2026-11-13 加）：拆完的頁內容很少，內容區空出一大塊（標題下和內容下方沒用到的高度合計超過內容區約四成），不要讓它空著，照順序處理：
 1. **換版型**，用會撐滿高度的版型，內容不變：
-   - 三張卡片 → 卡片裡的關鍵數字拉成 `.card-kpi`，或卡片加清單拉高，或階梯（示範第 82 頁）
+   - 三張卡片 → 卡片裡的關鍵數字拉成 `.card-kpi`，或卡片加清單拉高，或階梯（示範第 89 頁）
    - 一兩個大數字 → 超大數字＋點陣（第 24 頁）或摘要大字＋一排數字（第 16 頁）
-   - 短清單、兩三句說明 → 畫面塊＋文字（第 17、46 頁）
+   - 短清單、兩三句說明 → 畫面塊＋文字（第 17、47 頁）
    - 換版型時可以加一句把這頁重點串起來的摘要（例如畫面塊旁的大字），但不能加新資訊。
 2. **合併**：跟相鄰、講同一件事的頁合起來，合併後不要超過目標上限。
 3. 都不適合，由做 deck 的人決定留著或改內容；不確定視覺怎麼處理再問 Victor。
 
 不要用放大字級、拉大間距、加無關的圖來硬撐。
 
-**不用每頁都撐滿**：卡片內容少（只有數字加一兩行）時，卡片不要硬拉到滿版，跟標題之間留一段呼吸空間反而好看（示範第 21 頁：卡片拉高到約內容區六成，`.stats.is-big.is-tall`）。只有空到超過四成才算太空。
+**不用每頁都撐滿**：卡片內容少（只有數字加一兩行）時，卡片不要硬拉到滿版，跟標題之間留一段呼吸空間反而好看（示範第 21 頁：卡片拉高到約內容區六成，`.stats.is-big.is-tall`，整頁加 `.is-bottom` 靠底線）。只有空到超過四成才算太空。刻意留白、確定不再加東西的頁（例：範本第 50 頁，兩張卡貼底線、跟標題留一段呼吸空間），在 `<section>` 加 `data-sparse-ok`，總覽就不標藍。不能拿它代替上面的處理順序。
 
-**自動檢查**：`slides.js` 會在每一頁載入時量上面這幾項。按 `O` 進總覽，超過的頁縮圖左上角會出現紅色標記，寫著哪一項超過；有 `data-dense` 的頁改成黃色標記；有 `data-appendix` 的頁不檢查。瀏覽器 console 也會列出來。太空的頁（標題下空白超過內容區高度四成）標藍色「太空」，處理方式見上面「拆頁後太空」。標記只在總覽出現，投影和 PDF 不會印出來。
+**自動檢查**：`slides.js` 會在每一頁載入時量上面這幾項。按 `O` 進總覽，超過的頁縮圖左上角會出現紅色標記，寫著哪一項超過；有 `data-dense` 的頁改成黃色標記；有 `data-appendix` 的頁不檢查。內容超出底線的頁也標紅（「內容超出底線」）。瀏覽器 console 也會列出來。太空的頁（內容區沒用到的高度超過四成）標藍色「太空」，處理方式見上面「拆頁後太空」。標記只在總覽出現，投影和 PDF 不會印出來。
 
 ## 版面 v2（2026-11-13，依兩份參考簡報重訂）
 
 - **頁首列**：左上頁名、右上 logo。封面、章節頁、結尾不放。不放頁碼。標記仍寫 `<footer class="slide-foot">`，CSS 會把它放到上方；深底頁自動換白字 logo。
 - **頁底品牌列**（2026-11-17，Wayne 要求、Victor 定版）：左下公司 slogan「Bringing intelligence into every workspace」、右下 ANIWEAVE logo，**每一頁都有**，`slides.js` 自動加，不用寫標記。
-  - 位置跟頁首列上下對稱：離底 80、左右 80；slogan 基線和 logo 底切齊。slogan 用 `--deck-fs-small` 20、`--s-muted`；logo 字高＝頁首 ANIMA logo 的字高（15.7）。
-  - **不放的頁**：那一頁 `<section>` 加 `data-brand="off"`；整份都不放就加在 `<main class="deck">`。只有 Victor 或使用者說不用放才關。關掉的頁內容底線退到 1000（離底 80）。
+  - 位置：離底 64（`--deck-brand-bottom`，品牌列約 1000–1016）、左右 80；slogan 基線和 logo 底切齊。slogan 用 `--deck-fs-small` 20、`--s-muted`；logo 字高＝頁首 ANIMA logo 的字高（15.7）。
+  - **不放的頁**：那一頁 `<section>` 加 `data-brand="off"`；整份都不放就加在 `<main class="deck">`。只有 Victor 或使用者說不用放才關。關掉的頁內容底線改到 1000（離底 80，`--deck-pad-bottom`）。
   - **手機封面（`.cover-phone`）例外**：手機延伸到底會壓到右下 logo，所以 ANIWEAVE logo 改放在 slogan 左邊（大小不變），中間隔 `--deck-space-3` 24，整組在左下。其他頁 ANIWEAVE 都在右下。
   - 換頁時不動（每頁都一樣）。深底、章節色帶、滿版圖頁自動換官方白字版（`ANIWEAVE_textlogo_primary_dark.svg`），白底用深字版（`ANIWEAVE_textlogo_primary.svg`）。
   - slogan 照品牌規範逐字照用、句尾不加句號，不跟 ANIMA logo 組成 lockup。
 - **字重**：標題、大字用 `--deck-fw-title`（比內文粗一點），大數字用 `--deck-fw-number`（bold），其他照「字重」表。
 - **數字的中文單位**：中文字面比數字大，大數字裡的單位（個月、萬、家、天）用 `<small>` 包起來，縮成 0.5 倍（最小不低於 caption）：`<span class="kpi-value">1<small>個月</small></span>`。
 - **數字**：大數字用 `--deck-fs-number` 112，顏色 `--s-accent`（白底 Current 500、深底 Sky 300）。說明一行小字。
-- **內容框**：整頁外框只有一個邊距 `--deck-pad-x` 80：左、右、頁首列到頂、頁底品牌列到底都一樣。標題頂線固定在 `--deck-pad-top` 144，內容底線在 936（內容區高 792）。每一頁的內容都落在這個框裡：
+- **內容框**：整頁外框只有一個邊距 `--deck-pad-x` 80：左、右、頁首列到頂、頁底品牌列到底都一樣。標題頂線固定在 `--deck-pad-top` 144，內容底線在 968（`--deck-pad-end`，內容區高 824）。每一頁的內容都落在這個框裡：
   - 標題永遠在頂線，不垂直置中（封面、章節頁、主張頁、引言、結尾例外）。
-  - 內容撐到底線；內容少的頁整組靠底線放，不放在中間（2026-11-13 試過改成接在標題下面，下方空白太多，改回來）。
+  - 內容接在標題下方往下排（2026-11-20 改，Wayne 提、Victor 同意：原本整組靠底線，中等份量的頁標題下會空一大塊，內容太多時還會往上壓到標題）。放不下時往下超出底線，總覽標紅「內容超出底線」，不會壓到標題。
+  - 內容少、刻意留白的頁（只有一排數字卡、一個大數字＋小圖）在 `<section class="slide is-bottom">` 加 `.is-bottom`，整組靠底線放，跟標題之間留一段呼吸空間。範本第 21、31、60 頁是這種。
   - 有底色的框四邊同一個內距（`--deck-card-pad` 40；流程節點、對話泡泡 24）。框照內容高度，不撐出空白；標題和大數字用 `text-box` 裁掉上下行距，字的頂和底才會切齊內距。
   - 卡片裡的內容從上往下排（靠上）。只有方案欄（`.option`）例外：最後的清單、說明壓在卡底，同一排方案的底部才對齊。
 - **字的間距**：每組內容最外側的字裁掉行距，讓字的頂和底切齊框、線、頁面邊界；組內的字一定留距離，數值見下面「對齊與間距」。多行內文行高 1.6。
@@ -127,7 +129,7 @@
 - **預設封面**是 `.cover-phone` 配品牌流動玻璃背景（`.cover-bg.flow-06`，示範第 2 頁）；其他封面是備選：滿版流動玻璃（`.cover.ground-flow`）、畫面塊＋標題、自己的底圖＋手機、深色玻璃＋手機。
 - **封面＋手機** `.cover-phone`：背景鋪滿、手機在右邊往下超出頁面、文字在左。背景三選一：`.cover-bg` 放自己的底圖（圖案太滿加 `.is-faded`）、`.cover-bg.flow-NN` 品牌流動玻璃、整頁 `.ground-dark` 深色玻璃。手機圖用 JPG，圓角由 CSS 裁。
 - **預設全部白底（Victor 決定，2026-11-16）**：做簡報一律用白底，Victor 明講要深色才開深底。`data-dark` 沒寫就是 `off`。
-- **sales deck 預設漸層底（Wayne 決定，2026-11-17）**：業務簡報（sales deck、客戶提案）在 `<main class="deck">` 寫 `data-dark="ambient"`，內容頁全部用淡漸層底（`.ground-ambient`）。漸層底上的淺色塊（ANIMA 步驟、人員處理、完成、缺口、圖例色塊、chip、灰標籤、說明條 `.callout`）會自動換深一階（Sky／Warning／Success／Error／Depth 100），灰底的流程節點、卡片改白底，不用自己調。
+- **sales deck 的底色（照 sales deck v2.0.2 實際做法，2026-11-20 定案）**：在 `<main class="deck">` 寫 `data-dark="all"`，每一頁自己標底色：內容頁用淡漸層 `.ground-ambient`；性質不同的頁才用別的底：公司介紹那幾頁（公司概要、導入成果、團隊）`.ground-dark`，定價 `.ground-brand`（沙色），附錄 `.ground-neutral`（灰）；流動玻璃只留封面和 4A 那頁。漸層底上的淺色塊（ANIMA 步驟、人員處理、完成、缺口、圖例色塊、chip、灰標籤、說明條 `.callout`）會自動換深一階（Sky／Warning／Success／Error／Depth 100），灰底的流程節點、卡片改白底，不用自己調。整份都要淡漸層、不想逐頁標時，才用 `data-dark="ambient"`。
 - **深底頁**（Victor 要求時才用）：深底（Depth 900）大約三分之一，放在想讓人停下來的頁（目錄、重點數字、做法、見證）。深底上的卡片用 `--deck-card-bg-dark`（Depth 800）。
 - **深色頁開關**：寫在 `<main class="deck" data-dark="…">`，整份一起切換，印 PDF 也照這個設定：
   - `all`：照每頁設的底色（深底頁變深）。
@@ -139,7 +141,7 @@
 - **亮點卡** `.is-highlight`：實心 Current 500 ＋白字，一頁最多一張，標這頁最重要的一項。`.option.is-featured`、`.compare-col.after` 自動套用。深色面板不再加光暈。
 - **畫面塊** `.art` ＋ `.flow-NN`：流動玻璃裁成圓角矩形放進版面；深底頁自動轉深色版。`.is-band` 是橫條、`.is-fill` 撐滿格子。
 - **標題右側說明** `.slide-head.split`：標題左、兩三行說明靠右上。
-- **標題可以挑字上色**（2026-11-13 照參考簡報開放）：用 `<span class="accent">` 包住一個詞組，一個標題最多一處，挑這頁的重點（數字、結果、對比裡要強調的那一半）。顏色只用主色（白底 Current 500、深底 Sky 300），不加粗、不換字級。不是每頁都要，整份大約三分之一以內；主張頁、摘要大字（`.summary`）也適用。示範見第 16、20、26、27、32、35、55、74、78、86 頁。
+- **標題可以挑字上色**（2026-11-13 照參考簡報開放）：用 `<span class="accent">` 包住一個詞組，一個標題最多一處，挑這頁的重點（數字、結果、對比裡要強調的那一半）。顏色只用主色（白底 Current 500、深底 Sky 300），不加粗、不換字級。不是每頁都要，整份大約三分之一以內；主張頁、摘要大字（`.summary`）也適用。示範見第 16、20、26、27、32、35、58、80、84、93 頁。
 - **所有版型**：每頁右下角有按鈕（列印時不出現），點了看全部縮圖，點縮圖跳過去；也可以按 O。
 
 ## 對齊與間距（2026-11-13 逐頁校正後定下來的）
@@ -162,8 +164,8 @@
 - 分隔線一律 2px。
 
 **外框**
-- 外框 80：左、右，頁首列和封面 logo 到頂、頁底品牌列到底都是 80。封面 logo 貼左上角（80／80）。
-- 頁首列頂到標題頂線、內容底線到頁底品牌列底都是 64：標題頂線 144，內容底線 936。內容少的頁整組靠底線放。
+- 外框 80：左、右，頁首列和封面 logo 到頂都是 80；頁底品牌列到底 64。封面 logo 貼左上角（80／80）。
+- 頁首列頂到標題頂線 64：標題頂線 144。內容底線 968，到頁底品牌列頂 32。內容接在標題下方；刻意留白的頁加 `.is-bottom` 靠底線。
 
 **標題＋副標（全 deck 同一套）**
 - 小標題（26 以下）接副標或清單：**16**。
@@ -174,7 +176,8 @@
 - label 接大數字（儀表板）不算標題＋副標，維持原本間距。
 
 **其他固定間距**
-- 頁標題接引言（lede）：**24**。
+- 頁標題接引言（lede）：**16**（`.slide-head` 的 gap）。
+- 頁首（標題、引言）接內容：**40**（`--deck-head-gap`）。
 - 大數字、價格接下面的說明：**16**。
 - 一組數字接下一組（直排的 KPI、案例結果）：**32**。
 
@@ -185,16 +188,16 @@
 - 欄標題下方第一條線用深一階的線色（`--s-line-strong`），跟 card-head 一致。
 
 **清單**
-- 每一項都裁成一樣，圓點、勾勾、方框對齊第一行字的中線（約 .36em）。
+- 每一項都裁成一樣。勾勾的中心對齊第一行字的中線（中文 .4615em，純英文 .5cap）；圓點、方框約 .36em。
 - 一般清單項目間距 32；勾選方框清單（雙方準備）48；編號說明（截圖標註）48。
 
 **同一排等高**
-- 同一排的卡片、方案欄、比例對照、資料轉換前後一律等高，整排靠底線。
+- 同一排的卡片、方案欄、比例對照、資料轉換前後一律等高。
 - 卡片內距四邊一樣；roadmap 方塊到左右兩條泳道線都是 16。
 
 **置中與對稱**
 - 箭頭（＞）用視覺中心對齊，不是外框中心：往左補半個箭頭寬。
-- 里程碑的點到上面日期、到下面標題等距（40），虛線穿過點的中心。
+- 里程碑的點到上面日期、到下面標題等距（40），虛線穿過點的中心。日期用內文 26、標題 30：標題比日期重要，日期不能比標題大。
 - 頭像列（團隊）置中；其他人物介紹靠左。
 
 ## 顏色的例外規則
@@ -312,7 +315,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
   - 放法：字前面 `<img class="logo">`（表頭、清單標題、資料來源、流程節點都可用）；logo 本身就是名字時（例：比較表的 ANIMA 欄頭用 `ANIMA_horizontal_primary.svg`）只放 logo、不重複寫字，加 `.is-wordmark` 讓它照字高；chip 裡直接放 `<img>` 就是 logo＋文字的標籤（`<span class="chip"><img src="…/tools-plain/line.svg" alt="">LINE</span>`，工具卡片、流程頁列工具用這個）；一排 logo 用 `.logo-row`（卡片底部的小 logo 加 `.is-sm`）；logo 牆數量多用 `.logos.is-sm`（一排 5 格）；原稿一張圖的內容比 DS 元件多、拆不出來時，整張放回去用 `.figure-full`，不要自己重畫成少了東西的圖。
   - 交付前跑 `tools-audit-redo.py`，最後一段「圖片」要顯示「圖片全部對上」；有缺要寫進交付說明並問 Victor。
 - **logo 不加白底（2026-11-16，Victor 明令）**：除非 Victor 說要，logo 一律直接放在底色上，不墊白色方塊。Web DS 的工具與合作夥伴 logo 檔案內建白底，簡報一律用去白底版 `anima-brand/assets/logos/tools-plain/`、`partners-plain/`（由 `tools/`、`partners/` 拿掉白色 rect 產生，Web DS 更新後要重產）；舊稿的 png 有白底要先去背。
-- **同一頁的 logo 大小視覺要一致**：`slides.js` 會自動把 chip、`img.logo`、`.logo-row`、`.logo-cell` 裡的 logo 裁到實際圖案範圍，再依寬高比換算大小（圖示等高、橫式文字 logo 接近等面積），所以檔案留白不同也會一樣大。一排都是公司或計畫的文字 logo 時用 `.logo-row.is-wordmark`（基準較大）。流程節點的 logo 放在編號旁 `<span class="node-top">編號＋logo</span>`，不要塞進標題擠到換行。交付前逐頁截圖看：同一頁的 logo 有沒有一顆特別大、特別小、特別淡。
+- **同一頁的 logo 大小視覺要一致**：`slides.js` 會自動把 chip、`img.logo`、`.logo-row`、`.logo-cell` 裡的 logo 裁到實際圖案範圍，再依寬高比換算大小（圖示等高、橫式文字 logo 接近等面積），所以檔案留白不同也會一樣大。一排都是公司或計畫的文字 logo 時用 `.logo-row.is-wordmark`（基準較大）。logo 牆（`.logo-row.is-spread`／`.is-grid`）基準再大一級（80）。檔案裡帶小字副標的 logo（例：艾涅爾的 Anneal Energy、EY 的 Building a better working world），裁邊後主體會比別顆小，可以在那顆 `<img>` 加 `style="--logo-scale: 1.2;"`（預設 1，`slides.js` 算出的大小再乘上它）。只用在檔案帶額外文字的 logo，目標是同一頁的 logo 看起來一樣大，不要拿來單獨放大某個品牌。流程節點的 logo 放在編號旁 `<span class="node-top">編號＋logo</span>`，不要塞進標題擠到換行。交付前逐頁截圖看：同一頁的 logo 有沒有一顆特別大、特別小、特別淡。
   - 字前面的 `img.logo` 由 `slides.js` 量旁邊第一個字的中線，自動算 vertical-align 讓圖跟字中線對齊；不要手動寫 vertical-align。交付前放大看表頭、清單標題、資料來源列，圖跟字要在同一條中線上。
   - 自動校正要讀圖片像素，只在 http 開啟時有效（`file://` 讀不到，會照原檔大小）。輸出 PDF 一律從 `http://127.0.0.1:8766/…` 印。
 - **動畫一律從官網程式碼移植**，時間軸、彈簧曲線、尺寸、顏色照抄，不另外設計。目前有：
@@ -345,6 +348,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 簡報裡的 icon 一律用 `anima-brand/assets/icons/` 這套，跟官網同一套（來源：`anima-web/design-system/assets/icons/`，Web DS 改了要同步過來）。**不要自己畫 SVG、不要用 emoji、不要用 ✓ ✕ △ 這類符號字。**
 
 - **規格**：24×24 線條、1.5px 圓角筆畫，顏色跟著字（currentColor）。不填色、不漸層、不雙色、不加粗。
+- **怎麼畫**：`slides.js` 把每個 `.ico`、比較表符號、打勾清單、流程箭頭換成內嵌 `<svg>`（CSS 遮罩印成 PDF 會在框邊留一條細線）。SVG 內嵌在 `slides.css` 的 `--icon-名稱`，所以 `file://` 開也看得到。Web DS 的 icon 同步到 `anima-brand/assets/icons/` 之後，跑 `python3 slides/tools-icons.py` 重產這段。
 - **用法**：`<i class="ico ico-check"></i>`。大小預設 1em（跟字一樣大），要調用 `style="--ico-size: 32px"` 或 `font-size`。顏色用 `color`。
 - **ui/（29 個）**：介面與狀態符號。狀態 `check` `check-circle` `warning` `sparkle` `clock` `bell` `mention` `task` `hourglass`；操作 `plus` `minus` `close` `chevron-left` `chevron-right` `chevron-down` `arrow-up` `arrow-right` `search` `fit-all` `fullscreen`；物件 `document` `chat` `help` `building` `calendar` `paperclip` `lock` `shield` `shield-check`。
 - **domain/（29 個）**：業務領域，**一個領域只有一個 icon，內容提到那個領域就用它，不要拿相近的代替**：approval 簽核、audit-log 稽核紀錄、finance 財務、growth 成長、leadership 經營管理、legal 法務、marketing 行銷、procurement 採購、projects 專案管理、roles 權限管理、sales 業務銷售、support 客服、trading 貿易、travel 旅遊、anima ANIMA、admin 管理員、user 使用者、trial 實例試行、auto 自動執行、data-in-place 資料留在原處、sync 持續同步、hosted 託管服務、tools 可用工具、de-identify 去識別化、private-cloud 私有雲、on-premises 地端、operations 營運、learn 自主學習、shared-context 共享脈絡。
@@ -376,6 +380,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 - 底圖 13 張在 `anima-brand/assets/backgrounds/flow/`，已轉成 JPG（PDF 不會拆圖）。每張都有一塊留白給文字，挑玻璃跟文字錯開的那張；`slides.css` 裡每張都註明玻璃在哪一側。
 - token：`--deck-glass-bg`（白 32%）、`--deck-glass-ring`（白 70%）、`--deck-glass-backdrop`（blur 20px＋saturate 140%）、`--deck-glass-pad` 10px、`--deck-glass-shadow`、`--deck-stage-blur` 10px。
 - 字多的頁要壓淡底圖，加 `.is-faint`。
+- 玻璃是放圖和短標籤（標題、數字、chip）用的；清單、內文直接壓在玻璃上讀不清楚，要放在白色內層上。玻璃面板（`.panel-flow`）、玻璃框（`.glass`）裡直接放的 `.list`、`p` 會自動墊白色內層（`--deck-card-bg-alt`）。
 - 列印時展示台上的陰影會自動拿掉（Chrome 會把它印成灰色方塊）。
 
 ## sales deck 現有顏色對照（v1.3 色階外的 26 色）
@@ -408,21 +413,21 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 
 ## slides.css 版型
 
-`examples/layouts.html` 是 83 種版型的示範，照用途分成 11 類，每類前面有一張分類頁（共 94 頁，2026-11-17 重排）；三份舊簡報每一頁要用哪個版型，見 `examples/coverage.md`。每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
+`examples/layouts.html` 是 91 種版型的示範，照用途分成 11 類，每類前面有一張分類頁（共 102 頁，2026-11-17 重排）；三份舊簡報每一頁要用哪個版型，見 `examples/coverage.md`。每頁一種，複製需要的 `<section>` 改文字就好，不要另外寫樣式。
 
 | 分類 | 分類頁 | 版型 | 內容 |
 |---|---|---|---|
 | 01 開頭 | 第 1 頁 | 第 2–9 頁 | 封面、目錄、議程 |
 | 02 穿插 | 第 10 頁 | 第 11–18 頁 | 章節、主張、引言、見證、全版圖片 |
 | 03 數字 | 第 19 頁 | 第 20–29 頁 | 大數字、KPI、點陣、儀表板 |
-| 04 圖表 | 第 30 頁 | 第 31–39 頁 | 長條、直條、比例、曲線、甜甜圈 |
-| 05 卡片與清單 | 第 40 頁 | 第 41–49 頁 | 卡片、功能格、編號清單、摘錄 |
-| 06 圖文素材 | 第 50 頁 | 第 51–58 頁 | 圖文、截圖、對話、團隊、logo |
-| 07 流程與架構 | 第 59 頁 | 第 60–71 頁 | 流程、泳道、前後對照、架構、調度中心 |
-| 08 比較與表格 | 第 72 頁 | 第 73–78 頁 | 對照表、打勾比較、矩陣、定位 |
-| 09 時程 | 第 79 頁 | 第 80–87 頁 | 甘特、里程碑、路線圖、時間軸 |
-| 10 方案 | 第 88 頁 | 第 89–91 頁 | 方案、價格、部署選項 |
-| 11 結尾 | 第 92 頁 | 第 93–94 頁 | 結尾頁、聯絡資訊 |
+| 04 圖表 | 第 30 頁 | 第 31–40 頁 | 長條、直條、比例、曲線、甜甜圈 |
+| 05 卡片與清單 | 第 41 頁 | 第 42–52 頁 | 卡片、功能格、編號清單、摘錄 |
+| 06 圖文素材 | 第 53 頁 | 第 54–62 頁 | 圖文、截圖、對話、團隊、logo |
+| 07 流程與架構 | 第 63 頁 | 第 64–77 頁 | 流程、泳道、前後對照、架構、調度中心 |
+| 08 比較與表格 | 第 78 頁 | 第 79–85 頁 | 對照表、打勾比較、矩陣、定位 |
+| 09 時程 | 第 86 頁 | 第 87–94 頁 | 甘特、里程碑、路線圖、時間軸 |
+| 10 方案 | 第 95 頁 | 第 96–99 頁 | 方案、價格、部署選項 |
+| 11 結尾 | 第 100 頁 | 第 101–102 頁 | 結尾頁、聯絡資訊 |
 
 分類頁（`.is-divider`，整頁藍底）只是範本的目錄，不是版型：樣式寫在 `layouts.html` 自己的 `<style>`，不在 `slides.css`，也不跟底色模式切換；不要複製進 deck、不要當版型參考。
 
@@ -483,7 +488,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.lanes` + `.lane` | 泳道流程 | As-is／To-be；節點用 `--lane`、`--step`、`--span` 定位 |
 | `.arch` | 架構矩陣 | 層別 × 方案，格子用 `grid-column`／`grid-row` 定位 |
 | `.hub.wide-core` + `.hub-core.rect` | 調度中心 | 中間是長方形面板，放分工步驟 |
-| `.hub.wide-core.orch` | 調度中心完整版（範本第 69 頁） | 中間面板加四格功能 `.orch-grid`、排先後清單 `.orch-queue`；右邊分組交辦 `.hub-item.is-group`。sales deck「接下來」頁用這個，不用 `orchestrator-sales.png` |
+| `.hub.wide-core.orch` | 調度中心完整版（範本第 73 頁） | 中間面板加四格功能 `.orch-grid`、排先後清單 `.orch-queue`；右邊分組交辦 `.hub-item.is-group`。sales deck「接下來」頁用這個，不用 `orchestrator-sales.png` |
 | `.stats` + `.stat` | 數字卡 | 儀表板小 KPI，`.stat-delta.is-up／is-down` 標和上次比 |
 | `.timeline.has-end` | 甘特：預定 vs 實際 | `.bar.is-plan`＋`.bar.is-actual` 同一 `--row`；`.timeline-today` 今天線；`.timeline-end` 差幾天 |
 | `.columns` + `.col` | 直條圖 | `--v` 是高度 0–100，`data-v` 是顯示的數字 |
@@ -498,15 +503,23 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.numbers-chart` ＋ `.chart-block` ＋ `.kpis.is-inline` | 左長條圖、右三個大數字（示範第 27 頁） | 問題的數字、延誤集中在哪 |
 | `.slide-head.head-kpi` ＋ `.columns.is-wide` | 標題右邊一個大數字、下面整排長條（第 28 頁） | 漏斗、成長、逐期比較 |
 | `.summary` ＋ `.kpis` | 摘要大字＋一排大數字（第 16 頁，`.summary-body`） | 開場摘要、一句話結論 |
-| `.media-split` ＋ `.media-text` ＋ `.art` | 畫面塊＋文字（第 17、46 頁；`.is-flip` 左右對調） | 使命願景、功能總覽、做法 |
+| `.media-split` ＋ `.media-text` ＋ `.art` | 畫面塊＋文字（第 17、47 頁；`.is-flip` 左右對調） | 使命願景、功能總覽、做法 |
 | `.media-split` ＋ `.media-text` ＋ `.art.story` | 文字＋動畫（sales deck 第 2 頁用 `tools`，加 `.is-wide-media` 讓圖那欄寬一點：文字 5、圖 7）：畫面塊原樣加模糊，上面播官網首頁的程式動畫，見「素材與動畫」 | 一句主張配一段示範，取代另開一頁放示意圖 |
-| `.numgrid`（`.is-big`） | 編號 2×2，編號在標題上方（第 46 頁） | 四個功能、四個理由 |
+| `.numgrid`（`.is-big`） | 編號 2×2，編號在標題上方（第 47 頁） | 四個功能、四個理由 |
 | `.big-claim` ＋ `.dots.is-wide` | 超大數字＋說明，寬點陣鋪滿下方（第 24 頁） | 一個比例撐一整頁 |
-| `.tallcards` ＋ `.tallcards-side` | 高卡、數字壓卡底，右邊放標題（第 47 頁） | 競品、替代方案 |
-| `.quad` ＋ `.quad-cell` | 定位四象限，自家那格 `.is-highlight`（第 78 頁） | 市場定位 |
+| `.tallcards` ＋ `.tallcards-side` | 高卡、數字壓卡底，右邊放標題（第 48 頁） | 競品、替代方案 |
+| `.quad` ＋ `.quad-cell` | 定位四象限，自家那格 `.is-highlight`（第 84 頁） | 市場定位 |
 | `.donuts` ＋ `.donut-item` | 小甜甜圈 2×2，旁邊放金額（第 37 頁） | 資金用途、比例拆分 |
-| `.table.is-checks` ＋ `.check.is-yes／is-part／is-no` | 打勾比較表（第 74 頁），圖示取代文字標籤 | 能力比較 |
-| `.track` | 上下交錯時間軸，`.is-next` 是還沒到的點（第 86 頁） | 里程碑、歷程 |
+| `.table.is-checks` ＋ `.check.is-yes／is-part／is-no` | 打勾比較表（第 80 頁），圖示取代文字標籤 | 能力比較 |
+| `.track` | 上下交錯時間軸，`.is-next` 是還沒到的點（第 93 頁） | 里程碑、歷程 |
+| `.titlecols` ＋ `.tally` | 名稱欄：幾項就幾欄、不放卡片，名稱 44 是主角、工具列（`.chips.is-plain`）壓欄底；下面一條小計（第 51 頁）。4 欄時名稱縮成 36 | workflow、方案、產品線總覽 |
+| `.sources` ＋ `.rank-list`（`.rank-head`、`.rank-top`、`.rank-row`） | 左：大標題（`.title.is-xl`）＋來源清單（logo｜名稱｜一句）；右：排序清單，第一名一張亮點卡、右邊「今天要做的事」（第 52 頁） | 案例：從哪些訊號排出優先順序 |
+| `.relay` ＋ `.relay-step`／`.relay-ai` | 接力步驟：人做的步驟（`.node-num.is-human`、字小一級）夾著 ANIMA 做的步驟（一張亮點卡，右邊直式 logo，卡裡的工具 logo 用 `-dark` 版）；左欄同第 52 頁（第 77 頁） | 案例：一件事從人到 ANIMA 再回到人 |
+| `.split-3` ＋ `.card.is-ruled` | 圖表＋洞察＋下一步：前兩欄不放底色（上方一條線），最後一欄亮點卡放直向步驟；長條圖放窄欄也看得出長短（第 40 頁） | 從數字講到原因和行動 |
+| `.option-axis`（`.option-axis-head`、`.option-axis-tag`） | 選項軸：幾個選項排成一條軸（圓點＋線），下面一列一個面向，列名只寫一次；下面可接 `.features.is-stacked.is-sm`（標題 30、說明 24）（第 99 頁） | 部署方式、方案差異 |
+| `.strip` ＋ `.grid.cols-3 > .card.is-ruled` ＋ `.callout.is-row` | 一條橫列（別家 logo＋共同能力標籤＋一句說明）、下面三欄差異（卡片標題前 `.num` 編號，chip 去膠囊），最後一條橫排說明條（第 85 頁）。標籤裡的勾用 `<i class="ico ico-check">`，不打「✓」 | 競爭定位：先承認大家都有，再講差在哪 |
+| `.team-sheet` ＋ `.logo-row.is-spread`／`.is-grid` ＋ `.milestones.vertical.is-compact` ＋ `.list.checks.is-circle` | 團隊與公司現況：左邊人物（`.person-name.is-lg` 44）、經歷 logo 一排撐滿、團隊組成、亮點、成員 logo 格子；右邊一張卡放精簡時間軸（日期小字在上、實線空心點）和入選計畫（第 62 頁）。深底 logo 用 `team-plain`／`partners-plain` 的 `-dark` 白色版，`.logo-on-light`／`.logo-on-dark` 成對放，不加濾鏡 | 公司介紹、募資的團隊頁 |
+| `.fanout` ＋ `.fanout-bar`／`.fanout-items`／`.fanout-groups` | 一對多：上面一條亮點卡（主角），往下連到一排工具，底下標分組（第 76 頁；欄數 `--cols`、分組寬 `--span`）。文字欄配 `.lead-text`（36）＋`.lead-text.is-accent` | 產品接在既有工具上、一個平台串多個來源 |
 
 **撐滿高度用的變化**（2026-11-16，處理「太空」頁時加的；內容少的卡片拉到約內容區六成高，跟標題留呼吸空間，不要硬撐到滿版）
 
@@ -517,15 +530,15 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.kpis.is-before-after` | 每個大數字上方一組「原本／導入後」直條 | 範本第 20 頁 |
 | `.stats.is-big.is-tall`（`.is-accent` 數字改主色） | 數字卡拉高，數字在上、標籤壓卡底 | 範本第 21 頁、jingdu 第 17 頁 |
 | `.calc-row` | 數字卡底部一排「規則／推算／實際」三格 | jingdu 第 17 頁 |
-| `.flow.is-tall` | 流程卡拉高，大編號在上、標題和說明壓卡底；最後的標籤移到右上角 | 範本第 60 頁 |
+| `.flow.is-tall` | 流程卡拉高，大編號在上、標題和說明壓卡底；最後的標籤移到右上角 | 範本第 64 頁 |
 | `.bars-split` | 橫條圖裡最大的一項拉成左邊大數字，橫條加粗 | 範本第 31 頁 |
 | `.status-tiles` ＋ `.shares`（`--cols-tpl`） | 一個工項一格燈號，下面的數字照格數分欄對齊 | 範本第 33 頁 |
-| `.transform.is-tall` ＋ `.map` | 資料轉換卡拉高加大編號；`.map` 是「原文 → 代號」對照表 | 範本第 65 頁 |
-| `.logo-wall` | 左邊總數大數字，右邊客戶／產業格（沒有 logo 也用卡片底） | 範本第 57 頁 |
-| `.split-3.is-tall` | 分工三欄拉高，欄標題放大在上、清單壓卡底 | 範本第 58 頁 |
-| `.card > .card-text + .list` | 卡片說明接清單自動留 24（不用另外加 class） | 範本第 41 頁 |
+| `.transform.is-tall` ＋ `.map` | 資料轉換卡拉高加大編號；`.map` 是「原文 → 代號」對照表 | 範本第 69 頁 |
+| `.logo-wall` | 左邊總數大數字，右邊客戶／產業格（沒有 logo 也用卡片底） | 範本第 60 頁 |
+| `.split-3.is-tall` | 分工三欄拉高，欄標題放大在上、清單壓卡底 | 範本第 61 頁 |
+| `.card > .card-text + .list` | 卡片說明接清單自動留 24（不用另外加 class） | 範本第 42 頁 |
 
-其他：時間軸同一排的日期和標題統一照中文字頂切齊（範本第 83 頁）；時間軸上方可以加一條畫面塊 `.art.is-band` 填空白。
+其他：時間軸同一排的日期和標題統一照中文字頂切齊（範本第 90 頁）；時間軸上方可以加一條畫面塊 `.art.is-band` 填空白。
 
 ### 連接線
 
@@ -546,7 +559,38 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 - 底色用 `.ground-neutral`／`-brand`／`-sky`／`-ambient`／`-dark`／`-dark-warm`。深色底的文字、線條、卡片會自動換色。
 - 換頁：方向鍵、空白、點畫面；`#5` 跳頁；`O` 總覽；`F` 全螢幕。
 
+## sales deck 的 `@sd` 覆寫，v1.6 之後可以刪的（2026-11-20）
+
+sales deck（`anima-sales-deck_standard.html` v2.0.3）`@sd` 區塊裡這些是在補範本的缺，v1.6 範本直接有了，換上 v1.6 後刪掉、改用右欄的範本 class：
+
+| `@sd` | 改用 |
+|---|---|
+| `.sd-fill`、`.sd-center`（內容位置） | 不用寫：內容接在標題下（`.is-bottom` 才靠底線） |
+| 深底 `.callout` 改卡片底 | 不用寫：深底一般說明條自動用深色卡底 |
+| `.list.sd-icolist` ＋ 內嵌 SVG、箭頭用「→」字元 | `.list.checks`（`.is-circle` 是圓圈勾）；icon 由 `slides.js` 插成內嵌 SVG，印 PDF 沒有遮罩細線 |
+| `.sd-bars .bars-row` 名稱欄 | 不用寫：長條圖名稱欄照空間縮放 |
+| 里程碑行內縮字 | 不用寫：里程碑日期降到內文大小、放標題下 |
+| 玻璃底上的清單 | 不用寫：玻璃面板裡的清單、內文自動有白色內層 |
+| 各種 `text-box: normal`（左右並排的字一高一低） | 不用寫：範本的橫排組合每個子元素都同樣裁 |
+| `.sd-title-xl` | `.title.is-xl` |
+| `.sd-plain`、`.sd-nobg`、`.sd-col`、`.sd-pin` | `.card.is-ruled`（上方一條線、沒底色）、`.card.is-bare`（沒底色沒內距） |
+| `.sd-unpill`、`.sd-abc-tools` | `.chips.is-plain`（logo＋字，`slides.js` 會校正 logo 大小） |
+| `.sd-signals.is-compact` | `.sources` ＋ `.source` |
+| `.sd-lead`、`.sd-hub…`、`.sd-tool` | `.lead-text`、`.fanout`（第 76 頁） |
+| `.sd-abc…`、`.sd-base` | `.titlecols`、`.tally`（第 51 頁） |
+| `.sd-board`、`.sd-hero`、`.sd-todo`、`.sd-rank` | `.rank-list`、`.rank-top`、`.rank-todo`、`.rank-row`（第 52 頁） |
+| `.sd-step`、`.sd-anima`、`.sd-board.is-who` | `.relay`、`.relay-step`、`.relay-ai`（第 77 頁） |
+| `.sd-cols`、`.is-highlight .steps`、highlight 裡的 `.node-num` | `.split-3` ＋ `.card.is-ruled`；亮點卡裡的編號圓和步驟自動白底藍字（第 40 頁） |
+| `.sd-mx…`、`.features.is-stacked` 對齊 | `.option-axis`、`.features.is-sm`；並排功能格自動從同一高度開始（第 99 頁） |
+| `.sd-strip`、`.sd-vendors`、`.sd-cols3`、`.sd-num`、callout 行內 flex | `.strip`、`.logo-row`、`.card.is-ruled`、`.card-title > .num`、`.callout.is-row`（第 85 頁） |
+| `.sd-name`、`.sd-logos`（含 `--w`／`--dy` 手調、深底濾鏡）、`.sd-tl` | `.person-name.is-lg`、`.logo-row.is-wordmark.is-spread／.is-grid`、`.milestones.vertical.is-compact`；深底用 `team-plain`／`partners-plain` 的 `-dark` 白色檔（第 62 頁） |
+| 自畫的 `faq-sop.svg`、`project-folder.svg` | `.ico-document`、`.ico-projects`（Web DS icon） |
+| `.sd-timeline`、`.sd-stages`、`.sd-rows`、`.sd-final` | 沒有頁在用，直接刪 |
+
+還留在 sales 自己的（範本沒收）：`.sd-arch`、`.sd-ratio`、`.sd-pains`、`.sd-traction`、`.sd-fields`、`.sd-flow.chain`、`.sd-stairs`、`.sd-foot`、`.sd-arrows`。行內的字級 token 覆寫（例如整頁 `--deck-fs-body: caption`）是 deck 自己的取捨，範本示範頁不這樣寫。
+
 ## 版本
 
+- v1.6（2026-11-20）：sales deck 8 頁收進範本當新版型（`.fanout`、`.titlecols`、`.rank-list`、`.relay`、圖表＋洞察＋下一步、`.option-axis`、`.strip`、`.team-sheet`），加共用的 `.title.is-xl`、`.card.is-ruled`／`.is-bare`、`.chips.is-plain`、`.sources`；`slides.js` 的 logo 校正改成有透明的圖只看不透明像素（白色 `-dark` logo 也會校正）、窄欄裡的 logo 不超出欄寬；新增 `logos/team`、`team-plain` 和 Google Cloud for Startups。內容多一點空間：頁首到內容 64 → 40、標題接引言 40 → 16、內容底線 936 → 968、頁底品牌列離底 80 → 64（新 token `--deck-pad-end`、`--deck-brand-bottom`、`--deck-head-gap`；`data-brand="off"` 的頁底線維持 1000）。
 - v1.5（2026-11-17，回應 sales 的 v1.4 回饋）：外框 96 → 80、標題頂線 192 → 144、內容底線 984 → 936（內容區高度不變）；每頁加頁底品牌列（slogan＋ANIWEAVE logo，`data-brand="off"` 可關）；字級改成管範圍（投影最小 20、附錄 16、只發 PDF 14；同頁相鄰兩級差 4px；一頁最多 4 級），token 當建議值，caption 下補 `small` 20／`micro` 16／`print` 14；標題字重 `--deck-fw-title`、大數字 `--deck-fw-number`（bold）；一頁的內容上限從硬性改成目標，由做 deck 的人決定怎麼縮、拆、用 `data-dense`，新增 `data-appendix`（附錄不檢查）；內文字數上限 200 → 250（副標不算），副標另訂 2 行、60 字；ANIWEAVE logo 換官方深字／白字版。
 - v1.4（草稿）：新增狀態色階（success／warning／error）、`--deck-*` 簡報 token、這份文件、`slides.css`／`slides.js`／版型示範、Nunito Sans 靜態 TTF。

@@ -32,6 +32,35 @@
     });
   }
 
+  // Icon：CSS 遮罩印成 PDF 會在框邊留一條細線，所以換成內嵌 <svg>（筆畫是 currentColor，顏色照舊跟字）。
+  // SVG 從 slides.css 的 --icon-* 讀（tools-icons.py 產生），不用 fetch，file:// 也一樣。清單打勾、流程和對照的箭頭先插成真的 .ico 元素。
+  const icon = (cls, name) => { const i = document.createElement('i'); i.className = `ico ico-${name} ${cls}`; i.setAttribute('aria-hidden', 'true'); return i; };
+  deck.querySelectorAll('.list.checks > li').forEach(li => li.append(icon('li-ico', li.parentElement.classList.contains('is-circle') ? 'check-circle' : 'check')));   // .is-circle：圓圈勾
+  deck.querySelectorAll('.transform-arrow, .compare-arrows > i:not(:first-child), .flow > li:not(:last-child)').forEach(el => el.append(icon('arrow-ico', 'chevron-right')));
+  deck.querySelectorAll('.ico, .check, .mark').forEach(el => {
+    const m = getComputedStyle(el).getPropertyValue('--ico').match(/data:image\/svg\+xml,([^"')]+)/);
+    if (!m || el.children.length) return;
+    el.innerHTML = decodeURIComponent(m[1]);
+    el.classList.add('has-svg');
+  });
+
+  // 橫排的字：CSS 的 :first-child／:last-child 只裁一組的頭尾，用在並排的格子時只有第一格裁上、最後一格裁下，
+  // 同一列的字就上下錯開。同一列（同一個父層、頂端同高、同一種元素）一律照整列的裁法（有人裁上就全部裁上，裁下也一樣）。
+  const TRIMMED = ':is(p, li, h1, h2, h3, h4, span, small, b, cite, div, a):not(:has(> :is(div, ul, ol, p, table, img, svg)))';
+  slides.forEach(slide => slide.querySelectorAll('*').forEach(box => {
+    const kids = [...box.children].filter(c => c.matches(TRIMMED));
+    if (kids.length < 2) return;
+    const rows = new Map();
+    kids.forEach(c => { const key = Math.round(c.getBoundingClientRect().top) + ' ' + c.tagName + '.' + c.className; rows.set(key, [...(rows.get(key) || []), c]); });
+    rows.forEach(row => {
+      if (row.length < 2 || row.every(c => getComputedStyle(c).textBoxTrim === 'none')) return;
+      const trims = row.map(c => getComputedStyle(c).textBoxTrim);
+      const start = trims.some(t => t === 'trim-start' || t === 'trim-both'), end = trims.some(t => t === 'trim-end' || t === 'trim-both');
+      const want = start && end ? 'trim-both' : start ? 'trim-start' : 'trim-end';
+      row.forEach((c, i) => { if (trims[i] !== want) c.style.textBoxTrim = want; });
+    });
+  }));
+
   // 字的上下緣：CSS 預設裁到中文字墨跡（text）。純英文、數字的元素改裁到大寫頂和基線（cap alphabetic），
   // 數字類（大數字、價格、章節號）一律用 cap，即使後面接 <small> 中文單位。
   const NUM = '.kpi-value, .stat-value, .option-price, .ratio-value, .fact-value, .ask-value, .section-num, .section-band-num, .col-bar';
@@ -347,7 +376,7 @@
   });
   if (overList.length) console.warn('超過內容上限的頁（README「一頁的內容上限」）：\n' + overList.join('\n'));
 
-  // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（144–936，高 792）四成就在總覽標藍色。
+  // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（標題頂線到內容底線，有品牌列 144–968，高 824）四成就在總覽標藍色。
   var markSparse = () => {
     const sparse = [];
     slides.forEach((slide, i) => {
@@ -357,12 +386,14 @@
       if (!head || !body || slide.dataset.sparseOk || 'appendix' in slide.dataset) return;
       const k = slide.getBoundingClientRect().width / 1920;
       if (!k) return;
-      const tops = [...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0).map(r => r.top);
-      if (!tops.length) return;
-      const gap = (Math.min(...tops) - head.getBoundingClientRect().bottom) / k;
-      if (gap > 792 * 0.4) {
-        frame.dataset.sparse = `標題下空 ${Math.round(gap)}px，換版型或合併`;
-        sparse.push(`第 ${i + 1} 頁：標題下空 ${Math.round(gap)}px`);
+      const rects = [...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0);
+      if (!rects.length) return;
+      // 內容靠上或靠底線（.is-bottom）都一樣：量標題下、內容上下沒用到的高度
+      const gap = (Math.min(...rects.map(r => r.top)) - head.getBoundingClientRect().bottom + body.getBoundingClientRect().bottom - Math.max(...rects.map(r => r.bottom))) / k;
+      const area = (body.getBoundingClientRect().bottom - head.getBoundingClientRect().top) / k;
+      if (gap > area * 0.4) {
+        frame.dataset.sparse = `內容區空 ${Math.round(gap)}px，換版型或合併`;
+        sparse.push(`第 ${i + 1} 頁：內容區空 ${Math.round(gap)}px`);
       }
     });
     if (sparse.length) console.info('拆頁後太空的頁（README「拆頁後太空」）：\n' + sparse.join('\n'));
@@ -383,13 +414,20 @@
         if (n > LIMIT.ledeChars) over.push(`副標 ${n} 字＞${LIMIT.ledeChars}`);
         if (lines > LIMIT.ledeLines && el.closest('.slide-head:not(.split)')) over.push(`副標 ${lines} 行＞${LIMIT.ledeLines}`);
       });
+      const body = slide.querySelector(':scope > .slide-body');
+      if (body) {
+        const k = slide.getBoundingClientRect().width / slide.offsetWidth || 1;
+        const end = Math.max(0, ...[...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0).map(r => r.bottom));
+        const past = (end - body.getBoundingClientRect().bottom) / k;
+        if (past > 1) over.push(`內容超出底線 ${Math.round(past)}px`);
+      }
       if (!over.length) return;
       const frame = frames[i];
       frame.dataset.over = [frame.dataset.over, ...over].filter(Boolean).join('、');
       if (slide.dataset.dense) frame.dataset.denseOk = slide.dataset.dense;
       list.push(`第 ${i + 1} 頁：${over.join('、')}`);
     });
-    if (list.length) console.warn('副標超過 2 行或 60 字的頁（README「一頁的內容上限」）：\n' + list.join('\n'));
+    if (list.length) console.warn('副標過長、內容超出底線的頁（README「一頁的內容上限」）：\n' + list.join('\n'));
   };
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { markLede(); overview() && markSparse(); }, 300));
 
@@ -645,10 +683,13 @@
     const c = document.createElement('canvas'); c.width = cw; c.height = ch;
     const g = c.getContext('2d'); g.drawImage(img, 0, 0, cw, ch);
     let d; try { d = g.getImageData(0, 0, cw, ch).data; } catch (e) { return null; }   // file:// 讀不到像素就照原樣
+    // 有透明的圖（去白底版、深底用的白色 -dark 版）只看不透明的像素；整張不透明的圖才把白色當底跳過
+    let clear = false;
+    for (let i = 3; i < d.length; i += 4) if (d[i] < 16) { clear = true; break; }
     let t = ch, l = cw, b = -1, r = -1;
     for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) {
       const i = (y * cw + x) * 4, a = d[i + 3];
-      if (a < 16 || (d[i] > 242 && d[i + 1] > 242 && d[i + 2] > 242)) continue;   // 透明或白底不算圖案
+      if (a < 16 || (!clear && d[i] > 242 && d[i + 1] > 242 && d[i + 2] > 242)) continue;
       if (y < t) t = y; if (y > b) b = y; if (x < l) l = x; if (x > r) r = x;
     }
     if (b < 0) return null;
@@ -678,7 +719,9 @@
     let S, maxW = Infinity;
     if (cell) { S = cell.clientHeight * 0.5; maxW = cell.clientWidth * 0.85; }
     else S = (parseFloat(img.dataset.logoBase) || img.offsetHeight) * 0.8;
+    if (img.parentElement && img.parentElement.clientWidth) maxW = Math.min(maxW, img.parentElement.clientWidth);   // 窄欄裡的橫式 logo 不超出欄寬
     if (!S) { delete img.dataset.logoFit; return; }
+    S *= parseFloat(getComputedStyle(img).getPropertyValue('--logo-scale')) || 1;   // 檔案裡帶小字副標的 logo（例：Anneal、EY）主體偏小，單獨放大
     const a = box.a;
     let h = Math.min(S * 1.15, S * Math.pow(a, -0.4)), w = h * a;   // 介於「等高」和「等面積」之間：橫式不會縮太小、直式不會太瘦
     if (img.matches('img.logo.is-wordmark')) { h = S * 1.15; w = h * a; }   // logo 取代名字（例：比較表 ANIMA 欄頭）：照字高，不因為橫式縮小
