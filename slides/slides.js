@@ -721,6 +721,7 @@
     else S = (parseFloat(img.dataset.logoBase) || img.offsetHeight) * 0.8;
     if (img.parentElement && img.parentElement.clientWidth) maxW = Math.min(maxW, img.parentElement.clientWidth);   // 窄欄裡的橫式 logo 不超出欄寬
     if (!S) { delete img.dataset.logoFit; return; }
+    S *= parseFloat(getComputedStyle(img).getPropertyValue('--logo-scale')) || 1;   // 檔案裡帶小字副標的 logo（例：Anneal、EY）主體偏小，單獨放大
     const a = box.a;
     let h = Math.min(S * 1.15, S * Math.pow(a, -0.4)), w = h * a;   // 介於「等高」和「等面積」之間：橫式不會縮太小、直式不會太瘦
     if (img.matches('img.logo.is-wordmark')) { h = S * 1.15; w = h * a; }   // logo 取代名字（例：比較表 ANIMA 欄頭）：照字高，不因為橫式縮小
