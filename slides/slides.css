@@ -615,10 +615,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* 里程碑：橫線串起，.is-done 已完成、.is-now 現在、其餘是未來 */
 .milestones { list-style: none; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); position: relative; }
-.milestones::before { content: ""; position: absolute; left: 0; right: 0; top: calc(var(--deck-fs-subheading) * 1.3 + var(--deck-space-3) + 9px * var(--u)); border-top: 4px dashed var(--s-line-strong); }
+.milestones::before { content: ""; position: absolute; left: 0; right: 0; top: calc(var(--deck-fs-body) * 1.3 + var(--deck-space-3) + 9px * var(--u)); border-top: 4px dashed var(--s-line-strong); }
 .milestones > li { display: flex; flex-direction: column; gap: var(--deck-space-1); padding-right: var(--deck-space-4); position: relative; }
-.milestone-when { font-size: var(--deck-fs-subheading); font-weight: var(--deck-fw-medium); color: var(--s-muted); line-height: var(--deck-lh-title); margin-bottom: var(--deck-space-3); }
-.milestones > li::after { content: ""; position: absolute; left: 0; top: calc(var(--deck-fs-subheading) * 1.3 + var(--deck-space-3)); width: calc(22px * var(--u)); height: calc(22px * var(--u));
+.milestone-when { font-size: var(--deck-fs-body); font-weight: var(--deck-fw-medium); color: var(--s-muted); line-height: var(--deck-lh-title); margin-bottom: var(--deck-space-3); }
+.milestones > li::after { content: ""; position: absolute; left: 0; top: calc(var(--deck-fs-body) * 1.3 + var(--deck-space-3)); width: calc(22px * var(--u)); height: calc(22px * var(--u));
   border-radius: 50%; background: var(--s-bg); border: calc(4px * var(--u)) solid var(--s-line-strong); box-sizing: border-box; }
 .milestone-title { margin-top: var(--deck-space-4); font-size: var(--deck-fs-body-lg); font-weight: var(--deck-fw-semibold); color: var(--s-strong); line-height: var(--deck-lh-title); }
 .milestone-text { color: var(--s-muted); }
@@ -1042,8 +1042,9 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 橫向里程碑：日期、點、小標題三者等距（日期 baseline→點、點→小標題 cap 都是 --ms-g） */
 .deck .slide .milestones:not(.vertical) { --ms-g: calc(40px * var(--u)); }
 .deck .slide .milestones:not(.vertical) .milestone-when { text-box-trim: trim-both; text-box-edge: text; margin-bottom: 0; }
-.deck .slide .milestones:not(.vertical) > li::after { font-size: var(--deck-fs-subheading); top: calc(1cap + var(--ms-g)); }
-.deck .slide .milestones:not(.vertical)::before { font-size: var(--deck-fs-subheading); top: calc(1cap + var(--ms-g) + 11px * var(--u) - 2px); }
+/* 日期裁到字身，高＝(ascent 84% ＋ descent 8.3%)＝.923em */
+.deck .slide .milestones:not(.vertical) > li::after { top: calc(var(--deck-fs-body) * .923 + var(--ms-g)); }
+.deck .slide .milestones:not(.vertical)::before { top: calc(var(--deck-fs-body) * .923 + var(--ms-g) + 11px * var(--u) - 2px); }
 .deck .slide .milestones:not(.vertical) .milestone-title { margin-top: calc(var(--ms-g) * 2 + 22px * var(--u) - var(--deck-space-1)); }
 /* 深色底（ground-dark、panel-dark）上的圖表：Current 500 對比不夠，主色換成 Sky，其餘換亮一階 */
 :is(.ground-dark, .ground-dark-warm, .panel-dark:not(.panel-flow)) {
