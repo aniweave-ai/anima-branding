@@ -236,8 +236,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .list > li { position: relative; padding-left: calc(32px * var(--u)); }
 .list > li::before { content: ""; position: absolute; left: calc(4px * var(--u)); top: calc(.8em - 5px * var(--u));
   width: calc(10px * var(--u)); height: calc(10px * var(--u)); border-radius: 50%; background: var(--s-line-strong); }
-.list.checks > li::before { top: calc(.8em - 9px * var(--u)); left: 0; width: calc(18px * var(--u)); height: calc(10px * var(--u)); border-radius: 0;
-  background: none; border: solid var(--s-accent); border-width: 0 0 calc(4px * var(--u)) calc(4px * var(--u)); transform: rotate(-45deg); }
 
 
 /* 文字空位：還沒有的真實資料（客戶名、引言、數字）留在這裡，不要編 */
@@ -251,7 +249,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   --s-accent: var(--deck-highlight-text); --s-line: color-mix(in srgb, var(--deck-highlight-text) 28%, transparent); --s-line-strong: color-mix(in srgb, var(--deck-highlight-text) 45%, transparent);
   --s-card: color-mix(in srgb, var(--deck-highlight-text) 14%, transparent); }
 :is(.is-highlight, .option.is-featured, .compare-col.after) .chip { background: color-mix(in srgb, var(--deck-highlight-text) 18%, transparent); color: var(--deck-highlight-text); }
-:is(.is-highlight, .option.is-featured, .compare-col.after) .list.checks > li::before { border-color: var(--deck-highlight-text); }
 
 /* 頁首的標題＋說明：標題在左，兩三行說明靠右上（ref 的做法） */
 .slide-head.split { flex: none; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, calc(620px * var(--u))); column-gap: var(--deck-space-6); align-items: start; }
@@ -335,10 +332,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 流程：步驟卡片＋箭頭；最後一步常是「人工確認」 */
 .flow { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--deck-space-5); counter-reset: step; align-content: start; }
 .flow > li { list-style: none; counter-increment: step; position: relative; }
-.flow > li::after { content: ""; position: absolute; top: 50%; right: calc(-1 * var(--deck-space-5) / 2 - 10px * var(--u));
-  width: calc(20px * var(--u)); height: calc(20px * var(--u)); border: solid var(--s-line-strong);
-  border-width: calc(4px * var(--u)) calc(4px * var(--u)) 0 0; transform: translate(calc(-7px * var(--u)), -50%) rotate(45deg); }
-.flow > li:last-child::after { display: none; }
 .flow { padding: 0; }
 .flow .card { height: 100%; }
 .flow .card::before { content: counter(step, decimal-leading-zero); font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-bold);
@@ -353,9 +346,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .compare-col.after { grid-column: 3; }
 .compare-arrows { grid-column: 2; display: grid; grid-template-rows: subgrid; grid-row: span var(--rows, 4); }
 .compare-arrows > i { display: flex; align-items: center; justify-content: center; }
-.compare-arrows > i::before { content: ""; width: calc(22px * var(--u)); height: calc(22px * var(--u)); border: solid var(--s-line-strong);
-  border-width: calc(4px * var(--u)) calc(4px * var(--u)) 0 0; transform: translateX(calc(-8px * var(--u))) rotate(45deg); }
-.compare-arrows > i:first-child::before { display: none; }
 .compare-head { display: flex; align-items: center; gap: var(--deck-space-2); padding: var(--deck-space-3) 0 var(--deck-space-2);
                 font-size: var(--deck-fs-subheading); font-weight: var(--deck-fw-medium); color: var(--s-strong); }
 .compare-item { padding: var(--deck-space-2) 0; border-top: 2px solid var(--s-line); display: flex; flex-direction: column; justify-content: center; gap: calc(4px * var(--u)); }
@@ -543,8 +533,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .transform { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) calc(64px * var(--u)) minmax(0, 1fr) calc(64px * var(--u)) minmax(0, 1fr); align-items: stretch; gap: var(--deck-space-2); }
 .transform .card { justify-content: flex-start; }
 .transform-arrow { display: flex; align-items: center; justify-content: center; }
-.transform-arrow::before { content: ""; width: calc(22px * var(--u)); height: calc(22px * var(--u)); border: solid var(--s-line-strong);
-  border-width: calc(4px * var(--u)) calc(4px * var(--u)) 0 0; transform: translateX(calc(-8px * var(--u))) rotate(45deg); }
 .sample { font-size: var(--deck-fs-body); line-height: 1.9; color: var(--s-text); }
 .pii { background: var(--deck-warning-bg); color: var(--deck-warning-text); border-radius: calc(4px * var(--u)); padding: 0 calc(6px * var(--u)); font-weight: var(--deck-fw-semibold); }
 .token { background: var(--deck-chip-bg); color: var(--deck-chip-text); border-radius: calc(4px * var(--u)); padding: 0 calc(6px * var(--u)); font-weight: var(--deck-fw-semibold);
@@ -993,7 +981,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .deck .slide .list > li { text-box-trim: trim-both; text-box-edge: text; }
 .deck .slide .list { gap: var(--deck-space-4); }
 .deck .slide .list > li::before { top: calc(.36em - 5px * var(--u)); }
-.deck .slide .list.checks > li::before { top: calc(.36em - 6px * var(--u)); }
 .deck .slide .list.boxes > li::before { top: calc(.36em - 13px * var(--u)); transform: none; }
 /* 架構側欄：label 與標題靠在一起，chip 壓到底、間距加大 */
 .deck .slide .layers-side { justify-content: flex-start; gap: 0; }
@@ -1645,84 +1632,148 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
    ============================================================ */
 .ico { display: inline-block; flex: none; width: var(--ico-size, 1em); height: var(--ico-size, 1em); vertical-align: -.15em; background: currentColor;
   -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; }
-.ico-arrow-right { --ico: url("../anima-brand/assets/icons/ui/arrow-right.svg"); }
-.ico-arrow-up { --ico: url("../anima-brand/assets/icons/ui/arrow-up.svg"); }
-.ico-bell { --ico: url("../anima-brand/assets/icons/ui/bell.svg"); }
-.ico-building { --ico: url("../anima-brand/assets/icons/ui/building.svg"); }
-.ico-calendar { --ico: url("../anima-brand/assets/icons/ui/calendar.svg"); }
-.ico-chat { --ico: url("../anima-brand/assets/icons/ui/chat.svg"); }
-.ico-check { --ico: url("../anima-brand/assets/icons/ui/check.svg"); }
-.ico-check-circle { --ico: url("../anima-brand/assets/icons/ui/check-circle.svg"); }
-.ico-chevron-down { --ico: url("../anima-brand/assets/icons/ui/chevron-down.svg"); }
-.ico-chevron-left { --ico: url("../anima-brand/assets/icons/ui/chevron-left.svg"); }
-.ico-chevron-right { --ico: url("../anima-brand/assets/icons/ui/chevron-right.svg"); }
-.ico-clock { --ico: url("../anima-brand/assets/icons/ui/clock.svg"); }
-.ico-close { --ico: url("../anima-brand/assets/icons/ui/close.svg"); }
-.ico-document { --ico: url("../anima-brand/assets/icons/ui/document.svg"); }
-.ico-fit-all { --ico: url("../anima-brand/assets/icons/ui/fit-all.svg"); }
-.ico-fullscreen { --ico: url("../anima-brand/assets/icons/ui/fullscreen.svg"); }
-.ico-help { --ico: url("../anima-brand/assets/icons/ui/help.svg"); }
-.ico-hourglass { --ico: url("../anima-brand/assets/icons/ui/hourglass.svg"); }
-.ico-lock { --ico: url("../anima-brand/assets/icons/ui/lock.svg"); }
-.ico-mention { --ico: url("../anima-brand/assets/icons/ui/mention.svg"); }
-.ico-minus { --ico: url("../anima-brand/assets/icons/ui/minus.svg"); }
-.ico-paperclip { --ico: url("../anima-brand/assets/icons/ui/paperclip.svg"); }
-.ico-plus { --ico: url("../anima-brand/assets/icons/ui/plus.svg"); }
-.ico-search { --ico: url("../anima-brand/assets/icons/ui/search.svg"); }
-.ico-shield { --ico: url("../anima-brand/assets/icons/ui/shield.svg"); }
-.ico-shield-check { --ico: url("../anima-brand/assets/icons/ui/shield-check.svg"); }
-.ico-sparkle { --ico: url("../anima-brand/assets/icons/ui/sparkle.svg"); }
-.ico-task { --ico: url("../anima-brand/assets/icons/ui/task.svg"); }
-.ico-warning { --ico: url("../anima-brand/assets/icons/ui/warning.svg"); }
-.ico-admin { --ico: url("../anima-brand/assets/icons/domain/admin.svg"); }
-.ico-anima { --ico: url("../anima-brand/assets/icons/domain/anima.svg"); }
-.ico-approval { --ico: url("../anima-brand/assets/icons/domain/approval.svg"); }
-.ico-audit-log { --ico: url("../anima-brand/assets/icons/domain/audit-log.svg"); }
-.ico-data-in-place { --ico: url("../anima-brand/assets/icons/domain/data-in-place.svg"); }
-.ico-de-identify { --ico: url("../anima-brand/assets/icons/domain/de-identify.svg"); }
-.ico-finance { --ico: url("../anima-brand/assets/icons/domain/finance.svg"); }
-.ico-growth { --ico: url("../anima-brand/assets/icons/domain/growth.svg"); }
-.ico-hosted { --ico: url("../anima-brand/assets/icons/domain/hosted.svg"); }
-.ico-leadership { --ico: url("../anima-brand/assets/icons/domain/leadership.svg"); }
-.ico-learn { --ico: url("../anima-brand/assets/icons/domain/learn.svg"); }
-.ico-legal { --ico: url("../anima-brand/assets/icons/domain/legal.svg"); }
-.ico-marketing { --ico: url("../anima-brand/assets/icons/domain/marketing.svg"); }
-.ico-on-premises { --ico: url("../anima-brand/assets/icons/domain/on-premises.svg"); }
-.ico-operations { --ico: url("../anima-brand/assets/icons/domain/operations.svg"); }
-.ico-private-cloud { --ico: url("../anima-brand/assets/icons/domain/private-cloud.svg"); }
-.ico-procurement { --ico: url("../anima-brand/assets/icons/domain/procurement.svg"); }
-.ico-projects { --ico: url("../anima-brand/assets/icons/domain/projects.svg"); }
-.ico-roles { --ico: url("../anima-brand/assets/icons/domain/roles.svg"); }
-.ico-sales { --ico: url("../anima-brand/assets/icons/domain/sales.svg"); }
-.ico-shared-context { --ico: url("../anima-brand/assets/icons/domain/shared-context.svg"); }
-.ico-support { --ico: url("../anima-brand/assets/icons/domain/support.svg"); }
-.ico-sync { --ico: url("../anima-brand/assets/icons/domain/sync.svg"); }
-.ico-tools { --ico: url("../anima-brand/assets/icons/domain/tools.svg"); }
-.ico-trading { --ico: url("../anima-brand/assets/icons/domain/trading.svg"); }
-.ico-travel { --ico: url("../anima-brand/assets/icons/domain/travel.svg"); }
-.ico-user { --ico: url("../anima-brand/assets/icons/domain/user.svg"); }
+/* icons:start（tools-icons.py 從 anima-brand/assets/icons 產生，不要手改） */
+:root {
+  --icon-arrow-right: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5 12h13.5M13 6.5l5.5 5.5-5.5 5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-arrow-up: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 19V5.5M6.5 11 12 5.5l5.5 5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-bell: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 1.5H5l1.5-1.5ZM10 20.5h4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-building: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5 20.5V5A1.5 1.5 0 0 1 6.5 3.5h7A1.5 1.5 0 0 1 15 5v15.5M15 9.5h3a1.5 1.5 0 0 1 1.5 1.5v9.5M3.5 20.5h17M8.5 7.5h3M8.5 11h3M8.5 14.5h3%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-calendar: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Crect x=%274%27 y=%275%27 width=%2716%27 height=%2715%27 rx=%272%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M4 9.5h16M8.5 3.5v3M15.5 3.5v3%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-chat: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5.5 5h13A1.5 1.5 0 0 1 20 6.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17A1.5 1.5 0 0 1 4 15.5v-9A1.5 1.5 0 0 1 5.5 5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-check-circle: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%278.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M8.5 12.5l2.5 2.5 4.5-5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-check: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5 12.5l4.5 4.5L19 7.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6.5 9.5 12 15l5.5-5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-chevron-left: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M14.5 6.5 9 12l5.5 5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-chevron-right: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9.5 6.5 15 12l-5.5 5.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-clock: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%278.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M12 7.5V12l3 2%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-close: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6.5 6.5l11 11M17.5 6.5l-11 11%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-document: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M14 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8L14 3.5ZM14 3.5V8h4.5M9 12.5h6M9 16h4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-fit-all: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Crect x=%278.5%27 y=%278.5%27 width=%277%27 height=%277%27 rx=%271.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-fullscreen: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-help: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5.5 5h13A1.5 1.5 0 0 1 20 6.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17A1.5 1.5 0 0 1 4 15.5v-9A1.5 1.5 0 0 1 5.5 5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M9.75 9.25a2.25 2.25 0 1 1 3 2.1c-.5.2-.75.6-.75 1.15M12 14.75h.01%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-hourglass: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6.5 3.5h11M6.5 20.5h11M7.5 3.5c0 4 2 5.5 4.5 8.5-2.5 3-4.5 4.5-4.5 8.5M16.5 3.5c0 4-2 5.5-4.5 8.5 2.5 3 4.5 4.5 4.5 8.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-lock: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Crect x=%275%27 y=%2710.5%27 width=%2714%27 height=%2710%27 rx=%272%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M8 10.5V8a4 4 0 0 1 8 0v2.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-mention: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%273.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M15.5 12v1.25a2.25 2.25 0 0 0 4.5 0V12a8 8 0 1 0-3.2 6.4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-minus: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5.5 12h13%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-paperclip: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M19 11.5l-7.1 7.1a4.5 4.5 0 0 1-6.4-6.4l7.4-7.4a3 3 0 0 1 4.2 4.2l-7.3 7.3a1.5 1.5 0 0 1-2.1-2.1l6.6-6.6%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-plus: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 5.5v13M5.5 12h13%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-search: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Ccircle cx=%2711%27 cy=%2711%27 r=%276.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M16 16l4 4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-shield-check: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3.5 5 6v5.5c0 4.2 3 7.6 7 9 4-1.4 7-4.8 7-9V6l-7-2.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M9 12l2 2 4-4.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-shield: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3.5 5 6v5.5c0 4.2 3 7.6 7 9 4-1.4 7-4.8 7-9V6l-7-2.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-sparkle: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3c.7 4.8 3.2 7.3 8 8-4.8.7-7.3 3.2-8 8-.7-4.8-3.2-7.3-8-8 4.8-.7 7.3-3.2 8-8Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-task: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Crect x=%275%27 y=%273.5%27 width=%2714%27 height=%2717%27 rx=%272%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M8.5 12l2.5 2.5 4.5-5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-warning: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 4 21 19.5H3L12 4Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M12 10v4M12 16.75h.01%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+  --icon-admin: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.5 19.5c0-3 2.5-5.5 5.5-5.5 1.3 0 2.5.4 3.4 1.2M17.5 19.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5ZM17.50 15.00L17.50 13.75M19.45 16.12L20.53 15.50M19.45 18.38L20.53 19.00M17.50 19.50L17.50 20.75M15.55 18.38L14.47 19.00M15.55 16.12L14.47 15.50%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-anima: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M18.50 9.00A7.5 7.5 0 1 1 12 5.25M9.75 3.0 12 5.25l-2.25 2.25M8.75 12.75l2.25 2.25 4.25-4.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-approval: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11 4.5H6A1.5 1.5 0 0 0 4.5 6v12A1.5 1.5 0 0 0 6 19.5h12a1.5 1.5 0 0 0 1.5-1.5v-5M14.5 4.5h5v5M19.5 4.5 14 10M7.5 14.5l2 2 3.5-4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-audit-log: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11 21H6.5A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3h9A1.5 1.5 0 0 1 17 4.5V11M8.5 7.5h5M8.5 11h3M17 21a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM17 15.25V17l1.25 1.25%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-auto: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M19.5 12A7.5 7.5 0 0 1 6.2 16.8M4.5 12A7.5 7.5 0 0 1 17.8 7.2M18 3.75V7.5h-3.75M6 20.25V16.5h3.75M10.25 9.5v5l4-2.5-4-2.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-data-in-place: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 6c0-1.4 2.7-2.5 6-2.5s6 1.1 6 2.5-2.7 2.5-6 2.5S4 7.4 4 6ZM4 6v11.5c0 1.4 2.7 2.5 6 2.5.9 0 1.7-.1 2.5-.25M16 6v4.5M4 11.75c0 1.4 2.7 2.5 6 2.5.8 0 1.6-.1 2.25-.2M18 21.5s-3.25-2.9-3.25-5.5a3.25 3.25 0 0 1 6.5 0c0 2.6-3.25 5.5-3.25 5.5ZM18 16.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-de-identify: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5 5h14a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5v-11A1.5 1.5 0 0 1 5 5ZM8.5 11.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM5.75 16c0-1.5 1.25-2.75 2.75-2.75s2.75 1.25 2.75 2.75M13.75 10h.01M15.75 10h.01M17.75 10h.01M13.75 14h4%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-finance: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11 4a8.5 8.5 0 1 0 9 9h-9V4ZM14.5 2.75a7 7 0 0 1 6.75 6.75H14.5V2.75Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-growth: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 4v16h16M7.5 15.5l3.75-4.25 3 3L19 8.5M15.5 8.5H19V12%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-hosted: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M5.5 4h9A1.5 1.5 0 0 1 16 5.5v1.5A1.5 1.5 0 0 1 14.5 8.5h-9A1.5 1.5 0 0 1 4 7V5.5A1.5 1.5 0 0 1 5.5 4ZM11 16H5.5A1.5 1.5 0 0 1 4 14.5V13a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 16 13M7 6.25h2M7 13.75h2M15 20.5h3.75a2 2 0 0 0 .25-3.98 2.75 2.75 0 0 0-5.3.45A1.77 1.77 0 0 0 15 20.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-leadership: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM15.5 8.5l-2 5-5 2 2-5 5-2Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-learn: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 6.5C10.4 5.3 8.2 4.75 4.5 5v12.25c3.7-.25 5.9.3 7.5 1.5M12 6.5c1.6-1.2 3.8-1.75 7.5-1.5v6.25M12 6.5v12.25M17.5 13.75c.35 1.9 1.35 2.9 3.25 3.25-1.9.35-2.9 1.35-3.25 3.25-.35-1.9-1.35-2.9-3.25-3.25 1.9-.35 2.9-1.35 3.25-3.25Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-legal: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 3.5v17M7.5 20.5h9M5 7.5h14M12 5.5V7.5M5 7.5l-2.5 6.25a2.5 2.5 0 0 0 5 0L5 7.5ZM19 7.5l-2.5 6.25a2.5 2.5 0 0 0 5 0L19 7.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-marketing: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 10v4a1 1 0 0 0 1 1h2l7 4V5L7 9H5a1 1 0 0 0-1 1ZM7 15l1 4.5M17.5 9.5a3.5 3.5 0 0 1 0 5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-on-premises: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4 20.5V5A1.5 1.5 0 0 1 5.5 3.5h6A1.5 1.5 0 0 1 13 5v6M2.5 20.5h9M7 7.5h2M7 11h2M7 14.5h2M15.5 13.5h3.5a1.5 1.5 0 0 1 1.5 1.5v4a1.5 1.5 0 0 1-1.5 1.5h-3.5A1.5 1.5 0 0 1 14 19v-4a1.5 1.5 0 0 1 1.5-1.5ZM14 17h6.5M16.25 15.25h.01M16.25 18.75h.01%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-operations: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11.5 21H6.5A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3h9A1.5 1.5 0 0 1 17 4.5V11M8.5 7.5h5M8.5 11h5M8.5 14.5h2.5M17.5 19.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5ZM17.50 15.00L17.50 13.75M19.45 16.12L20.53 15.50M19.45 18.38L20.53 19.00M17.50 19.50L17.50 20.75M15.55 18.38L14.47 19.00M15.55 16.12L14.47 15.50%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-private-cloud: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11.5 18H7a4 4 0 0 1-.5-7.97A5.5 5.5 0 0 1 17.2 9.4M15.5 15h4a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V16a1 1 0 0 1 1-1ZM16 15v-1.5a1.5 1.5 0 0 1 3 0V15%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-procurement: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M3 4h2.2l2.3 11h10.5l2-8H6.3M9 20.25a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM17 20.25a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-projects: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M8.5 4.5h-2A1.5 1.5 0 0 0 5 6v13.5A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5h-2M9 3h6v3H9V3ZM9 13.5l2 2 4-4.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-roles: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.5 19.5c0-3 2.5-5.5 5.5-5.5 1.3 0 2.5.4 3.4 1.2M15.5 15h4a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V16a1 1 0 0 1 1-1ZM16 15v-1.5a1.5 1.5 0 0 1 3 0V15%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-sales: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.5 19.5c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5M15.5 5.1a3 3 0 0 1 0 5.8M17 14.2c2.1.6 3.5 2.6 3.5 5.3%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-shared-context: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M11 3.5 3.5 7.25 11 11l7.5-3.75L11 3.5ZM3.5 11 11 14.75l1.5-.75M3.5 14.75 11 18.5l1-.5M17.5 16.5a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5ZM14.25 20.75c0-1.8 1.45-3.25 3.25-3.25s3.25 1.45 3.25 3.25%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-support: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M4.5 14v-2a7.5 7.5 0 0 1 15 0v2M4.5 13.5h2a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-4.5ZM19.5 13.5h-2a1 1 0 0 0-1 1V18a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-4.5ZM18.5 19v.5a2 2 0 0 1-2 2H13%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-sync: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M19.5 12a7.5 7.5 0 0 0-13.25-4.8M4.5 12a7.5 7.5 0 0 0 13.25 4.8M5.75 3.75V7.5H9.5M18.25 20.25V16.5H14.5%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-tools: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M6 4.5h2.5A1.5 1.5 0 0 1 10 6v2.5A1.5 1.5 0 0 1 8.5 10H6A1.5 1.5 0 0 1 4.5 8.5V6A1.5 1.5 0 0 1 6 4.5ZM15.5 4.5H18A1.5 1.5 0 0 1 19.5 6v2.5A1.5 1.5 0 0 1 18 10h-2.5A1.5 1.5 0 0 1 14 8.5V6a1.5 1.5 0 0 1 1.5-1.5ZM6 14h2.5a1.5 1.5 0 0 1 1.5 1.5V18a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18v-2.5A1.5 1.5 0 0 1 6 14ZM15 14.9v3.7a.55.55 0 0 0 .83.47l3.05-1.85a.55.55 0 0 0 0-.94l-3.05-1.85a.55.55 0 0 0-.83.47Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-trading: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M3.75 7.5 12 3.25l8.25 4.25v9L12 20.75 3.75 16.5v-9ZM3.75 7.5 12 11.75l8.25-4.25M12 11.75v9%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-travel: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11ZM12 12.25a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-trial: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M9.5 3.5h5M10.5 3.5v5.25L5.2 17.9A1.75 1.75 0 0 0 6.7 20.5h10.6a1.75 1.75 0 0 0 1.5-2.6L13.5 8.75V3.5M7.6 14.5h8.8%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+  --icon-user: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27%3E%3Cpath d=%27M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.5 19.5c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5M15.5 3.5h4a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-1.75L16.5 10.5V9h-1a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z%27 stroke=%27currentColor%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3C/path%3E%3C/svg%3E");
+}
+.ico-arrow-right { --ico: var(--icon-arrow-right); }
+.ico-arrow-up { --ico: var(--icon-arrow-up); }
+.ico-bell { --ico: var(--icon-bell); }
+.ico-building { --ico: var(--icon-building); }
+.ico-calendar { --ico: var(--icon-calendar); }
+.ico-chat { --ico: var(--icon-chat); }
+.ico-check-circle { --ico: var(--icon-check-circle); }
+.ico-check { --ico: var(--icon-check); }
+.ico-chevron-down { --ico: var(--icon-chevron-down); }
+.ico-chevron-left { --ico: var(--icon-chevron-left); }
+.ico-chevron-right { --ico: var(--icon-chevron-right); }
+.ico-clock { --ico: var(--icon-clock); }
+.ico-close { --ico: var(--icon-close); }
+.ico-document { --ico: var(--icon-document); }
+.ico-fit-all { --ico: var(--icon-fit-all); }
+.ico-fullscreen { --ico: var(--icon-fullscreen); }
+.ico-help { --ico: var(--icon-help); }
+.ico-hourglass { --ico: var(--icon-hourglass); }
+.ico-lock { --ico: var(--icon-lock); }
+.ico-mention { --ico: var(--icon-mention); }
+.ico-minus { --ico: var(--icon-minus); }
+.ico-paperclip { --ico: var(--icon-paperclip); }
+.ico-plus { --ico: var(--icon-plus); }
+.ico-search { --ico: var(--icon-search); }
+.ico-shield-check { --ico: var(--icon-shield-check); }
+.ico-shield { --ico: var(--icon-shield); }
+.ico-sparkle { --ico: var(--icon-sparkle); }
+.ico-task { --ico: var(--icon-task); }
+.ico-warning { --ico: var(--icon-warning); }
+.ico-admin { --ico: var(--icon-admin); }
+.ico-anima { --ico: var(--icon-anima); }
+.ico-approval { --ico: var(--icon-approval); }
+.ico-audit-log { --ico: var(--icon-audit-log); }
+.ico-auto { --ico: var(--icon-auto); }
+.ico-data-in-place { --ico: var(--icon-data-in-place); }
+.ico-de-identify { --ico: var(--icon-de-identify); }
+.ico-finance { --ico: var(--icon-finance); }
+.ico-growth { --ico: var(--icon-growth); }
+.ico-hosted { --ico: var(--icon-hosted); }
+.ico-leadership { --ico: var(--icon-leadership); }
+.ico-learn { --ico: var(--icon-learn); }
+.ico-legal { --ico: var(--icon-legal); }
+.ico-marketing { --ico: var(--icon-marketing); }
+.ico-on-premises { --ico: var(--icon-on-premises); }
+.ico-operations { --ico: var(--icon-operations); }
+.ico-private-cloud { --ico: var(--icon-private-cloud); }
+.ico-procurement { --ico: var(--icon-procurement); }
+.ico-projects { --ico: var(--icon-projects); }
+.ico-roles { --ico: var(--icon-roles); }
+.ico-sales { --ico: var(--icon-sales); }
+.ico-shared-context { --ico: var(--icon-shared-context); }
+.ico-support { --ico: var(--icon-support); }
+.ico-sync { --ico: var(--icon-sync); }
+.ico-tools { --ico: var(--icon-tools); }
+.ico-trading { --ico: var(--icon-trading); }
+.ico-travel { --ico: var(--icon-travel); }
+.ico-trial { --ico: var(--icon-trial); }
+.ico-user { --ico: var(--icon-user); }
+/* icons:end */
 
 /* 比較表、權限矩陣的符號：有＝check（主色）、部分＝minus（主色）、沒有＝close（淡）。圖例寫「✓ 有、– 部分、✕ 沒有」的地方一律用這三個 */
 :is(.check, .mark) { display: inline-block; vertical-align: middle; width: calc(32px * var(--u)); height: calc(32px * var(--u)); border: 0 !important; border-radius: 0 !important; box-shadow: none !important; opacity: 1;
   background: currentColor !important; -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; }
 :is(.check, .mark)::after { content: none !important; }
-:is(.check, .mark).is-yes { --ico: url("../anima-brand/assets/icons/ui/check.svg"); color: var(--s-accent); }
-:is(.check, .mark).is-part { --ico: url("../anima-brand/assets/icons/ui/minus.svg"); color: var(--s-accent); }
-:is(.check, .mark).is-no { --ico: url("../anima-brand/assets/icons/ui/close.svg"); color: var(--s-muted); width: calc(28px * var(--u)); height: calc(28px * var(--u)); }
+:is(.ico, .check, .mark) > svg { display: block; width: 100%; height: 100%; }
+.slide :is(.ico, .check, .mark).has-svg { background: none !important; -webkit-mask: none; mask: none; }
+:is(.check, .mark).is-yes { --ico: var(--icon-check); color: var(--s-accent); }
+:is(.check, .mark).is-part { --ico: var(--icon-minus); color: var(--s-accent); }
+:is(.check, .mark).is-no { --ico: var(--icon-close); color: var(--s-muted); width: calc(28px * var(--u)); height: calc(28px * var(--u)); }
 .table.is-checks.is-dense :is(.check, .mark) { width: calc(28px * var(--u)); height: calc(28px * var(--u)); }
 .marks-legend :is(.check, .mark) { transform: none; width: calc(24px * var(--u)); height: calc(24px * var(--u)); }
 
-/* 打勾清單：check icon */
-.deck .slide .list.checks > li::before { border: 0; transform: none; border-radius: 0; left: 0; top: calc(.36em - 4px * var(--u)); width: calc(24px * var(--u)); height: calc(24px * var(--u));
-  background: var(--s-accent); -webkit-mask: url("../anima-brand/assets/icons/ui/check.svg") center / contain no-repeat; mask: url("../anima-brand/assets/icons/ui/check.svg") center / contain no-repeat; }
-:is(.is-highlight, .option.is-featured, .compare-col.after) .list.checks > li::before { background: var(--deck-highlight-text); }
+/* 打勾清單、流程和對照的箭頭：slides.js 插進真的 .ico 元素（偽元素只能用遮罩，Chrome 印 PDF 會在遮罩框邊留細線） */
+.list.checks > li::before { content: none; }
+.deck .slide .list.checks > li > .li-ico { position: absolute; left: 0; --ico-size: calc(24px * var(--u)); color: var(--s-accent);
+  top: calc(.4615em - var(--ico-size) / 2); }   /* 中文字身裁切：第一行中線＝(ascent 84% ＋ descent 8.3%) ÷ 2 */
+.deck .slide .list.checks > li[style*="cap alphabetic"] > .li-ico { top: calc(.5cap - var(--ico-size) / 2); }   /* 純英文項目裁到大寫頂和基線（slides.js 寫在行內） */
+:is(.is-highlight, .option.is-featured, .compare-col.after) .list.checks > li > .li-ico { color: var(--deck-highlight-text); }
+.deck .slide :is(.transform-arrow, .compare-arrows > i, .flow > li) > .arrow-ico { --ico-size: calc(32px * var(--u)); color: var(--s-line-strong); vertical-align: 0; }
+.deck .slide .flow > li > .arrow-ico { position: absolute; top: 50%; right: calc(-1 * var(--deck-space-5) / 2 - 16px * var(--u)); transform: translateY(-50%); }
 
-/* 流程、對照的箭頭：chevron-right icon */
-.deck .slide :is(.transform-arrow, .compare-arrows > i)::before, .deck .slide .flow > li::after { border: 0 !important; transform: none !important; width: calc(32px * var(--u)); height: calc(32px * var(--u));
-  background: var(--s-line-strong); -webkit-mask: url("../anima-brand/assets/icons/ui/chevron-right.svg") center / contain no-repeat; mask: url("../anima-brand/assets/icons/ui/chevron-right.svg") center / contain no-repeat; }
-.deck .slide .flow > li::after { right: calc(-1 * var(--deck-space-5) / 2 - 16px * var(--u)); transform: translateY(-50%) !important; }
-.ico-trial { --ico: url("../anima-brand/assets/icons/domain/trial.svg"); }
-.ico-auto { --ico: url("../anima-brand/assets/icons/domain/auto.svg"); }
 
 
 /* 官網動畫 .story（slides.js 畫）：底圖照畫面塊原樣，只加模糊；顏色照官網 Story 區（白卡、Depth 200 線、Current 500 強調） */

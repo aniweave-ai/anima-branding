@@ -186,7 +186,7 @@
 - 欄標題下方第一條線用深一階的線色（`--s-line-strong`），跟 card-head 一致。
 
 **清單**
-- 每一項都裁成一樣，圓點、勾勾、方框對齊第一行字的中線（約 .36em）。
+- 每一項都裁成一樣。勾勾的中心對齊第一行字的中線（中文 .4615em，純英文 .5cap）；圓點、方框約 .36em。
 - 一般清單項目間距 32；勾選方框清單（雙方準備）48；編號說明（截圖標註）48。
 
 **同一排等高**
@@ -346,6 +346,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 簡報裡的 icon 一律用 `anima-brand/assets/icons/` 這套，跟官網同一套（來源：`anima-web/design-system/assets/icons/`，Web DS 改了要同步過來）。**不要自己畫 SVG、不要用 emoji、不要用 ✓ ✕ △ 這類符號字。**
 
 - **規格**：24×24 線條、1.5px 圓角筆畫，顏色跟著字（currentColor）。不填色、不漸層、不雙色、不加粗。
+- **怎麼畫**：`slides.js` 把每個 `.ico`、比較表符號、打勾清單、流程箭頭換成內嵌 `<svg>`（CSS 遮罩印成 PDF 會在框邊留一條細線）。SVG 內嵌在 `slides.css` 的 `--icon-名稱`，所以 `file://` 開也看得到。Web DS 的 icon 同步到 `anima-brand/assets/icons/` 之後，跑 `python3 slides/tools-icons.py` 重產這段。
 - **用法**：`<i class="ico ico-check"></i>`。大小預設 1em（跟字一樣大），要調用 `style="--ico-size: 32px"` 或 `font-size`。顏色用 `color`。
 - **ui/（29 個）**：介面與狀態符號。狀態 `check` `check-circle` `warning` `sparkle` `clock` `bell` `mention` `task` `hourglass`；操作 `plus` `minus` `close` `chevron-left` `chevron-right` `chevron-down` `arrow-up` `arrow-right` `search` `fit-all` `fullscreen`；物件 `document` `chat` `help` `building` `calendar` `paperclip` `lock` `shield` `shield-check`。
 - **domain/（29 個）**：業務領域，**一個領域只有一個 icon，內容提到那個領域就用它，不要拿相近的代替**：approval 簽核、audit-log 稽核紀錄、finance 財務、growth 成長、leadership 經營管理、legal 法務、marketing 行銷、procurement 採購、projects 專案管理、roles 權限管理、sales 業務銷售、support 客服、trading 貿易、travel 旅遊、anima ANIMA、admin 管理員、user 使用者、trial 實例試行、auto 自動執行、data-in-place 資料留在原處、sync 持續同步、hosted 託管服務、tools 可用工具、de-identify 去識別化、private-cloud 私有雲、on-premises 地端、operations 營運、learn 自主學習、shared-context 共享脈絡。

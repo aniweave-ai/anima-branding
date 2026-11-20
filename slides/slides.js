@@ -32,6 +32,18 @@
     });
   }
 
+  // Icon：CSS 遮罩印成 PDF 會在框邊留一條細線，所以換成內嵌 <svg>（筆畫是 currentColor，顏色照舊跟字）。
+  // SVG 從 slides.css 的 --icon-* 讀（tools-icons.py 產生），不用 fetch，file:// 也一樣。清單打勾、流程和對照的箭頭先插成真的 .ico 元素。
+  const icon = (cls, name) => { const i = document.createElement('i'); i.className = `ico ico-${name} ${cls}`; i.setAttribute('aria-hidden', 'true'); return i; };
+  deck.querySelectorAll('.list.checks > li').forEach(li => li.append(icon('li-ico', 'check')));
+  deck.querySelectorAll('.transform-arrow, .compare-arrows > i:not(:first-child), .flow > li:not(:last-child)').forEach(el => el.append(icon('arrow-ico', 'chevron-right')));
+  deck.querySelectorAll('.ico, .check, .mark').forEach(el => {
+    const m = getComputedStyle(el).getPropertyValue('--ico').match(/data:image\/svg\+xml,([^"')]+)/);
+    if (!m || el.children.length) return;
+    el.innerHTML = decodeURIComponent(m[1]);
+    el.classList.add('has-svg');
+  });
+
   // 字的上下緣：CSS 預設裁到中文字墨跡（text）。純英文、數字的元素改裁到大寫頂和基線（cap alphabetic），
   // 數字類（大數字、價格、章節號）一律用 cap，即使後面接 <small> 中文單位。
   const NUM = '.kpi-value, .stat-value, .option-price, .ratio-value, .fact-value, .ask-value, .section-num, .section-band-num, .col-bar';
