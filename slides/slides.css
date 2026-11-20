@@ -134,6 +134,9 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
   --s-line-strong: var(--deck-line-on-dark);
   --s-card: var(--deck-card-bg-dark);
   --s-inner: var(--deck-card-bg-dark);
+  /* 一般說明條換深色卡底，不留一條亮的；狀態色說明條照舊 */
+  --deck-callout-bg: var(--deck-card-bg-dark);
+  --deck-callout-text: var(--deck-text-on-dark);
 }
 .ground-dark-warm { --s-bg: var(--deck-ground-dark-warm); }
 
