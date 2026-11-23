@@ -2101,7 +2101,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .logo-row.is-spread { justify-content: space-between; flex-wrap: nowrap; }
 .logo-row.is-grid { display: grid; grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr)); justify-items: center; gap: var(--deck-space-3) var(--deck-space-2); }
 .logo-row:is(.is-spread, .is-grid) img { height: calc(80px * var(--u)); }
-.team-sheet > .card:not(.is-bare) .logo-row.is-spread img { height: calc(48px * var(--u)); }   /* 右側面板比較窄：比原本的 wordmark 列大，但不撐高面板 */
 /* 直向時間軸精簡版：實線、空心點，日期小字在上、說明在下 */
 .milestones.vertical.is-compact { gap: var(--deck-space-2); flex: 1; align-content: space-between; }
 .milestones.vertical.is-compact::before { border-left-style: solid; border-left-width: 3px; }
