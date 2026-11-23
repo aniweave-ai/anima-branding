@@ -102,7 +102,7 @@
 
 不要用放大字級、拉大間距、加無關的圖來硬撐。
 
-**不用每頁都撐滿**：卡片內容少（只有數字加一兩行）時，卡片不要硬拉到滿版，跟標題之間留一段呼吸空間反而好看（示範第 21 頁：卡片拉高到約內容區六成，`.stats.is-big.is-tall`，整頁加 `.is-bottom` 靠底線）。只有空到超過四成才算太空。刻意留白、確定不再加東西的頁（例：範本第 50 頁，兩張卡貼底線、跟標題留一段呼吸空間），在 `<section>` 加 `data-sparse-ok`，總覽就不標藍。不能拿它代替上面的處理順序。
+**不用每頁都撐滿**：卡片內容少（只有數字加一兩行）時，卡片不要硬拉到滿版，跟標題之間留一段呼吸空間反而好看（示範第 21 頁：卡片拉高到約內容區六成，`.stats.is-big.is-tall`，整頁加 `.is-bottom` 靠底線）。只有空到超過四成才算太空。**拉高卡（`.stats.is-tall`、`.flow.is-tall`）不要自己寫 CSS 撐滿整個內容區**：撐滿後數字或編號在頂、文字在底，卡片中間空一大段，總覽量不到（它只量卡片外框）。內容少就整頁加 `.is-bottom`（範本第 21、64 頁）。刻意留白、確定不再加東西的頁（例：範本第 50 頁，兩張卡貼底線、跟標題留一段呼吸空間），在 `<section>` 加 `data-sparse-ok`，總覽就不標藍。不能拿它代替上面的處理順序。
 
 **自動檢查**：`slides.js` 會在每一頁載入時量上面這幾項。按 `O` 進總覽，超過的頁縮圖左上角會出現紅色標記，寫著哪一項超過；有 `data-dense` 的頁改成黃色標記；有 `data-appendix` 的頁不檢查。內容超出底線的頁也標紅（「內容超出底線」）。瀏覽器 console 也會列出來。太空的頁（內容區沒用到的高度超過四成）標藍色「太空」，處理方式見上面「拆頁後太空」。標記只在總覽出現，投影和 PDF 不會印出來。
 
@@ -129,6 +129,7 @@
 - **預設封面**是 `.cover-phone` 配品牌流動玻璃背景（`.cover-bg.flow-06`，示範第 2 頁）；其他封面是備選：滿版流動玻璃（`.cover.ground-flow`）、畫面塊＋標題、自己的底圖＋手機、深色玻璃＋手機。
 - **封面＋手機** `.cover-phone`：背景鋪滿、手機在右邊往下超出頁面、文字在左。背景三選一：`.cover-bg` 放自己的底圖（圖案太滿加 `.is-faded`）、`.cover-bg.flow-NN` 品牌流動玻璃、整頁 `.ground-dark` 深色玻璃。手機圖用 JPG，圓角由 CSS 裁。
 - **預設全部白底（Victor 決定，2026-11-16）**：做簡報一律用白底，Victor 明講要深色才開深底。`data-dark` 沒寫就是 `off`。
+- **頁上標了 `.ground-*`，`<main>` 就要寫 `data-dark="all"`**：沒寫的話，`.ground-brand` 主張頁、`.ground-dark` 結尾頁全部變成白底上一行字，看起來像沒做完。
 - **sales deck 的底色（照 sales deck v2.0.2 實際做法，2026-11-20 定案）**：在 `<main class="deck">` 寫 `data-dark="all"`，每一頁自己標底色：內容頁用淡漸層 `.ground-ambient`；性質不同的頁才用別的底：公司介紹那幾頁（公司概要、導入成果、團隊）`.ground-dark`，定價 `.ground-brand`（沙色），附錄 `.ground-neutral`（灰）；流動玻璃只留封面和 4A 那頁。漸層底上的淺色塊（ANIMA 步驟、人員處理、完成、缺口、圖例色塊、chip、灰標籤、說明條 `.callout`）會自動換深一階（Sky／Warning／Success／Error／Depth 100），灰底的流程節點、卡片改白底，不用自己調。整份都要淡漸層、不想逐頁標時，才用 `data-dark="ambient"`。
 - **深底頁**（Victor 要求時才用）：深底（Depth 900）大約三分之一，放在想讓人停下來的頁（目錄、重點數字、做法、見證）。深底上的卡片用 `--deck-card-bg-dark`（Depth 800）。
 - **深色頁開關**：寫在 `<main class="deck" data-dark="…">`，整份一起切換，印 PDF 也照這個設定：
@@ -507,7 +508,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.media-split` ＋ `.media-text` ＋ `.art.story` | 文字＋動畫（sales deck 第 2 頁用 `tools`，加 `.is-wide-media` 讓圖那欄寬一點：文字 5、圖 7）：畫面塊原樣加模糊，上面播官網首頁的程式動畫，見「素材與動畫」 | 一句主張配一段示範，取代另開一頁放示意圖 |
 | `.numgrid`（`.is-big`） | 編號 2×2，編號在標題上方（第 47 頁） | 四個功能、四個理由 |
 | `.big-claim` ＋ `.dots.is-wide` | 超大數字＋說明，寬點陣鋪滿下方（第 24 頁） | 一個比例撐一整頁 |
-| `.tallcards` ＋ `.tallcards-side` | 高卡、數字壓卡底，右邊放標題（第 48 頁） | 競品、替代方案 |
+| `.tallcards` ＋ `.tallcards-side` | 高卡、卡片最後一塊（數字 `.kpi`、清單 `.list`、logo 列）自動壓卡底，右邊放標題（第 48 頁） | 競品、替代方案 |
 | `.quad` ＋ `.quad-cell` | 定位四象限，自家那格 `.is-highlight`（第 84 頁） | 市場定位 |
 | `.donuts` ＋ `.donut-item` | 小甜甜圈 2×2，旁邊放金額（第 37 頁） | 資金用途、比例拆分 |
 | `.table.is-checks` ＋ `.check.is-yes／is-part／is-no` | 打勾比較表（第 80 頁），圖示取代文字標籤 | 能力比較 |
@@ -519,7 +520,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.option-axis`（`.option-axis-head`、`.option-axis-tag`） | 選項軸：幾個選項排成一條軸（圓點＋線），下面一列一個面向，列名只寫一次；下面可接 `.features.is-stacked.is-sm`（標題 30、說明 24）（第 99 頁） | 部署方式、方案差異 |
 | `.strip` ＋ `.grid.cols-3 > .card.is-ruled` ＋ `.callout.is-row` | 一條橫列（別家 logo＋共同能力標籤＋一句說明）、下面三欄差異（卡片標題前 `.num` 編號，chip 去膠囊），最後一條橫排說明條（第 85 頁）。標籤裡的勾用 `<i class="ico ico-check">`，不打「✓」 | 競爭定位：先承認大家都有，再講差在哪 |
 | `.team-sheet` ＋ `.logo-row.is-spread`／`.is-grid` ＋ `.milestones.vertical.is-compact` ＋ `.list.checks.is-circle` | 團隊與公司現況：左邊人物（`.person-name.is-lg` 44）、經歷 logo 一排撐滿、團隊組成、亮點、成員 logo 格子；右邊一張卡放精簡時間軸（日期小字在上、實線空心點）和入選計畫（第 62 頁）。深底 logo 用 `team-plain`／`partners-plain` 的 `-dark` 白色版，`.logo-on-light`／`.logo-on-dark` 成對放，不加濾鏡 | 公司介紹、募資的團隊頁 |
-| `.fanout` ＋ `.fanout-bar`／`.fanout-items`／`.fanout-groups` | 一對多：上面一條亮點卡（主角），往下連到一排工具，底下標分組（第 76 頁；欄數 `--cols`、分組寬 `--span`）。文字欄配 `.lead-text`（36）＋`.lead-text.is-accent` | 產品接在既有工具上、一個平台串多個來源 |
+| `.fanout` ＋ `.fanout-bar`／`.fanout-items`／`.fanout-groups` | 一對多：上面一條亮點卡（主角），往下連到一排工具，底下標分組（第 76 頁；欄數 `--cols`、分組寬 `--span`）。文字欄配 `.lead-text`（36）＋`.lead-text.is-accent`，自動跟右邊的圖上下置中，不用自己設 `justify-content` | 產品接在既有工具上、一個平台串多個來源 |
 
 **撐滿高度用的變化**（2026-11-16，處理「太空」頁時加的；內容少的卡片拉到約內容區六成高，跟標題留呼吸空間，不要硬撐到滿版）
 
