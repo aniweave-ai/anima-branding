@@ -512,7 +512,7 @@ Sky 500（`--deck-brand`）只當識別點（logo、小圓點），不當文字�
 | `.donuts` ＋ `.donut-item` | 小甜甜圈 2×2，旁邊放金額（第 37 頁） | 資金用途、比例拆分 |
 | `.table.is-checks` ＋ `.check.is-yes／is-part／is-no` | 打勾比較表（第 80 頁），圖示取代文字標籤 | 能力比較 |
 | `.track` | 上下交錯時間軸，`.is-next` 是還沒到的點（第 93 頁） | 里程碑、歷程 |
-| `.titlecols` ＋ `.tally` | 名稱欄：幾項就幾欄、不放卡片，名稱 44 是主角、工具列（`.chips.is-plain`）壓欄底；下面一條小計（第 51 頁）。4 欄時名稱縮成 36 | workflow、方案、產品線總覽 |
+| `.titlecols` ＋ `.tally` | 名稱欄：幾項就幾欄、不放卡片，名稱 44 是主角、工具列（`.chips.is-plain`）壓欄底；下面一條小計（第 51 頁）。4 欄時名稱也是 44，只縮欄距（縮成 36 會變一頁 5 級字） | workflow、方案、產品線總覽 |
 | `.sources` ＋ `.rank-list`（`.rank-head`、`.rank-top`、`.rank-row`） | 左：大標題（`.title.is-xl`）＋來源清單（logo｜名稱｜一句）；右：排序清單，第一名一張亮點卡、右邊「今天要做的事」（第 52 頁） | 案例：從哪些訊號排出優先順序 |
 | `.relay` ＋ `.relay-step`／`.relay-ai` | 接力步驟：人做的步驟（`.node-num.is-human`、字小一級）夾著 ANIMA 做的步驟（一張亮點卡，右邊直式 logo，卡裡的工具 logo 用 `-dark` 版）；左欄同第 52 頁（第 77 頁） | 案例：一件事從人到 ANIMA 再回到人 |
 | `.split-3` ＋ `.card.is-ruled` | 圖表＋洞察＋下一步：前兩欄不放底色（上方一條線），最後一欄亮點卡放直向步驟；長條圖放窄欄也看得出長短（第 40 頁） | 從數字講到原因和行動 |
@@ -585,9 +585,9 @@ sales deck（`anima-sales-deck_standard.html` v2.0.3）`@sd` 區塊裡這些是�
 | `.sd-strip`、`.sd-vendors`、`.sd-cols3`、`.sd-num`、callout 行內 flex | `.strip`、`.logo-row`、`.card.is-ruled`、`.card-title > .num`、`.callout.is-row`（第 85 頁） |
 | `.sd-name`、`.sd-logos`（含 `--w`／`--dy` 手調、深底濾鏡）、`.sd-tl` | `.person-name.is-lg`、`.logo-row.is-wordmark.is-spread／.is-grid`、`.milestones.vertical.is-compact`；深底用 `team-plain`／`partners-plain` 的 `-dark` 白色檔（第 62 頁） |
 | 自畫的 `faq-sop.svg`、`project-folder.svg` | `.ico-document`、`.ico-projects`（Web DS icon） |
-| `.sd-timeline`、`.sd-stages`、`.sd-rows`、`.sd-final` | 沒有頁在用，直接刪 |
+| `.sd-final` | 沒有頁在用，直接刪 |
 
-還留在 sales 自己的（範本沒收）：`.sd-arch`、`.sd-ratio`、`.sd-pains`、`.sd-traction`、`.sd-fields`、`.sd-flow.chain`、`.sd-stairs`、`.sd-foot`、`.sd-arrows`。行內的字級 token 覆寫（例如整頁 `--deck-fs-body: caption`）是 deck 自己的取捨，範本示範頁不這樣寫。
+還留在 sales 自己的（範本沒收）：`.sd-timeline`、`.sd-stages`、`.sd-rows`（PoC 模組的 PoC 時程、啟動前雙方準備兩頁在用，基底檔看不到）、`.sd-arch`、`.sd-ratio`、`.sd-pains`、`.sd-traction`、`.sd-fields`、`.sd-flow.chain`、`.sd-stairs`、`.sd-foot`、`.sd-arrows`。行內的字級 token 覆寫（例如整頁 `--deck-fs-body: caption`）是 deck 自己的取捨，範本示範頁不這樣寫。
 
 ## 版本
 
