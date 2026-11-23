@@ -470,9 +470,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* 案例：左邊背景／問題／做法，右邊深色面板放結果 */
 .case { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--deck-space-5); }
-.case-story { display: flex; flex-direction: column; }
-.case-row { display: grid; grid-template-columns: calc(150px * var(--u)) minmax(0, 1fr); gap: var(--deck-space-3); padding: var(--deck-space-3) 0; border-top: 2px solid var(--s-line); }
-.case-row:last-child { border-bottom: 2px solid var(--s-line); }
+.case-story { display: flex; flex-direction: column; justify-content: safe center; }   /* 跟右邊滿高的面板對齊中線；放不下時 safe 讓它往下超出，不頂到標題 */
+.case-row { display: grid; grid-template-columns: calc(150px * var(--u)) minmax(0, 1fr); gap: var(--deck-space-3); padding: var(--deck-space-3) 0; }
+.case-row + .case-row { border-top: 2px solid var(--s-line); }
+.case-row:first-child { padding-top: 0; }
 .case-row .label { padding-top: calc(4px * var(--u)); }
 .case-result { justify-content: center; }
 .case-result .kpi { border-top-color: var(--s-line); }
@@ -1496,7 +1497,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 高卡＋側標題（ref B「Competitive landscape」）：卡片撐滿高度，數字壓在卡底 */
 .tallcards { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)) minmax(0, 1.3fr); gap: var(--deck-space-2); align-items: stretch; height: 100%; }
 .tallcards > .card { justify-content: flex-start; }
-.tallcards > .card > .kpi { margin-top: auto; }
+.deck .slide .tallcards > .card > :is(.kpi, .list, .logo-row):last-child { margin-top: auto !important; }   /* 卡片撐滿全高，最後一塊貼卡底，不在卡片中段留一大塊空 */
 .tallcards > .card .kpi-value { font-size: var(--deck-fs-number); }
 .tallcards > .tallcards-side { display: flex; flex-direction: column; justify-content: flex-end; gap: var(--deck-space-3); padding-left: var(--deck-space-4); }
 
@@ -1979,6 +1980,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 /* 一對多：上面一條亮點卡（ANIMA），往下連到一排工具，底下標分組（sales deck 品類頁） */
 .fanout { display: flex; flex-direction: column; min-width: 0; }
 .split > .fanout { align-self: center; }
+.split:has(> .fanout) > .split-text { justify-content: center; }   /* 跟置中的一對多圖對同一條中線 */
 .deck .slide .fanout-bar { flex-direction: row; align-items: center; gap: var(--deck-space-4); padding: var(--deck-space-4); }
 .deck .slide .fanout-bar > img.logo { height: calc(44px * var(--u)); margin: 0; flex: none; }
 .fanout-bar > div { flex: 1; display: flex; flex-direction: column; gap: var(--deck-space-1); border-left: 2px solid var(--s-line-strong); padding-left: var(--deck-space-4); }

@@ -377,6 +377,18 @@
   if (overList.length) console.warn('超過內容上限的頁（README「一頁的內容上限」）：\n' + overList.join('\n'));
 
   // 拆頁後太空（README「拆頁後太空」）：量標題底到內容頂的空白，超過內容區（標題頂線到內容底線，有品牌列 144–968，高 824）四成就在總覽標藍色。
+  // 用版面座標（offsetTop 累加）量，不用 getBoundingClientRect：直接開到某頁時那頁正在播進場動畫，translate 會讓內容看起來往下多 16 到 24px
+  const pageTop = el => { let y = 0; for (; el; el = el.offsetParent) y += el.offsetTop; return y; };
+  const boxes = (els, slide) => {
+    const o = pageTop(slide), k = slide.getBoundingClientRect().width / slide.offsetWidth || 1;
+    // SVG 沒有 offsetTop：量它跟 HTML 父層的相對位置，再接到父層的版面座標上
+    const box = el => {
+      if (el instanceof HTMLElement) { const top = pageTop(el) - o; return { top, bottom: top + el.offsetHeight }; }
+      const p = el.parentElement, pr = p.getBoundingClientRect(), r = el.getBoundingClientRect(), pt = box(p).top;
+      return { top: pt + (r.top - pr.top) / k, bottom: pt + (r.bottom - pr.top) / k };
+    };
+    return els.map(box).filter(r => r.bottom > r.top);
+  };
   var markSparse = () => {
     const sparse = [];
     slides.forEach((slide, i) => {
@@ -384,13 +396,13 @@
       const frame = frames[i];
       delete frame.dataset.sparse;
       if (!head || !body || slide.dataset.sparseOk || 'appendix' in slide.dataset) return;
-      const k = slide.getBoundingClientRect().width / 1920;
-      if (!k) return;
-      const rects = [...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0);
+      const rects = boxes([...body.children], slide);
       if (!rects.length) return;
+      const [h, b] = boxes([head, body], slide);
+      if (!h || !b) return;
       // 內容靠上或靠底線（.is-bottom）都一樣：量標題下、內容上下沒用到的高度
-      const gap = (Math.min(...rects.map(r => r.top)) - head.getBoundingClientRect().bottom + body.getBoundingClientRect().bottom - Math.max(...rects.map(r => r.bottom))) / k;
-      const area = (body.getBoundingClientRect().bottom - head.getBoundingClientRect().top) / k;
+      const gap = Math.min(...rects.map(r => r.top)) - h.bottom + b.bottom - Math.max(...rects.map(r => r.bottom));
+      const area = b.bottom - h.top;
       if (gap > area * 0.4) {
         frame.dataset.sparse = `內容區空 ${Math.round(gap)}px，換版型或合併`;
         sparse.push(`第 ${i + 1} 頁：內容區空 ${Math.round(gap)}px`);
@@ -416,9 +428,9 @@
       });
       const body = slide.querySelector(':scope > .slide-body');
       if (body) {
-        const k = slide.getBoundingClientRect().width / slide.offsetWidth || 1;
-        const end = Math.max(0, ...[...body.children].map(el => el.getBoundingClientRect()).filter(r => r.height > 0).map(r => r.bottom));
-        const past = (end - body.getBoundingClientRect().bottom) / k;
+        const [b] = boxes([body], slide);
+        const end = Math.max(0, ...boxes([...body.children], slide).map(r => r.bottom));
+        const past = b ? end - b.bottom : 0;
         if (past > 1) over.push(`內容超出底線 ${Math.round(past)}px`);
       }
       if (!over.length) return;
