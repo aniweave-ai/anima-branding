@@ -2005,7 +2005,6 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .titlecols p { font-size: var(--deck-fs-body-lg); color: var(--s-muted); text-wrap: balance; }
 .titlecols > * > .chips:last-child { margin-top: auto; padding-top: var(--deck-space-2); }
 .titlecols:has(> :nth-child(4)) { gap: var(--deck-space-5); }
-.titlecols:has(> :nth-child(4)) .titlecols-name { font-size: var(--deck-fs-subheading); }
 /* 一排小計：卡片底色的一條，左邊幾個數字、右邊註解 */
 .tally { display: flex; align-items: center; justify-content: space-between; gap: var(--deck-space-5); background: var(--s-card); border-radius: var(--deck-radius-lg); padding: var(--deck-space-2) var(--deck-space-4); }
 .tally > p { display: flex; align-items: baseline; gap: var(--deck-space-5); font-size: var(--deck-fs-body-lg); color: var(--s-strong); }
@@ -2107,7 +2106,7 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 .milestones.vertical.is-compact { gap: var(--deck-space-2); flex: 1; align-content: space-between; }
 .milestones.vertical.is-compact::before { border-left-style: solid; border-left-width: 3px; }
 .milestones.vertical.is-compact > li { grid-template-columns: minmax(0, 1fr); row-gap: calc(4px * var(--u)); }
-.milestones.vertical.is-compact > li::after { top: 0; }
+.milestones.vertical.is-compact > li::after { top: 0; border-color: var(--s-accent); }   /* 跟日期同色；深底的 --s-line-strong 和細線一樣淡，點會看不出來 */
 .milestones.vertical.is-compact .milestone-when { font-size: var(--deck-fs-caption); font-weight: var(--deck-fw-semibold); color: var(--s-accent); }
 .milestones.vertical.is-compact .milestone-text { grid-column: 1; color: var(--s-muted); }
 .list.checks.is-circle > li { padding-left: calc(28px * var(--u) + var(--deck-space-2)); }
