@@ -470,9 +470,10 @@ body { background: var(--depth-100); font-family: var(--deck-font); color: var(-
 
 /* 案例：左邊背景／問題／做法，右邊深色面板放結果 */
 .case { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--deck-space-5); }
-.case-story { display: flex; flex-direction: column; }
-.case-row { display: grid; grid-template-columns: calc(150px * var(--u)) minmax(0, 1fr); gap: var(--deck-space-3); padding: var(--deck-space-3) 0; border-top: 2px solid var(--s-line); }
-.case-row:last-child { border-bottom: 2px solid var(--s-line); }
+.case-story { display: flex; flex-direction: column; justify-content: safe center; }   /* 跟右邊滿高的面板對齊中線；放不下時 safe 讓它往下超出，不頂到標題 */
+.case-row { display: grid; grid-template-columns: calc(150px * var(--u)) minmax(0, 1fr); gap: var(--deck-space-3); padding: var(--deck-space-3) 0; }
+.case-row + .case-row { border-top: 2px solid var(--s-line); }
+.case-row:first-child { padding-top: 0; }
 .case-row .label { padding-top: calc(4px * var(--u)); }
 .case-result { justify-content: center; }
 .case-result .kpi { border-top-color: var(--s-line); }
