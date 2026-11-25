@@ -694,7 +694,7 @@
     const k = n / Math.max(w, h), cw = Math.max(1, Math.round(w * k)), ch = Math.max(1, Math.round(h * k));
     const c = document.createElement('canvas'); c.width = cw; c.height = ch;
     const g = c.getContext('2d'); g.drawImage(img, 0, 0, cw, ch);
-    let d; try { d = g.getImageData(0, 0, cw, ch).data; } catch (e) { return null; }   // file:// 讀不到像素就照原樣
+    let d; try { d = g.getImageData(0, 0, cw, ch).data; } catch (e) { return { t: 0, l: 0, b: 0, r: 0, a: w / h }; }   // file:// 讀不到像素：照整張圖的寬高比算大小，只是不裁留白
     // 有透明的圖（去白底版、深底用的白色 -dark 版）只看不透明的像素；整張不透明的圖才把白色當底跳過
     let clear = false;
     for (let i = 3; i < d.length; i += 4) if (d[i] < 16) { clear = true; break; }
